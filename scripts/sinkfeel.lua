@@ -136,6 +136,7 @@ function OnCreateThing(t)
     if (t.Model == M_EFFECT_ATLANTIS_INVOKE) then
       if (did_set_timer ~= TRUE) then
         SET_TIMER_GOING((12*60)*8,1)
+        log_msg(TRIBE_NEUTRAL,"TIP: The time is controlled by us, stones give unlimited power.")
         did_set_timer = TRUE
         check_for_people = TRUE
       end

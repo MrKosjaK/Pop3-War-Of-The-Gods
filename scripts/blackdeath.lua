@@ -9,6 +9,7 @@ include("UtilPThings.lua")
 
 spell_delay = 0
 index = 0
+tip_shown = false
 statue_has_prayed = FALSE
 winner = -1
 final_blow = FALSE
@@ -232,6 +233,11 @@ function OnTurn()
       REMOVE_TIMER()
     end
   end
+  
+  if (EVERY_2POW_TURNS(2)) then
+    if (_gsi.Counts.GameTurn > 12*15 and not tip_shown) then
+      tip_shown = true
+      log_msg(TRIBE_NEUTRAL,"TIP: Invoking the ancient flying creature will fill Your blood with determination.")
 end
 
 function OnCreateThing(t)
