@@ -80,6 +80,33 @@ CONSTANT: constant.dat
 EXTRASRC: levlspc2.dat
 EXTRADST: levels\levlspc2.dat
 
+EXTRASRC: cpatr000.dat
+EXTRADST: levels\cpatr000.dat
+
+EXTRASRC: cpatr001.dat
+EXTRADST: levels\cpatr001.dat
+
+EXTRASRC: cpatr002.dat
+EXTRADST: levels\cpatr002.dat
+
+EXTRASRC: cpatr003.dat
+EXTRADST: levels\cpatr003.dat
+
+EXTRASRC: cpatr004.dat
+EXTRADST: levels\cpatr004.dat
+
+EXTRASRC: cpatr005.dat
+EXTRADST: levels\cpatr005.dat
+
+EXTRASRC: cpatr006.dat
+EXTRADST: levels\cpatr006.dat
+
+EXTRASRC: cpatr007.dat
+EXTRADST: levels\cpatr007.dat
+
+EXTRASRC: cpatr008.dat
+EXTRADST: levels\cpatr008.dat
+
 EXTRASRC: cpatr010.dat
 EXTRADST: levels\cpatr010.dat
 
@@ -115,6 +142,33 @@ EXTRADST: levels\cpatr021.dat
 
 EXTRASRC: cpatr122.dat
 EXTRADST: levels\cpatr122.dat
+
+EXTRASRC: cpscr000.dat
+EXTRADST: levels\cpscr000.dat
+
+EXTRASRC: cpscr001.dat
+EXTRADST: levels\cpscr001.dat
+
+EXTRASRC: cpscr002.dat
+EXTRADST: levels\cpscr002.dat
+
+EXTRASRC: cpscr003.dat
+EXTRADST: levels\cpscr003.dat
+
+EXTRASRC: cpscr004.dat
+EXTRADST: levels\cpscr004.dat
+
+EXTRASRC: cpscr005.dat
+EXTRADST: levels\cpscr005.dat
+
+EXTRASRC: cpscr006.dat
+EXTRADST: levels\cpscr006.dat
+
+EXTRASRC: cpscr007.dat
+EXTRADST: levels\cpscr007.dat
+
+EXTRASRC: cpscr008.dat
+EXTRADST: levels\cpscr008.dat
 
 EXTRASRC: cpscr010.dat
 EXTRADST: levels\cpscr010.dat
