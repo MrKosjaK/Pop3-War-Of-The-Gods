@@ -238,6 +238,8 @@ function OnTurn()
     if (_gsi.Counts.GameTurn > 12*15 and not tip_shown) then
       tip_shown = true
       log_msg(TRIBE_NEUTRAL,"TIP: Invoking the ancient flying creature will fill Your blood with determination.")
+    end
+  end
 end
 
 function OnCreateThing(t)

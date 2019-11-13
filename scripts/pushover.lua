@@ -22,10 +22,11 @@ numthings = 16
 tick_c_attack = _gsi.Counts.GameTurn + (1840 + G_RANDOM(512))
 tick_c_boat = _gsi.Counts.GameTurn + (840 + G_RANDOM(320))
 tick_p_expand = _gsi.Counts.GameTurn + (480 + G_RANDOM(800))
-tick_p_attack = _gsi.Counts.GameTurn + (1740 + G_RANDOM(512))
+tick_p_attack = _gsi.Counts.GameTurn + (1540 + G_RANDOM(512))
 tick_b_boat = _gsi.Counts.GameTurn + (1000 + G_RANDOM(380))
-tick_b_attack = _gsi.Counts.GameTurn + (2394 + G_RANDOM(1024))
-tick_o_attack = _gsi.Counts.GameTurn + (1940 + G_RANDOM(512))
+tick_b_attack = _gsi.Counts.GameTurn + (1794 + G_RANDOM(512))
+tick_o_attack = _gsi.Counts.GameTurn + (1840 + G_RANDOM(512))
+tick_o_boat = _gsi.Counts.GameTurn + (1000 + G_RANDOM(1000))
 cyanTowers = {MAP_XZ_2_WORLD_XYZ(220, 78),
               MAP_XZ_2_WORLD_XYZ(192, 122),
               MAP_XZ_2_WORLD_XYZ(122, 60),
@@ -237,7 +238,7 @@ function OnTurn()
         end
       end
     elseif (_gsi.Counts.GameTurn > tick_p_attack) then
-      tick_p_attack = _gsi.Counts.GameTurn + (1740 + G_RANDOM(512))
+      tick_p_attack = _gsi.Counts.GameTurn + (1540 + G_RANDOM(512))
       if (PLAYERS_PEOPLE_OF_TYPE(TRIBE_PINK, M_PERSON_WARRIOR) > 5 and FREE_ENTRIES(TRIBE_PINK) > 3) then
         if (_gsi.Players[TRIBE_ORANGE].NumPeople > 0) then
           WRITE_CP_ATTRIB(TRIBE_PINK, ATTR_AWAY_RELIGIOUS, 35)
@@ -258,7 +259,7 @@ function OnTurn()
         end
       end
     elseif (_gsi.Counts.GameTurn > tick_b_attack) then
-      tick_b_attack = _gsi.Counts.GameTurn + (2394 + G_RANDOM(1024))
+      tick_b_attack = _gsi.Counts.GameTurn + (1794 + G_RANDOM(512))
       if (G_RANDOM(2) == 1 and _gsi.Players[TRIBE_BLACK].NumPeople > 45) then
         local troops = PLAYERS_PEOPLE_OF_TYPE(TRIBE_BLACK, M_PERSON_WARRIOR)
         troops = troops + PLAYERS_PEOPLE_OF_TYPE(TRIBE_BLACK, M_PERSON_RELIGIOUS)
@@ -344,7 +345,7 @@ function OnTurn()
         end
       end
     elseif (_gsi.Counts.GameTurn > tick_o_attack) then
-      tick_o_attack = _gsi.Counts.GameTurn + (1940 + G_RANDOM(512))
+      tick_o_attack = _gsi.Counts.GameTurn + (1840 + G_RANDOM(512))
       if (_gsi.Players[TRIBE_ORANGE].NumPeople > 40 and FREE_ENTRIES(TRIBE_ORANGE) > 2) then
         if (_gsi.Players[TRIBE_PINK].NumPeople > 0 or _gsi.Players[TRIBE_CYAN].NumPeople > 0) then
           if (G_RANDOM(2) == 1) then
@@ -420,6 +421,29 @@ function OnTurn()
           WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_WARRIOR, G_RANDOM(100))
           WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_MEDICINE_MAN, G_RANDOM(2))
           ATTACK(TRIBE_BLACK, wta, 4+G_RANDOM(GET_NUM_OF_AVAILABLE_BOATS(TRIBE_BLACK)+1)*4, ATTACK_BUILDING, T_MODEL_NONE, 999, M_SPELL_WHIRLWIND, M_SPELL_WHIRLWIND, M_SPELL_WHIRLWIND, ATTACK_BY_BOAT, 0, NO_MARKER, NO_MARKER, NO_MARKER)
+        end
+      end
+    elseif (_gsi.Counts.GameTurn > tick_o_boat) then
+      tick_o_boat = _gsi.Counts.GameTurn + (1000 + G_RANDOM(1000))
+      if (FREE_ENTRIES(TRIBE_ORANGE) > 2 and PLAYERS_VEHICLE_OF_TYPE(TRIBE_ORANGE, M_VEHICLE_BOAT_1) > 0) then
+        if (_gsi.Players[TRIBE_BLUE].NumPeople > 0 or _gsi.Players[TRIBE_RED].NumPeople > 0) then
+          local myenemy = G_RANDOM(2)
+          local tries = 16
+          
+          while tries > 0 do
+            tries = tries-1
+            if (_gsi.Players[myenemy].NumPeople == 0) then
+              myenemy = G_RANDOM(2)
+            else
+              break
+            end
+          end
+          
+          WRITE_CP_ATTRIB(TRIBE_ORANGE, ATTR_AWAY_RELIGIOUS, G_RANDOM(100))
+          WRITE_CP_ATTRIB(TRIBE_ORANGE, ATTR_AWAY_SUPER_WARRIOR, G_RANDOM(100))
+          WRITE_CP_ATTRIB(TRIBE_ORANGE, ATTR_AWAY_WARRIOR, G_RANDOM(100))
+          WRITE_CP_ATTRIB(TRIBE_ORANGE, ATTR_AWAY_MEDICINE_MAN, G_RANDOM(2))
+          ATTACK(TRIBE_ORANGE, myenemy, 4+G_RANDOM(GET_NUM_OF_AVAILABLE_BOATS(TRIBE_ORANGE)+1)*4, ATTACK_BUILDING, T_MODEL_NONE, 999, M_SPELL_HYPNOTISM, M_SPELL_HYPNOTISM, M_SPELL_HYPNOTISM, ATTACK_BY_BOAT, 0, NO_MARKER, NO_MARKER, NO_MARKER)
         end
       end
     end
@@ -506,6 +530,12 @@ function OnTurn()
               STATE_SET(i, TRUE, CP_AT_TYPE_BUILD_VEHICLE)
               STATE_SET(i, TRUE, CP_AT_TYPE_FETCH_FAR_VEHICLE)
             end
+          end
+          if (i == TRIBE_ORANGE and _gsi.Counts.GameTurn > (12*60)*6) then
+            WRITE_CP_ATTRIB(i, ATTR_PREF_BOAT_HUTS, 1)
+            WRITE_CP_ATTRIB(i, ATTR_PREF_BOAT_DRIVERS, 7)
+            STATE_SET(i, TRUE, CP_AT_TYPE_BUILD_VEHICLE)
+            STATE_SET(i, TRUE, CP_AT_TYPE_FETCH_FAR_VEHICLE)
           end
         else
           WRITE_CP_ATTRIB(i, ATTR_PREF_WARRIOR_TRAINS, 0)
