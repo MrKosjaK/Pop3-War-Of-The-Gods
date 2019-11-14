@@ -106,19 +106,43 @@ function OnTurn()
     local h1 = GET_HEIGHT_AT_POS(12)
     local h2 = GET_HEIGHT_AT_POS(14)
     if (MANA(TRIBE_PINK) > SPELL_COST(M_SPELL_LAND_BRIDGE)) then
+      local enemy = G_RANDOM(2)
+      local tries = 16
+      
+      while tries > 0 do
+        tries = tries-1
+        if (_gsi.Players[enemy].NumPeople == 0) then
+          enemy = G_RANDOM(2)
+        else
+          break
+        end
+      end
+      
       if (h1 == heightCache[1]) then
-        ATTACK(TRIBE_PINK, G_RANDOM(2), 0, ATTACK_BUILDING, -1, 0, M_SPELL_LAND_BRIDGE, M_SPELL_NONE, M_SPELL_NONE, ATTACK_NORMAL, 0, 11, 13, -1)
+        ATTACK(TRIBE_PINK, enemy, 0, ATTACK_BUILDING, -1, 0, M_SPELL_LAND_BRIDGE, M_SPELL_NONE, M_SPELL_NONE, ATTACK_NORMAL, 0, 11, 13, -1)
       else
         if (h2 == heightCache[2]) then
-          ATTACK(TRIBE_PINK, G_RANDOM(2), 0, ATTACK_BUILDING, -1, 0, M_SPELL_LAND_BRIDGE, M_SPELL_NONE, M_SPELL_NONE, ATTACK_NORMAL, 0, 13, 15, -1)
+          ATTACK(TRIBE_PINK, enemy, 0, ATTACK_BUILDING, -1, 0, M_SPELL_LAND_BRIDGE, M_SPELL_NONE, M_SPELL_NONE, ATTACK_NORMAL, 0, 13, 15, -1)
         else
-          ATTACK(TRIBE_PINK, G_RANDOM(2), 5+G_RANDOM(10), ATTACK_BUILDING, -1, 250+G_RANDOM(700), M_SPELL_BLAST, M_SPELL_BLAST, M_SPELL_BLAST, ATTACK_NORMAL, 0, 11, -1, -1)
+          ATTACK(TRIBE_PINK, enemy, 5+G_RANDOM(10), ATTACK_BUILDING, -1, 250+G_RANDOM(700), M_SPELL_BLAST, M_SPELL_BLAST, M_SPELL_BLAST, ATTACK_NORMAL, 0, 11, -1, -1)
         end
       end
     end
     
     if (h1 ~= heightCache[1] and h2 ~= heightCache[2]) then
-      ATTACK(TRIBE_CYAN, G_RANDOM(2), 6+G_RANDOM(12), ATTACK_BUILDING, -1, 250+G_RANDOM(700), M_SPELL_BLAST, M_SPELL_BLAST, M_SPELL_BLAST, ATTACK_NORMAL, 0, 11, -1, -1)
+      local enemy = G_RANDOM(2)
+      local tries = 16
+      
+      while tries > 0 do
+        tries = tries-1
+        if (_gsi.Players[enemy].NumPeople == 0) then
+          enemy = G_RANDOM(2)
+        else
+          break
+        end
+      end
+      
+      ATTACK(TRIBE_CYAN, enemy, 6+G_RANDOM(12), ATTACK_BUILDING, -1, 250+G_RANDOM(700), M_SPELL_BLAST, M_SPELL_BLAST, M_SPELL_BLAST, ATTACK_NORMAL, 0, 11, -1, -1)
     end
   end
   
