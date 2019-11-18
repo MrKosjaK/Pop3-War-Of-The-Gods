@@ -26,7 +26,7 @@ tick_p_attack = _gsi.Counts.GameTurn + (1540 + G_RANDOM(512))
 tick_b_boat = _gsi.Counts.GameTurn + (1000 + G_RANDOM(380))
 tick_b_attack = _gsi.Counts.GameTurn + (1794 + G_RANDOM(512))
 tick_o_attack = _gsi.Counts.GameTurn + (1840 + G_RANDOM(512))
-tick_o_boat = _gsi.Counts.GameTurn + (1000 + G_RANDOM(1000))
+tick_o_boat = _gsi.Counts.GameTurn + (500 + G_RANDOM(1000))
 cyanTowers = {MAP_XZ_2_WORLD_XYZ(220, 78),
               MAP_XZ_2_WORLD_XYZ(192, 122),
               MAP_XZ_2_WORLD_XYZ(122, 60),

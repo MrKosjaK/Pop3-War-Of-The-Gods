@@ -1,5 +1,5 @@
 PACKNAME: War of the Gods
-PACKVERSION: 1.2.1
+PACKVERSION: 1.3.0
 PACKCREATOR: Impboy / KosjaK
 PACKDESC: Co-op project
 
@@ -75,6 +75,12 @@ DAT: levl2012.dat
 HDR: Blank.hdr
 CREATOR: Impboy / KosjaK
 
+LEVEL: C
+NAME: Etheral Onslaught
+DAT: levl2013.dat
+HDR: Blank.hdr
+CREATOR: Impboy / KosjaK
+
 CONSTANT: constant.dat
 
 EXTRASRC: levlspc2.dat
@@ -140,6 +146,9 @@ EXTRADST: levels\cpatr020.dat
 EXTRASRC: cpatr021.dat
 EXTRADST: levels\cpatr021.dat
 
+EXTRASRC: cpatr022.dat
+EXTRADST: levels\cpatr022.dat
+
 EXTRASRC: cpatr122.dat
 EXTRADST: levels\cpatr122.dat
 
@@ -203,10 +212,11 @@ EXTRADST: levels\cpscr020.dat
 EXTRASRC: cpscr021.dat
 EXTRADST: levels\cpscr021.dat
 
+EXTRASRC: cpscr022.dat
+EXTRADST: levels\cpscr022.dat
+
 EXTRASRC: cpscr122.dat
 EXTRADST: levels\cpscr122.dat
-
-LANG: 611: Bush: Select Braves and {}to gather wood. |}query.
 
 EXTRASRC: al0-3.dat
 EXTRADST: data\al0-3.dat
@@ -546,3 +556,7 @@ EXTRADST: objects\shapes.dat
 
 EXTRASRC: shapes.ver
 EXTRADST: objects\shapes.ver
+
+LANG: 611: Bush: Select Braves and {}to gather wood. |}query.
+
+LANG: 612: Bush: Select Braves and {}to gather wood. |}query.
