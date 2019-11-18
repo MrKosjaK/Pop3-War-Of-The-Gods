@@ -551,6 +551,18 @@ EXTRADST: objects\objs0-2.ver
 EXTRASRC: pnts0-2.dat
 EXTRADST: objects\pnts0-2.dat
 
+EXTRASRC: facs0-5.dat
+EXTRADST: objects\facs0-5.dat
+
+EXTRASRC: objs0-5.dat
+EXTRADST: objects\objs0-5.dat
+
+EXTRASRC: objs0-5.ver
+EXTRADST: objects\objs0-5.ver
+
+EXTRASRC: pnts0-5.dat
+EXTRADST: objects\pnts0-5.dat
+
 EXTRASRC: shapes.dat
 EXTRADST: objects\shapes.dat
 
