@@ -558,5 +558,3 @@ EXTRASRC: shapes.ver
 EXTRADST: objects\shapes.ver
 
 LANG: 611: Bush: Select Braves and {}to gather wood. |}query.
-
-LANG: 612: Bush: Select Braves and {}to gather wood. |}query.
