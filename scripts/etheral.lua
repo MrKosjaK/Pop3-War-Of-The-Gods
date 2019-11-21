@@ -15,7 +15,7 @@ _constants.ShamenDeadManaPer256Gained = 16
 wilds = {}
 spell_delay = {0,0}
 index = 1
-availableNums = {4,6}
+availableNums = {4,6,2}
 ms_used = 0
 ms_delay = 720
 in_used = 0
@@ -151,10 +151,10 @@ for i = 4,5 do
   
   SET_DEFENCE_RADIUS(availableNums[i-3], 7)
   SET_SPELL_ENTRY(availableNums[i-3], 0, M_SPELL_INSECT_PLAGUE, 25000, 64, 3, 0)
-  SET_SPELL_ENTRY(availableNums[i-3], 1, M_SPELL_INSECT_PLAGUE, 25000, 64, 3, 1)
-  SET_SPELL_ENTRY(availableNums[i-3], 2, M_SPELL_LIGHTNING_BOLT, 40000, 64, 2, 0)
-  SET_SPELL_ENTRY(availableNums[i-3], 3, M_SPELL_LIGHTNING_BOLT, 40000, 64, 2, 1)
-  SET_SPELL_ENTRY(availableNums[i-3], 4, M_SPELL_HYPNOTISM, 70000, 64, 6, 0)
+  SET_SPELL_ENTRY(availableNums[i-3], 1, M_SPELL_LIGHTNING_BOLT, 40000, 64, 2, 0)
+  SET_SPELL_ENTRY(availableNums[i-3], 2, M_SPELL_HYPNOTISM, 70000, 64, 6, 0)
+  SET_SPELL_ENTRY(availableNums[i-3], 3, M_SPELL_INSECT_PLAGUE, 25000, 64, 3, 1)
+  SET_SPELL_ENTRY(availableNums[i-3], 4, M_SPELL_LIGHTNING_BOLT, 40000, 64, 2, 1)
   SET_SPELL_ENTRY(availableNums[i-3], 5, M_SPELL_HYPNOTISM, 70000, 64, 6, 1)
 end
 
