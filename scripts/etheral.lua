@@ -341,7 +341,7 @@ function OnTurn()
           end
         end
         
-        if (t.Model < 3 and t.Owner > 1) then
+        if (t.Model < 3 and t.Owner > 2) then
           if (t.u.Bldg.UpgradeCount < 625) then
             t.u.Bldg.UpgradeCount = t.u.Bldg.UpgradeCount + 175
           end
