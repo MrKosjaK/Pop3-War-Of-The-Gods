@@ -360,7 +360,7 @@ function OnTurn()
             if (count < 6) then
               count = count+1
               if (t.Type == T_PERSON) then
-                if (t.Model > 2 and t.Model < 6 and not isFlagEnabled(t.Flags3, TF3_SHIELD_ACTIVE)) then
+                if (t.Model > 2 and t.Model < 6 and t.Owner == shaman.Owner and not isFlagEnabled(t.Flags3, TF3_SHIELD_ACTIVE)) then
                   if (count > 1 and ms_used < 5) then
                     createThing(T_SPELL,M_SPELL_SHIELD,TRIBE_CYAN,t.Pos.D3,false,false)
                     ms_used = ms_used+1
@@ -384,7 +384,7 @@ function OnTurn()
             if (count < 6) then
               count = count+1
               if (t.Type == T_PERSON) then
-                if (t.Model > 2 and t.Model < 6 and not isFlagEnabled(t.Flags2, TF2_THING_IS_AN_INVISIBLE_PERSON)) then
+                if (t.Model > 2 and t.Model < 6 and t.Owner == shaman2.Owner and not isFlagEnabled(t.Flags2, TF2_THING_IS_AN_INVISIBLE_PERSON)) then
                   if (count > 1 and in_used < 5) then
                     createThing(T_SPELL,M_SPELL_INVISIBILITY,TRIBE_BLACK,t.Pos.D3,false,false)
                     in_used = in_used+1
