@@ -1,5 +1,5 @@
 PACKNAME: War of the Gods
-PACKVERSION: 1.3.0
+PACKVERSION: 1.3.1
 PACKCREATOR: Impboy / KosjaK
 PACKDESC: Co-op project
 
@@ -81,6 +81,12 @@ DAT: levl2013.dat
 HDR: Blank.hdr
 CREATOR: Impboy / KosjaK
 
+LEVEL: D
+NAME: Ambush Assault
+DAT: levl2014.dat
+HDR: Blank.hdr
+CREATOR: Impboy / KosjaK
+
 CONSTANT: constant.dat
 
 EXTRASRC: levlspc2.dat
@@ -149,6 +155,12 @@ EXTRADST: levels\cpatr021.dat
 EXTRASRC: cpatr022.dat
 EXTRADST: levels\cpatr022.dat
 
+EXTRASRC: cpatr023.dat
+EXTRADST: levels\cpatr023.dat
+
+EXTRASRC: cpatr024.dat
+EXTRADST: levels\cpatr024.dat
+
 EXTRASRC: cpatr122.dat
 EXTRADST: levels\cpatr122.dat
 
@@ -214,6 +226,12 @@ EXTRADST: levels\cpscr021.dat
 
 EXTRASRC: cpscr022.dat
 EXTRADST: levels\cpscr022.dat
+
+EXTRASRC: cpscr023.dat
+EXTRADST: levels\cpscr023.dat
+
+EXTRASRC: cpscr024.dat
+EXTRADST: levels\cpscr024.dat
 
 EXTRASRC: cpscr122.dat
 EXTRADST: levels\cpscr122.dat
@@ -322,6 +340,27 @@ EXTRADST: data\pal0-8.dat
 
 EXTRASRC: sky0-8.dat
 EXTRADST: data\sky0-8.dat
+
+EXTRASRC: al0-9.dat
+EXTRADST: data\al0-9.dat
+
+EXTRASRC: bigf0-9.dat
+EXTRADST: data\bigf0-9.dat
+
+EXTRASRC: fade0-9.dat
+EXTRADST: data\fade0-9.dat
+
+EXTRASRC: cliff0-9.dat
+EXTRADST: data\cliff0-9.dat
+
+EXTRASRC: ghost0-9.dat
+EXTRADST: data\ghost0-9.dat
+
+EXTRASRC: pal0-9.dat
+EXTRADST: data\pal0-9.dat
+
+EXTRASRC: sky0-9.dat
+EXTRADST: data\sky0-9.dat
 
 EXTRASRC: al0-a.dat
 EXTRADST: data\al0-a.dat
@@ -532,6 +571,9 @@ EXTRADST: scripts\cursedfaith.lua
 
 EXTRASRC: blackdeath.lua
 EXTRADST: scripts\blackdeath.lua
+
+EXTRASRC: etheral.lua
+EXTRADST: scripts\etheral.lua
 
 EXTRASRC: aniob0-2.dat
 EXTRADST: objects\aniob0-2.dat
