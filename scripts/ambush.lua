@@ -39,19 +39,19 @@ p_towers = {MAP_XZ_2_WORLD_XYZ(22, 246),
             MAP_XZ_2_WORLD_XYZ(248, 228),
             MAP_XZ_2_WORLD_XYZ(4, 230)
 }
-o_towers = {MAP_XZ_2_WORLD_XYZ(28 190),
-            MAP_XZ_2_WORLD_XYZ(96 184),
-            MAP_XZ_2_WORLD_XYZ(98 218),
-            MAP_XZ_2_WORLD_XYZ(60 238),
-            MAP_XZ_2_WORLD_XYZ(38 128),
-            MAP_XZ_2_WORLD_XYZ(50 144),
-            MAP_XZ_2_WORLD_XYZ(34 152),
-            MAP_XZ_2_WORLD_XYZ(26 132),
-            MAP_XZ_2_WORLD_XYZ(18 150),
-            MAP_XZ_2_WORLD_XYZ(16 164),
-            MAP_XZ_2_WORLD_XYZ(18 182),
-            MAP_XZ_2_WORLD_XYZ(30 202),
-            MAP_XZ_2_WORLD_XYZ(34 216)
+o_towers = {MAP_XZ_2_WORLD_XYZ(28, 190),
+            MAP_XZ_2_WORLD_XYZ(96, 184),
+            MAP_XZ_2_WORLD_XYZ(98, 218),
+            MAP_XZ_2_WORLD_XYZ(60, 238),
+            MAP_XZ_2_WORLD_XYZ(38, 128),
+            MAP_XZ_2_WORLD_XYZ(50, 144),
+            MAP_XZ_2_WORLD_XYZ(34, 152),
+            MAP_XZ_2_WORLD_XYZ(26, 132),
+            MAP_XZ_2_WORLD_XYZ(18, 150),
+            MAP_XZ_2_WORLD_XYZ(16, 164),
+            MAP_XZ_2_WORLD_XYZ(18, 182),
+            MAP_XZ_2_WORLD_XYZ(30, 202),
+            MAP_XZ_2_WORLD_XYZ(34, 216)
 }
 o_flat_pos = {MAP_XZ_2_WORLD_XYZ(14, 154),
               MAP_XZ_2_WORLD_XYZ(8, 154),
@@ -350,7 +350,7 @@ function OnTurn()
               if (t.Type == T_PERSON) then
                 if (t.Model > 2 and t.Model < 6 and t.Owner == shaman.Owner and not isFlagEnabled(t.Flags3, TF3_SHIELD_ACTIVE)) then
                   if (count > 1 and ms_used < 5) then
-                    createThing(T_SPELL,M_SPELL_SHIELD,TRIBE_CYAN,t.Pos.D3,false,false)
+                    createThing(T_SPELL,M_SPELL_SHIELD,shaman.Owner,t.Pos.D3,false,false)
                     ms_used = ms_used+1
                     return false
                   end
@@ -374,7 +374,7 @@ function OnTurn()
               if (t.Type == T_PERSON) then
                 if (t.Model > 2 and t.Model < 6 and t.Owner == shaman2.Owner and not isFlagEnabled(t.Flags2, TF2_THING_IS_AN_INVISIBLE_PERSON)) then
                   if (count > 1 and in_used < 5) then
-                    createThing(T_SPELL,M_SPELL_INVISIBILITY,TRIBE_BLACK,t.Pos.D3,false,false)
+                    createThing(T_SPELL,M_SPELL_INVISIBILITY,shaman2.Owner,t.Pos.D3,false,false)
                     in_used = in_used+1
                     return false
                   end
