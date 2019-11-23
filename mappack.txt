@@ -575,6 +575,9 @@ EXTRADST: scripts\blackdeath.lua
 EXTRASRC: etheral.lua
 EXTRADST: scripts\etheral.lua
 
+EXTRASRC: ambush.lua
+EXTRADST: scripts\ambush.lua
+
 EXTRASRC: aniob0-2.dat
 EXTRADST: objects\aniob0-2.dat
 

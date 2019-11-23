@@ -1,5 +1,6 @@
 import(Module_Defines)
 import(Module_PopScript)
+import(Module_Commands)
 import(Module_Game)
 import(Module_Objects)
 import(Module_Map)
@@ -13,7 +14,7 @@ _constants.MaxManaValue = 2500000
 _constants.ShamenDeadManaPer256Gained = 16
 
 wilds = {}
-spell_delay = {0,0}
+spell_delay = {0,0,0,0}
 index = 1
 availableNums = {5,7,2,3}
 ms_used = 0
@@ -21,6 +22,58 @@ ms_delay = 720
 in_used = 0
 in_delay = 360
 numthings = 16
+should_i_check_for_flats = false
+flats_to_use = 0
+pink_base_coord = Coord2D.new()
+map_xz_to_world_coord2d(234, 18, pink_base_coord)
+tick_p_attack = _gsi.Counts.GameTurn + (1300 + G_RANDOM(800))
+tick_p_defend = _gsi.Counts.GameTurn + (340 + G_RANDOM(400))
+tick_o_flatten = _gsi.Counts.GameTurn + (1500 + G_RANDOM(400))
+p_towers = {MAP_XZ_2_WORLD_XYZ(22, 246),
+            MAP_XZ_2_WORLD_XYZ(12, 12),
+            MAP_XZ_2_WORLD_XYZ(0, 34),
+            MAP_XZ_2_WORLD_XYZ(222, 32),
+            MAP_XZ_2_WORLD_XYZ(200, 20),
+            MAP_XZ_2_WORLD_XYZ(210, 254),
+            MAP_XZ_2_WORLD_XYZ(228, 248),
+            MAP_XZ_2_WORLD_XYZ(248, 228),
+            MAP_XZ_2_WORLD_XYZ(4, 230)
+}
+o_towers = {MAP_XZ_2_WORLD_XYZ(28 190),
+            MAP_XZ_2_WORLD_XYZ(96 184),
+            MAP_XZ_2_WORLD_XYZ(98 218),
+            MAP_XZ_2_WORLD_XYZ(60 238),
+            MAP_XZ_2_WORLD_XYZ(38 128),
+            MAP_XZ_2_WORLD_XYZ(50 144),
+            MAP_XZ_2_WORLD_XYZ(34 152),
+            MAP_XZ_2_WORLD_XYZ(26 132),
+            MAP_XZ_2_WORLD_XYZ(18 150),
+            MAP_XZ_2_WORLD_XYZ(16 164),
+            MAP_XZ_2_WORLD_XYZ(18 182),
+            MAP_XZ_2_WORLD_XYZ(30 202),
+            MAP_XZ_2_WORLD_XYZ(34 216)
+}
+o_flat_pos = {MAP_XZ_2_WORLD_XYZ(14, 154),
+              MAP_XZ_2_WORLD_XYZ(8, 154),
+              MAP_XZ_2_WORLD_XYZ(2, 154),
+              MAP_XZ_2_WORLD_XYZ(252, 154),
+              MAP_XZ_2_WORLD_XYZ(246, 154),
+              MAP_XZ_2_WORLD_XYZ(10, 170),
+              MAP_XZ_2_WORLD_XYZ(4, 170),
+              MAP_XZ_2_WORLD_XYZ(254, 170),
+              MAP_XZ_2_WORLD_XYZ(248, 170),
+              MAP_XZ_2_WORLD_XYZ(242, 170),
+              MAP_XZ_2_WORLD_XYZ(16, 188),
+              MAP_XZ_2_WORLD_XYZ(10, 188),
+              MAP_XZ_2_WORLD_XYZ(4, 188),
+              MAP_XZ_2_WORLD_XYZ(254, 188),
+              MAP_XZ_2_WORLD_XYZ(248, 188),
+              MAP_XZ_2_WORLD_XYZ(26, 206),
+              MAP_XZ_2_WORLD_XYZ(20, 206),
+              MAP_XZ_2_WORLD_XYZ(14, 206),
+              MAP_XZ_2_WORLD_XYZ(8, 206),
+              MAP_XZ_2_WORLD_XYZ(2, 206)
+}
 botSpells = {M_SPELL_CONVERT_WILD,
              M_SPELL_BLAST,
              M_SPELL_LAND_BRIDGE,
@@ -50,6 +103,12 @@ for i=0,1 do
   end
 end
 
+for k,v in ipairs(availableNums) do
+  for kk,vv in ipairs(availableNums) do
+    set_players_allied(v,vv)
+  end
+end
+
 for i = 4,5 do
   for u,v in ipairs(botSpells) do
     PThing.SpellSet(availableNums[i-3], v, TRUE, FALSE)
@@ -64,7 +123,7 @@ for i = 4,5 do
   
   WRITE_CP_ATTRIB(availableNums[i-3], ATTR_EXPANSION, 24+G_RANDOM(16))
   WRITE_CP_ATTRIB(availableNums[i-3], ATTR_HOUSE_PERCENTAGE, 50+G_RANDOM(48))
-  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_MAX_BUILDINGS_ON_GO, 5+G_RANDOM(5))
+  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_MAX_BUILDINGS_ON_GO, 6+G_RANDOM(5))
   WRITE_CP_ATTRIB(availableNums[i-3], ATTR_PREF_WARRIOR_TRAINS, 0)
   WRITE_CP_ATTRIB(availableNums[i-3], ATTR_PREF_WARRIOR_PEOPLE, 0)
   WRITE_CP_ATTRIB(availableNums[i-3], ATTR_PREF_RELIGIOUS_TRAINS, 0)
@@ -134,150 +193,112 @@ for i = 4,5 do
   SET_SPELL_ENTRY(availableNums[i-3], 5, M_SPELL_HYPNOTISM, 70000, 64, 6, 1)
 end
 
--- SHAMAN_DEFEND(TRIBE_CYAN, 76, 244, TRUE)
--- SHAMAN_DEFEND(TRIBE_BLACK, 218, 186, TRUE)
--- SET_DRUM_TOWER_POS(TRIBE_CYAN, 76, 244)
--- SET_DRUM_TOWER_POS(TRIBE_BLACK, 218, 186)
+SHAMAN_DEFEND(TRIBE_PINK, 234, 18, TRUE)
+SHAMAN_DEFEND(TRIBE_ORANGE, 62, 182, TRUE)
+SET_DRUM_TOWER_POS(TRIBE_PINK, 234, 18)
+SET_DRUM_TOWER_POS(TRIBE_ORANGE, 62, 182)
 
 function OnTurn()
   if (_gsi.Counts.GameTurn > 1) then
-    -- if (_gsi.Counts.GameTurn > tick_c_balloon) then
-      -- tick_c_balloon = _gsi.Counts.GameTurn + (1000 + G_RANDOM(1000))
-      -- if (PLAYERS_VEHICLE_OF_TYPE(TRIBE_CYAN, M_VEHICLE_AIRSHIP_1) > 0 and FREE_ENTRIES(TRIBE_CYAN) > 2) then
-        -- if (_gsi.Players[TRIBE_CYAN].NumPeople > 30 and PLAYERS_PEOPLE_OF_TYPE(TRIBE_CYAN, M_PERSON_SUPER_WARRIOR) > 2) then
-          -- local enemy = G_RANDOM(3)
-          -- local tries = 16
+    if (_gsi.Counts.GameTurn > tick_p_attack) then
+      tick_p_attack = _gsi.Counts.GameTurn + (1300 + G_RANDOM(800))
+      if (FREE_ENTRIES(TRIBE_PINK) > 2 and IS_SHAMAN_AVAILABLE_FOR_ATTACK(TRIBE_PINK) > 0) then
+        if (count_troops(TRIBE_PINK) > 7 and _gsi.Players[TRIBE_PINK].Mana > 250000) then
+          local enemy = G_RANDOM(2)
+          local tries = 16
           
-          -- while tries > 0 do
-            -- tries = tries-1
-            -- if (_gsi.Players[enemy].NumPeople == 0) then
-              -- enemy = G_RANDOM(3)
-            -- else
-              -- break
-            -- end
-          -- end
+          while tries > 0 do
+            tries = tries-1
+            if (_gsi.Players[enemy].NumPeople == 0) then
+              enemy = G_RANDOM(2)
+            else
+              break
+            end
+          end
           
-          -- WRITE_CP_ATTRIB(TRIBE_CYAN, ATTR_EMPTY_AT_WAYPOINT, 1)
-          -- WRITE_CP_ATTRIB(TRIBE_CYAN, ATTR_AWAY_RELIGIOUS, G_RANDOM(100))
-          -- WRITE_CP_ATTRIB(TRIBE_CYAN, ATTR_AWAY_SPY, 0)
-          -- WRITE_CP_ATTRIB(TRIBE_CYAN, ATTR_AWAY_WARRIOR, G_RANDOM(100))
-          -- WRITE_CP_ATTRIB(TRIBE_CYAN, ATTR_AWAY_SUPER_WARRIOR, G_RANDOM(100))
-          -- WRITE_CP_ATTRIB(TRIBE_CYAN, ATTR_AWAY_MEDICINE_MAN, 0)
+          WRITE_CP_ATTRIB(TRIBE_PINK, ATTR_AWAY_RELIGIOUS, G_RANDOM(100))
+          WRITE_CP_ATTRIB(TRIBE_PINK, ATTR_AWAY_SPY, 0)
+          WRITE_CP_ATTRIB(TRIBE_PINK, ATTR_AWAY_WARRIOR, G_RANDOM(100))
+          WRITE_CP_ATTRIB(TRIBE_PINK, ATTR_AWAY_SUPER_WARRIOR, G_RANDOM(100))
+          WRITE_CP_ATTRIB(TRIBE_PINK, ATTR_AWAY_MEDICINE_MAN, 1)
           
-          -- ATTACK(TRIBE_CYAN, enemy, 2+G_RANDOM(PLAYERS_VEHICLE_OF_TYPE(TRIBE_CYAN,M_VEHICLE_AIRSHIP_1)+1)*2, 1, -1, 850, 0, 0, 0, ATTACK_BY_BALLOON, 0, -1, -1, -1)
-        -- end
-      -- end
-    -- elseif (_gsi.Counts.GameTurn > tick_c_s_balloon) then
-      -- tick_c_s_balloon = _gsi.Counts.GameTurn + (1000 + G_RANDOM(1000))
-      -- if (PLAYERS_VEHICLE_OF_TYPE(TRIBE_CYAN, M_VEHICLE_AIRSHIP_1) > 0 and FREE_ENTRIES(TRIBE_CYAN) > 2) then
-        -- if (IS_SHAMAN_AVAILABLE_FOR_ATTACK(TRIBE_CYAN) > 0) then
-          -- local enemy = G_RANDOM(3)
-          -- local tries = 16
-          
-          -- while tries > 0 do
-            -- tries = tries-1
-            -- if (_gsi.Players[enemy].NumPeople == 0) then
-              -- enemy = G_RANDOM(3)
-            -- else
-              -- break
-            -- end
-          -- end
-          
-          -- WRITE_CP_ATTRIB(TRIBE_CYAN, ATTR_AWAY_RELIGIOUS, 0)
-          -- WRITE_CP_ATTRIB(TRIBE_CYAN, ATTR_AWAY_SPY, 0)
-          -- WRITE_CP_ATTRIB(TRIBE_CYAN, ATTR_AWAY_WARRIOR, 0)
-          -- WRITE_CP_ATTRIB(TRIBE_CYAN, ATTR_AWAY_SUPER_WARRIOR, 0)
-          -- WRITE_CP_ATTRIB(TRIBE_CYAN, ATTR_AWAY_MEDICINE_MAN, 100)
-          
-          -- ATTACK(TRIBE_CYAN, enemy, 0, 1, 4, 850, M_SPELL_WHIRLWIND, M_SPELL_WHIRLWIND, M_SPELL_WHIRLWIND, ATTACK_BY_BALLOON, 0, -1, -1, -1)
-        -- end
-      -- end
-    -- end
+          ATTACK(TRIBE_PINK, enemy, 8+G_RANDOM(16), 1, -1, 850, 4, 4, 14, ATTACK_NORMAL, 0, 11, -1, -1)
+        end
+      end
+    end
     
-    -- if (_gsi.Counts.GameTurn > tick_b_t_attack) then
-      -- tick_b_t_attack = _gsi.Counts.GameTurn + (1000 + G_RANDOM(1000))
-      -- if (PLAYERS_PEOPLE_OF_TYPE(TRIBE_BLACK, M_PERSON_RELIGIOUS) > 5 and FREE_ENTRIES(TRIBE_BLACK) > 2) then
-        -- local enemy = G_RANDOM(3)
-        -- local tries = 16
+    if (_gsi.Counts.GameTurn > tick_p_defend) then
+      if (FREE_ENTRIES(TRIBE_PINK) > 2) then
+        if (count_people(pink_base_coord,8) > 8) then
+          local enemy = G_RANDOM(2)
+          local tries = 16
           
-        -- while tries > 0 do
-          -- tries = tries-1
-          -- if (_gsi.Players[enemy].NumPeople == 0) then
-            -- enemy = G_RANDOM(3)
-          -- else
-            -- break
-          -- end
-        -- end
-        
-        -- WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_RELIGIOUS, 30)
-        -- WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_SPY, 2)
-        -- WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_WARRIOR, 50)
-        -- WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_SUPER_WARRIOR, 50)
-        -- WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_MEDICINE_MAN, 0)
-        -- ATTACK(TRIBE_BLACK, enemy, 5, 1, 8, 250, 0, 0, 0, 0, 0, 19, -1, -1)
-        -- ATTACK(TRIBE_BLACK, enemy, 5, 1, 7, 250, 0, 0, 0, 0, 0, 20, -1, -1)
-        -- ATTACK(TRIBE_BLACK, enemy, 5, 1, 5, 250, 0, 0, 0, 0, 0, 21, -1, -1)
-      -- end
-    -- elseif (_gsi.Counts.GameTurn > tick_b_s_attack) then
-      -- tick_b_s_attack = _gsi.Counts.GameTurn + (1000 + G_RANDOM(1000))
-      -- if (IS_SHAMAN_AVAILABLE_FOR_ATTACK(TRIBE_BLACK) > 0 and FREE_ENTRIES(TRIBE_BLACK) > 2) then
-        -- if (_gsi.Players[TRIBE_BLACK].Mana > 300000) then
-          -- local enemy = G_RANDOM(3)
-          -- local tries = 16
-            
-          -- while tries > 0 do
-            -- tries = tries-1
-            -- if (_gsi.Players[enemy].NumPeople == 0) then
-              -- enemy = G_RANDOM(3)
-            -- else
-              -- break
-            -- end
-          -- end
+          while tries > 0 do
+            tries = tries-1
+            if (_gsi.Players[enemy].NumPeople == 0) then
+              enemy = G_RANDOM(2)
+            else
+              break
+            end
+          end
           
-          -- WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_RELIGIOUS, 0)
-          -- WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_SPY, 0)
-          -- WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_WARRIOR, 0)
-          -- WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_SUPER_WARRIOR, 0)
-          -- WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_MEDICINE_MAN, 100)
-          -- ATTACK(TRIBE_BLACK, enemy, 0, 1, 3, 999, 14, 14, 10, 0, 0, -1, -1, -1)
-        -- else
-          -- GIVE_MANA_TO_PLAYER(TRIBE_BLACK, 450000)
-        -- end
-      -- end
-    -- end
+          GIVE_ONE_SHOT(TRIBE_PINK, M_SPELL_HYPNOTISM)
+          GIVE_ONE_SHOT(TRIBE_PINK, M_SPELL_HYPNOTISM)
+          GIVE_ONE_SHOT(TRIBE_PINK, M_SPELL_HYPNOTISM)
+          
+          WRITE_CP_ATTRIB(TRIBE_PINK, ATTR_DONT_GROUP_AT_DT, 1)
+          WRITE_CP_ATTRIB(TRIBE_PINK, ATTR_AWAY_RELIGIOUS, 80)
+          WRITE_CP_ATTRIB(TRIBE_PINK, ATTR_AWAY_SPY, 0)
+          WRITE_CP_ATTRIB(TRIBE_PINK, ATTR_AWAY_WARRIOR, 80)
+          WRITE_CP_ATTRIB(TRIBE_PINK, ATTR_AWAY_SUPER_WARRIOR, 80)
+          WRITE_CP_ATTRIB(TRIBE_PINK, ATTR_AWAY_MEDICINE_MAN, 1)
+          
+          ATTACK(TRIBE_PINK, enemy, (_gsi.Players[TRIBE_PINK].NumPeople/3), 0, 10, 999, 7, 7, 7, ATTACK_NORMAL, 0, -1, -1, -1)
+          tick_p_defend = _gsi.Counts.GameTurn + (340 + G_RANDOM(400))
+        end
+      end
+    end
     
+    if (_gsi.Counts.GameTurn > tick_o_flatten) then
+      tick_o_flatten = _gsi.Counts.GameTurn + (1800 + G_RANDOM(1000))
+      if (IS_SHAMAN_AVAILABLE_FOR_ATTACK(TRIBE_ORANGE) > 0 and FREE_ENTRIES(TRIBE_ORANGE) > 2) then
+        if (_gsi.Players[TRIBE_ORANGE].Mana > 280000) then
+          if (tablelength(o_flat_pos) > 0) then
+            if (o_flat_pos[1] ~= nil) then
+              if (point_altitude(o_flat_pos[1].Xpos,o_flat_pos[1].Zpos) > 600 and not should_i_check_for_flats) then
+                should_i_check_for_flats = true
+                flats_to_use = 3
+              else
+                table.remove(o_flat_pos,1)
+              end
+            end
+          end
+        end
+      end
+    end
+
     if (EVERY_2POW_TURNS(10)) then
-      -- if (tablelength(cyan_towers) > 0) then
-        -- local t_idx = tablelength(cyan_towers)
-        -- local t_rnd = G_RANDOM(t_idx)+1
-        -- if (cyan_towers[t_rnd] ~= nil and FREE_ENTRIES(TRIBE_CYAN) > 4) then
-          -- local map_idx = MapPosXZ.new()
-          -- map_idx.Pos = world_coord3d_to_map_idx(cyan_towers[t_rnd])
-          -- BUILD_DRUM_TOWER(TRIBE_CYAN, map_idx.XZ.X, map_idx.XZ.Z)
-          -- table.remove(cyan_towers, t_rnd)
-        -- end
-      -- end
+      if (tablelength(p_towers) > 0) then
+        local t_idx = tablelength(p_towers)
+        local t_rnd = G_RANDOM(t_idx)+1
+        if (p_towers[t_rnd] ~= nil and FREE_ENTRIES(TRIBE_PINK) > 4) then
+          local map_idx = MapPosXZ.new()
+          map_idx.Pos = world_coord3d_to_map_idx(p_towers[t_rnd])
+          BUILD_DRUM_TOWER(TRIBE_PINK, map_idx.XZ.X, map_idx.XZ.Z)
+          table.remove(p_towers, t_rnd)
+        end
+      end
       
-      -- if (tablelength(black_towers) > 0) then
-        -- local t_idx = tablelength(black_towers)
-        -- local t_rnd = G_RANDOM(t_idx)+1
-        -- if (black_towers[t_rnd] ~= nil and FREE_ENTRIES(TRIBE_BLACK) > 4) then
-          -- local map_idx = MapPosXZ.new()
-          -- map_idx.Pos = world_coord3d_to_map_idx(black_towers[t_rnd])
-          -- BUILD_DRUM_TOWER(TRIBE_BLACK, map_idx.XZ.X, map_idx.XZ.Z)
-          -- table.remove(black_towers, t_rnd)
-        -- end
-      -- end
-      
-      -- if (COUNT_PEOPLE_IN_MARKER(TRIBE_BLACK, TRIBE_YELLOW, 27, 6) > 4) then
-        -- if (PLAYERS_PEOPLE_OF_TYPE(TRIBE_BLACK, M_PERSON_RELIGIOUS) > 4 and FREE_ENTRIES(TRIBE_BLACK) > 2) then
-          -- WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_RELIGIOUS, 65)
-          -- WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_WARRIOR, 65)
-          -- WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_SUPER_WARRIOR, 44)
-          -- WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_MEDICINE_MAN, 0)
-          -- ATTACK(TRIBE_BLACK, TRIBE_YELLOW, 8, 0, 27, 50, 0, 0, 0, 0, 0, -1, -1, -1)
-        -- end
-      -- end
+      if (tablelength(o_towers) > 0) then
+        local t_idx = tablelength(o_towers)
+        local t_rnd = G_RANDOM(t_idx)+1
+        if (o_towers[t_rnd] ~= nil and FREE_ENTRIES(TRIBE_ORANGE) > 4) then
+          local map_idx = MapPosXZ.new()
+          map_idx.Pos = world_coord3d_to_map_idx(o_towers[t_rnd])
+          BUILD_DRUM_TOWER(TRIBE_ORANGE, map_idx.XZ.X, map_idx.XZ.Z)
+          table.remove(o_towers, t_rnd)
+        end
+      end
     end
     
     if (EVERY_2POW_TURNS(9)) then
@@ -369,6 +390,29 @@ function OnTurn()
       end
     end
     
+    if (EVERY_2POW_TURNS(4)) then
+      if (should_i_check_for_flats) then
+        if (flats_to_use > 0) then
+          local s = getShaman(TRIBE_ORANGE)
+          if (s ~= nil and o_flat_pos[1] ~= nil) then
+            if (get_thing_curr_cmd_list_ptr(s) == nil) then
+              local c2d = Coord2D.new()
+              coord3D_to_coord2D(o_flat_pos[1],c2d)
+              command_person_go_to_coord2d(s,c2d)
+            end
+            
+            if (get_world_dist_xyz(s.Pos.D3,o_flat_pos[1]) < (4096 + s.Pos.D3.Ypos*3)) then
+              createThing(T_SPELL,M_SPELL_FLATTEN,s.Owner,o_flat_pos[1],false,false)
+              table.remove(o_flat_pos, 1)
+              flats_to_use = flats_to_use-1
+            end
+          end
+        else
+          should_i_check_for_flats = false
+        end
+      end
+    end
+    
     if (EVERY_2POW_TURNS(2)) then
       for i=1,tablelength(availableNums) do
         local shaman = getShaman(availableNums[i])
@@ -396,7 +440,7 @@ function OnTurn()
       if (_gsi.Players[TRIBE_ORANGE].NumPeople +
           _gsi.Players[TRIBE_YELLOW].NumPeople +
           _gsi.Players[TRIBE_GREEN].NumPeople +
-          _gsi.Players[TRIBE_MAGENTA].NumPeople < 255 and
+          _gsi.Players[TRIBE_PINK].NumPeople < 255 and
           _gsi.Counts.GameTurn < (12*60)*4 and
           _gsi.Counts.GameTurn > (12*10)) then
         process(numthings)
@@ -459,6 +503,43 @@ function process(n)
       index = 1
     end
   end
+end
+
+function count_people(coord2,radii)
+  local count = 0
+  SearchMapCells(CIRCULAR, 0, 0, radii, world_coord2d_to_map_idx(coord2), function(me)
+    me.MapWhoList:processList(function (t)
+      if (t.Type == T_PERSON) then
+        if (t.Owner == TRIBE_BLUE or t.Owner == TRIBE_RED) then
+          count = count+1
+        end
+      end
+      return true
+    end)
+    return true
+  end)
+  
+  return count
+end
+
+function count_troops(pn)
+  local count = 0
+  ProcessGlobalTypeList(T_PERSON, function(t)
+    if (t.Owner == pn) then
+      if (t.Model == M_PERSON_WARRIOR) then
+        count=count+1
+      end
+      if (t.Model == M_PERSON_RELIGIOUS) then
+        count=count+1
+      end
+      if (t.Model == M_PERSON_SUPER_WARRIOR) then
+        count=count+1
+      end
+    end
+    return true
+  end)
+  
+  return count
 end
 
 function tablelength(te)
