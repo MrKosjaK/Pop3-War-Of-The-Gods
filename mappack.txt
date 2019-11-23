@@ -87,6 +87,12 @@ DAT: levl2014.dat
 HDR: Blank.hdr
 CREATOR: Impboy / KosjaK
 
+LEVEL: E
+NAME: Detained
+DAT: levl2015.dat
+HDR: Blank.hdr
+CREATOR: Impboy / KosjaK
+
 CONSTANT: constant.dat
 
 EXTRASRC: levlspc2.dat
@@ -277,6 +283,27 @@ EXTRADST: data\pal0-4.dat
 
 EXTRASRC: sky0-4.dat
 EXTRADST: data\sky0-4.dat
+
+EXTRASRC: al0-5.dat
+EXTRADST: data\al0-5.dat
+
+EXTRASRC: bigf0-5.dat
+EXTRADST: data\bigf0-5.dat
+
+EXTRASRC: fade0-5.dat
+EXTRADST: data\fade0-5.dat
+
+EXTRASRC: cliff0-5.dat
+EXTRADST: data\cliff0-5.dat
+
+EXTRASRC: ghost0-5.dat
+EXTRADST: data\ghost0-5.dat
+
+EXTRASRC: pal0-5.dat
+EXTRADST: data\pal0-5.dat
+
+EXTRASRC: sky0-5.dat
+EXTRADST: data\sky0-5.dat
 
 EXTRASRC: al0-6.dat
 EXTRADST: data\al0-6.dat
@@ -577,6 +604,9 @@ EXTRADST: scripts\etheral.lua
 
 EXTRASRC: ambush.lua
 EXTRADST: scripts\ambush.lua
+
+EXTRASRC: detained.lua
+EXTRADST: scripts\detained.lua
 
 EXTRASRC: aniob0-2.dat
 EXTRADST: objects\aniob0-2.dat
