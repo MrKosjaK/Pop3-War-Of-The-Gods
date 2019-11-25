@@ -26,7 +26,34 @@ botBldgs = {M_BUILDING_TEPEE,
                    M_BUILDING_WARRIOR_TRAIN,
                    M_BUILDING_TEMPLE
 }
+backdoor_points = {
+  MAP_XZ_2_WORLD_XYZ(188, 22),
+  MAP_XZ_2_WORLD_XYZ(190, 26),
+  MAP_XZ_2_WORLD_XYZ(192, 30),
+  MAP_XZ_2_WORLD_XYZ(192, 34),
+  MAP_XZ_2_WORLD_XYZ(196, 38),
+  MAP_XZ_2_WORLD_XYZ(198, 42),
+  MAP_XZ_2_WORLD_XYZ(202, 46),
+  MAP_XZ_2_WORLD_XYZ(204, 50),
+  MAP_XZ_2_WORLD_XYZ(206, 54),
+  MAP_XZ_2_WORLD_XYZ(208, 58),
+  MAP_XZ_2_WORLD_XYZ(212, 60),
+  MAP_XZ_2_WORLD_XYZ(216, 60),
+  MAP_XZ_2_WORLD_XYZ(186, 18),
+  MAP_XZ_2_WORLD_XYZ(186, 14),
+  MAP_XZ_2_WORLD_XYZ(188, 10),
+  MAP_XZ_2_WORLD_XYZ(192, 6),
+  MAP_XZ_2_WORLD_XYZ(196, 2),
+  MAP_XZ_2_WORLD_XYZ(200, 254),
+  MAP_XZ_2_WORLD_XYZ(204, 250),
+  MAP_XZ_2_WORLD_XYZ(208, 246),
+  MAP_XZ_2_WORLD_XYZ(212, 242),
+  MAP_XZ_2_WORLD_XYZ(220, 60),
+  MAP_XZ_2_WORLD_XYZ(224, 62)
+}
 
+FIX_WILD_IN_AREA(32, 124,12)
+FIX_WILD_IN_AREA(114, 50,12)
 
 for i = 2,3 do
   for j = 0,1 do
@@ -193,6 +220,16 @@ function OnTurn()
     
     MARKER_ENTRIES(TRIBE_BLACK, 0, 1, 2, 3)
     MARKER_ENTRIES(TRIBE_BLACK, 4, 5, NO_MARKER, NO_MARKER)
+  end
+  
+  if (EVERY_2POW_TURNS(5)) then
+    for k,v in ipairs(backdoor_points) do
+      if (point_altitude(v.Xpos,v.Zpos) ~= 0) then
+        for i=0,3 do
+          createThing(T_EFFECT,M_EFFECT_DIP,TRIBE_HOSTBOT,v,false,false)
+        end
+      end
+    end
   end
   
   if (EVERY_2POW_TURNS(7)) then
