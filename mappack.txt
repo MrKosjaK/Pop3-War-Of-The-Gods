@@ -557,11 +557,17 @@ EXTRADST: data\pal0-s.dat
 EXTRASRC: sky0-s.dat
 EXTRADST: data\sky0-s.dat
 
+EXTRASRC: hfx0-0.dat
+EXTRADST: data\hfx0-0.dat
+
 EXTRASRC: UtilPThings.lua
 EXTRADST: scripts\UtilPThings.lua
 
 EXTRASRC: BushMod.lua
 EXTRADST: scripts\BushMod.lua
+
+EXTRASRC: fws.lua
+EXTRADST: scripts\fws.lua
 
 EXTRASRC: triforceos.lua
 EXTRADST: scripts\triforceos.lua
