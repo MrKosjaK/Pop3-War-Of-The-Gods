@@ -253,7 +253,7 @@ function OnTurn()
           WRITE_CP_ATTRIB(TRIBE_PINK, ATTR_AWAY_SUPER_WARRIOR, 80)
           WRITE_CP_ATTRIB(TRIBE_PINK, ATTR_AWAY_MEDICINE_MAN, 1)
           
-          ATTACK(TRIBE_PINK, enemy, (_gsi.Players[TRIBE_PINK].NumPeople/3), 0, 10, 999, 7, 7, 7, ATTACK_NORMAL, 0, -1, -1, -1)
+          ATTACK(TRIBE_PINK, enemy, math.ceil((_gsi.Players[TRIBE_PINK].NumPeople/3)), 0, 10, 999, 7, 7, 7, ATTACK_NORMAL, 0, -1, -1, -1)
           tick_p_defend = _gsi.Counts.GameTurn + (340 + G_RANDOM(400))
         end
       end

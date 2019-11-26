@@ -5,7 +5,6 @@ import(Module_Person)
 import(Module_Objects)
 import(Module_Map)
 import(Module_MapWho)
-import(Module_Draw)
 
 include("UtilPThings.lua")
 
