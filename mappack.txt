@@ -545,6 +545,15 @@ EXTRADST: data\hfx0-0.dat
 EXTRASRC: UtilPThings.lua
 EXTRADST: scripts\UtilPThings.lua
 
+EXTRASRC: UtilPortal.lua
+EXTRADST: scripts\UtilPortal.lua
+
+EXTRASRC: UtilFlags.lua
+EXTRADST: scripts\UtilFlags.lua
+
+EXTRASRC: Hub.lua
+EXTRADST: scripts\Hub.lua
+
 EXTRASRC: BushMod.lua
 EXTRADST: scripts\BushMod.lua
 
