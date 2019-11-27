@@ -4,8 +4,92 @@ PACKCREATOR: Impboy / KosjaK
 PACKDESC: Co-op project
 
 LEVEL: 0
-NAME: Fabric Of Creation
-DAT: levl2000.dat
+NAME: Erecting Paths
+DAT: levl2001.dat
+HDR: Blank.hdr
+CREATOR: Impboy / KosjaK
+
+LEVEL: 1
+NAME: Hornet Nest
+DAT: levl2002.dat
+HDR: Blank.hdr
+CREATOR: Impboy / KosjaK
+
+LEVEL: 2
+NAME: Cursed Faith
+DAT: levl2003.dat
+HDR: Blank.hdr
+CREATOR: Impboy / KosjaK
+
+LEVEL: 3
+NAME: Triforce of Storms 
+DAT: levl2004.dat
+HDR: Blank.hdr
+CREATOR: Impboy / KosjaK
+
+LEVEL: 4
+NAME: Black Death
+DAT: levl2005.dat
+HDR: Blank.hdr
+CREATOR: Impboy / KosjaK
+
+LEVEL: 5
+NAME: Supernatural Voodoo
+DAT: levl2006.dat
+HDR: Blank.hdr
+CREATOR: Impboy / KosjaK
+
+LEVEL: 6
+NAME: Inconspicuous Odds
+DAT: levl2007.dat
+HDR: Blank.hdr
+CREATOR: Impboy / KosjaK
+
+LEVEL: 7
+NAME: Intercontinental Split
+DAT: levl2008.dat
+HDR: Blank.hdr
+CREATOR: Impboy / KosjaK
+
+LEVEL: 8
+NAME: Obscured From the Flow
+DAT: levl2009.dat
+HDR: Blank.hdr
+CREATOR: Impboy / KosjaK
+
+LEVEL: 9
+NAME: A Sinking Feeling
+DAT: levl2010.dat
+HDR: Blank.hdr
+CREATOR: Impboy / KosjaK
+
+LEVEL: A
+NAME: Perilous Spirits
+DAT: levl2011.dat
+HDR: Blank.hdr
+CREATOR: Impboy / KosjaK
+
+LEVEL: B
+NAME: A Pushover Decision
+DAT: levl2012.dat
+HDR: Blank.hdr
+CREATOR: Impboy / KosjaK
+
+LEVEL: C
+NAME: Etheral Onslaught
+DAT: levl2013.dat
+HDR: Blank.hdr
+CREATOR: Impboy / KosjaK
+
+LEVEL: D
+NAME: Ambush Assault
+DAT: levl2014.dat
+HDR: Blank.hdr
+CREATOR: Impboy / KosjaK
+
+LEVEL: E
+NAME: Detained
+DAT: levl2015.dat
 HDR: Blank.hdr
 CREATOR: Impboy / KosjaK
 
@@ -202,27 +286,6 @@ EXTRADST: levels\cpscr024.dat
 
 EXTRASRC: cpscr122.dat
 EXTRADST: levels\cpscr122.dat
-
-EXTRASRC: al0-0.dat
-EXTRADST: data\al0-0.dat
-
-EXTRASRC: bigf0-0.dat
-EXTRADST: data\bigf0-0.dat
-
-EXTRASRC: fade0-0.dat
-EXTRADST: data\fade0-0.dat
-
-EXTRASRC: cliff0-0.dat
-EXTRADST: data\cliff0-0.dat
-
-EXTRASRC: ghost0-0.dat
-EXTRADST: data\ghost0-0.dat
-
-EXTRASRC: pal0-0.dat
-EXTRADST: data\pal0-0.dat
-
-EXTRASRC: sky0-0.dat
-EXTRADST: data\sky0-0.dat
 
 EXTRASRC: al0-3.dat
 EXTRADST: data\al0-3.dat
