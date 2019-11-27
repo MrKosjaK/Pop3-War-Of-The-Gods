@@ -28,11 +28,11 @@ IPortal.reg  = function(_level, _angle, _x, _z)
   function p:process()
     if not (p.activetransfer) then
       local shamans_present = 0
-      SearchMapCells(CIRCULAR, 0, 0, 1, world_coord3d_to_map_idx(p.coord), function(me)
+      SearchMapCells(SQUARE, 0, 0, 1, world_coord3d_to_map_idx(p.coord), function(me)
         me.MapWhoList:processList(function (t)
           if (t.Type == T_PERSON) then
             if (t.Model == M_PERSON_MEDICINE_MAN) then
-              if (t.Owner < 2) then
+              if (t.Owner == TRIBE_BLUE or t.Owner == TRIBE_RED) then
                 shamans_present = shamans_present+1
               end
             end
