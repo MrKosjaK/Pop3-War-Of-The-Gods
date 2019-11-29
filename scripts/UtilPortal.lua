@@ -5,6 +5,7 @@ import(Module_DataTypes)
 import(Module_MapWho)
 import(Module_Level)
 import(Module_Objects)
+import(Module_Draw)
 
 IPortal = {}
 IPortal.reg  = function(_level, _angle, _x, _z)
@@ -21,8 +22,12 @@ IPortal.reg  = function(_level, _angle, _x, _z)
   end
   
   function p:initialize()
-    local mark = createThing(T_EFFECT,M_EFFECT_FIRESTORM_SMOKE,TRIBE_HOSTBOT,p.coord,false,false)
-    centre_coord3d_on_block(mark.Pos.D3)
+    local portal = createThing(T_SCENERY,M_SCENERY_TOP_LEVEL_SCENERY,TRIBE_HOSTBOT,p.coord,false,false)
+    portal.AngleXZ = p.angle
+    portal.DrawInfo.DrawNum = 160
+    portal.DrawInfo.Flags = portal.DrawInfo.Flags | (1<<7)
+    ensure_thing_on_ground(portal)
+    centre_coord3d_on_block(portal.Pos.D3)
   end
   
   function p:process()
