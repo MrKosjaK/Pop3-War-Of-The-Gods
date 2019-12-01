@@ -19,10 +19,6 @@ IPortal.reg  = function(_level, _angle, _x, _z, _spr, _diff)
   p.activetransfer = false
   p.transferdelay = 0
   
-  function p:get_level()
-    return p.level
-  end
-  
   function p:init_portal()
     local portal = createThing(T_SCENERY,M_SCENERY_TOP_LEVEL_SCENERY,TRIBE_HOSTBOT,p.coord,false,false)
     portal.AngleXZ = p.angle
