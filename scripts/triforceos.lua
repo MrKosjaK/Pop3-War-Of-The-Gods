@@ -7,6 +7,7 @@ import(Module_Map)
 import(Module_Helpers)
 
 include("UtilPThings.lua")
+include("UtilRefs.lua")
 
 wilds = {}
 spell_delay = 0
@@ -35,17 +36,17 @@ for i = 2,3 do
   for j = 0,1 do
     set_players_allied(i-2,j)
   end
-  
+
   for u,v in ipairs(botSpells) do
     PThing.SpellSet(TRIBE_PINK, v, TRUE, FALSE)
   end
-  
+
   for y,v in ipairs(botBldgs) do
     PThing.BldgSet(TRIBE_PINK, v, TRUE)
   end
-  
+
   computer_init_player(_gsi.Players[TRIBE_PINK])
-  
+
   WRITE_CP_ATTRIB(TRIBE_PINK, ATTR_EXPANSION, 12+G_RANDOM(8))
   WRITE_CP_ATTRIB(TRIBE_PINK, ATTR_HOUSE_PERCENTAGE, 22+G_RANDOM(37))
   WRITE_CP_ATTRIB(TRIBE_PINK, ATTR_MAX_BUILDINGS_ON_GO, 5+G_RANDOM(5))
@@ -79,7 +80,7 @@ for i = 2,3 do
   WRITE_CP_ATTRIB(TRIBE_PINK, ATTR_SPY_DISCOVER_CHANCE, 10)
   WRITE_CP_ATTRIB(TRIBE_PINK, ATTR_MAX_TRAIN_AT_ONCE, 3)
   WRITE_CP_ATTRIB(TRIBE_PINK, ATTR_SHAMEN_BLAST, 8)
-  
+
   STATE_SET(TRIBE_PINK, TRUE, CP_AT_TYPE_FETCH_WOOD)
   STATE_SET(TRIBE_PINK, TRUE, CP_AT_TYPE_CONSTRUCT_BUILDING)
   STATE_SET(TRIBE_PINK, TRUE, CP_AT_TYPE_BUILD_OUTER_DEFENCES)
@@ -94,14 +95,14 @@ for i = 2,3 do
   STATE_SET(TRIBE_PINK, TRUE, CP_AT_TYPE_POPULATE_DRUM_TOWER)
   STATE_SET(TRIBE_PINK, TRUE, CP_AT_TYPE_FETCH_LOST_PEOPLE)
   STATE_SET(TRIBE_PINK, TRUE, CP_AT_TYPE_MED_MAN_GET_WILD_PEEPS)
-  
+
   SET_BUCKET_USAGE(TRIBE_PINK, TRUE)
   SET_BUCKET_COUNT_FOR_SPELL(TRIBE_PINK, M_SPELL_BLAST, 8)
   SET_BUCKET_COUNT_FOR_SPELL(TRIBE_PINK, M_SPELL_CONVERT_WILD, 8)
   SET_BUCKET_COUNT_FOR_SPELL(TRIBE_PINK, M_SPELL_INSECT_PLAGUE, 16)
   SET_BUCKET_COUNT_FOR_SPELL(TRIBE_PINK, M_SPELL_LAND_BRIDGE, 32)
   SET_BUCKET_COUNT_FOR_SPELL(TRIBE_PINK, M_SPELL_LIGHTNING_BOLT, 40)
-  
+
   SET_DEFENCE_RADIUS(TRIBE_PINK, 7)
 end
 
@@ -120,7 +121,7 @@ function OnTurn()
   if (EVERY_2POW_TURNS(11)) then
     local who_i_attack = playernum[G_RANDOM(tablelength(playernum))+1]
     local tries = 8
-    
+
     while tries > 0 do
       tries = tries-1
       if (_gsi.Players[who_i_attack].NumPeople == 0) then
@@ -129,7 +130,7 @@ function OnTurn()
         break
       end
     end
-    
+
     attack_idx = G_RANDOM(4)
     if (attack_idx == 0) then
       WRITE_CP_ATTRIB(TRIBE_PINK, ATTR_AWAY_BRAVE, 5)
@@ -189,7 +190,7 @@ function OnTurn()
       end
     end
   end
-  
+
   if (EVERY_2POW_TURNS(10)) then
     if (G_RANDOM(2) == 1) then
       shaman_patrol = TRUE
@@ -197,7 +198,7 @@ function OnTurn()
       shaman_patrol = FALSE
     end
   end
-  
+
   if (EVERY_2POW_TURNS(9)) then
     if (PLAYERS_PEOPLE_OF_TYPE(TRIBE_PINK, M_PERSON_WARRIOR) > 4 and PLAYERS_PEOPLE_OF_TYPE(TRIBE_PINK, M_PERSON_RELIGIOUS) > 3) then
       MARKER_ENTRIES(TRIBE_PINK, 0, 1, NO_MARKER, NO_MARKER)
@@ -205,10 +206,10 @@ function OnTurn()
         MARKER_ENTRIES(TRIBE_PINK, 2, NO_MARKER, NO_MARKER, NO_MARKER)
       end
     end
-    
+
     local who_i_attack = playernum[G_RANDOM(tablelength(playernum))+1]
     local tries = 8
-    
+
     while tries > 0 do
       tries = tries-1
       if (_gsi.Players[who_i_attack].NumPeople == 0) then
@@ -217,7 +218,7 @@ function OnTurn()
         break
       end
     end
-    
+
     attack_idx_lite = G_RANDOM(3)
     if (attack_idx_lite == 0) then
       if (PLAYERS_PEOPLE_OF_TYPE(TRIBE_PINK, M_PERSON_WARRIOR) > 4 and _gsi.Players[TRIBE_PINK].NumPeople > 55) then
@@ -254,7 +255,7 @@ function OnTurn()
       end
     end
   end
-  
+
   if (EVERY_2POW_TURNS(7)) then
     ProcessGlobalTypeList(T_BUILDING, function(t)
       if (t.Model < 4 and t.Owner > 1) then
@@ -262,10 +263,10 @@ function OnTurn()
           t.u.Bldg.SproggingCount = t.u.Bldg.SproggingCount + 750
         end
       end
-      
+
       return true
     end)
-    
+
     if (shaman_patrol == TRUE and IS_SHAMAN_AVAILABLE_FOR_ATTACK(TRIBE_PINK) == 1) then
       SHAMAN_DEFEND(TRIBE_PINK, 206, 76, FALSE)
       if (G_RANDOM(2) == 1) then
@@ -277,7 +278,7 @@ function OnTurn()
       SHAMAN_DEFEND(TRIBE_PINK, 206, 76, TRUE)
     end
   end
-  
+
   if (EVERY_2POW_TURNS(6)) then
     local shaman = getShaman(TRIBE_PINK)
     if (shaman ~= nil) then
@@ -302,24 +303,24 @@ function OnTurn()
       end)
     end
   end
-  
+
   if (EVERY_2POW_TURNS(3)) then
     if (_gsi.Players[TRIBE_PINK].NumPeople < 70 and
-        _gsi.Counts.GameTurn < (12*60)*2 and
-        _gsi.Counts.GameTurn > (12*10)) then
+        GetTurn() < (12*60)*2 and
+        GetTurn() > (12*10)) then
       process(numthings)
     end
   end
-  
+
   if (spell_delay > 0) then
     spell_delay = spell_delay - 1
   end
 end
 
 ProcessGlobalTypeList(T_PERSON, function(t)
-  if (t.Model == M_PERSON_WILD) then 
+  if (t.Model == M_PERSON_WILD) then
     table.insert(wilds, t)
-  end 
+  end
   return true
 end)
 
@@ -350,10 +351,4 @@ function process(n)
       index = 1
     end
   end
-end
-
-function tablelength(te)
-  local count = 0
-  for _ in pairs(te) do count = count + 1 end
-  return count
 end

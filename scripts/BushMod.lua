@@ -6,35 +6,39 @@ import(Module_Draw)
 import(Module_Globals)
 import(Module_Map)
 
-_sti = scenery_type_info()
+include("UtilRefs.lua")
 
 _sti[4].DfltResourceValue = 140
 _sti[4].DormantTime = 3000
 _sti[4].ToolTipStrId = 611
 _sti[4].ShadowDepth = 6
 
+bushes_spread_cells = 2
+bushes_spread_cells_rand = 5
 bushes_groups = 32
 bushes_in_group = 3
 
 function generate_bush(coord)
+  coord.Xpos = coord.Xpos + ((G_RANDOM(bushes_spread_cells_rand)+bushes_spread_cells * 512) * randSign())
+  coord.Zpos = coord.Zpos + ((G_RANDOM(bushes_spread_cells_rand)+bushes_spread_cells * 512) * randSign())
   CREATE_THING_WITH_PARAMS4(T_SCENERY, M_SCENERY_DORMANT_TREE, TRIBE_HOSTBOT, coord, T_SCENERY, 4, 0, 0);
 end
 
 for i = 0,bushes_groups do
+  local tries = 128
   local crd = Coord2D.new()
   local c3d = Coord3D.new()
-  crd.Xpos = G_RANDOM(65536)
-  crd.Zpos = G_RANDOM(65536)
-  while (is_map_point_land(crd) ~= 1) do
+  while (tries > 0) do
+    tries=tries-1
     crd.Xpos = G_RANDOM(65536)
     crd.Zpos = G_RANDOM(65536)
     if (is_map_point_land(crd) == 1) then
       break
     end
   end
-  
+
   coord2D_to_coord3D(crd, c3d)
-  
+
   for j = 0,G_RANDOM(bushes_in_group)+2 do
     generate_bush(c3d)
   end
@@ -51,7 +55,7 @@ function OnTurn()
           end
         end
       end
-    
+
       return true
     end)
   end

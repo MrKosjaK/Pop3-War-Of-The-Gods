@@ -7,6 +7,7 @@ import(Module_Globals)
 import(Module_Map)
 
 include("UtilPThings.lua")
+include("UtilRefs.lua")
 
 wilds = {}
 spell_delay = {0,0}
@@ -15,7 +16,7 @@ availableNums = {5,6}
 numthings = 16
 pinkTowers = 0
 blackTowers = 0
-tickPinkAttack = _gsi.Counts.GameTurn + (1558 +(G_RANDOM(924)))
+tickPinkAttack = GetTurn() + (1558 +(G_RANDOM(924)))
 botSpells = {M_SPELL_CONVERT_WILD,
                     M_SPELL_BLAST,
                     M_SPELL_LAND_BRIDGE,
@@ -35,17 +36,17 @@ for i = 2,3 do
     set_players_allied(i-2,j)
     set_players_allied(availableNums[i-1], availableNums[j+1])
   end
-  
+
   for u,v in ipairs(botSpells) do
     PThing.SpellSet(availableNums[i-1], v, TRUE, FALSE)
   end
-  
+
   for y,v in ipairs(botBldgs) do
     PThing.BldgSet(availableNums[i-1], v, TRUE)
   end
-  
+
   computer_init_player(_gsi.Players[availableNums[i-1]])
-  
+
   WRITE_CP_ATTRIB(availableNums[i-1], ATTR_EXPANSION, 12+G_RANDOM(8))
   WRITE_CP_ATTRIB(availableNums[i-1], ATTR_HOUSE_PERCENTAGE, 39+G_RANDOM(28))
   WRITE_CP_ATTRIB(availableNums[i-1], ATTR_MAX_BUILDINGS_ON_GO, 5+G_RANDOM(5))
@@ -79,7 +80,7 @@ for i = 2,3 do
   WRITE_CP_ATTRIB(availableNums[i-1], ATTR_SPY_DISCOVER_CHANCE, 10)
   WRITE_CP_ATTRIB(availableNums[i-1], ATTR_MAX_TRAIN_AT_ONCE, 3)
   WRITE_CP_ATTRIB(availableNums[i-1], ATTR_SHAMEN_BLAST, 8)
-  
+
   STATE_SET(availableNums[i-1], TRUE, CP_AT_TYPE_FETCH_WOOD)
   STATE_SET(availableNums[i-1], TRUE, CP_AT_TYPE_CONSTRUCT_BUILDING)
   STATE_SET(availableNums[i-1], TRUE, CP_AT_TYPE_BUILD_OUTER_DEFENCES)
@@ -94,7 +95,7 @@ for i = 2,3 do
   STATE_SET(availableNums[i-1], TRUE, CP_AT_TYPE_POPULATE_DRUM_TOWER)
   STATE_SET(availableNums[i-1], TRUE, CP_AT_TYPE_FETCH_LOST_PEOPLE)
   STATE_SET(availableNums[i-1], TRUE, CP_AT_TYPE_MED_MAN_GET_WILD_PEEPS)
-  
+
   SET_BUCKET_USAGE(availableNums[i-1], TRUE)
   SET_BUCKET_COUNT_FOR_SPELL(availableNums[i-1], M_SPELL_BLAST, 8)
   SET_BUCKET_COUNT_FOR_SPELL(availableNums[i-1], M_SPELL_CONVERT_WILD, 8)
@@ -102,7 +103,7 @@ for i = 2,3 do
   SET_BUCKET_COUNT_FOR_SPELL(availableNums[i-1], M_SPELL_LAND_BRIDGE, 32)
   SET_BUCKET_COUNT_FOR_SPELL(availableNums[i-1], M_SPELL_LIGHTNING_BOLT, 40)
   SET_BUCKET_COUNT_FOR_SPELL(availableNums[i-1], M_SPELL_INVISIBILITY, 28)
-  
+
   SET_DEFENCE_RADIUS(availableNums[i-1], 7)
   SET_SPELL_ENTRY(availableNums[i-1], 0, M_SPELL_INSECT_PLAGUE, 25000, 64, 3, 0)
   SET_SPELL_ENTRY(availableNums[i-1], 1, M_SPELL_INSECT_PLAGUE, 25000, 64, 3, 1)
@@ -130,31 +131,31 @@ SET_MARKER_ENTRY(TRIBE_BLACK, 4, 44, 45, 0, 2, 0, 2)
 
 function OnTurn()
   if (EVERY_2POW_TURNS(12)) then
-    if (_gsi.Players[TRIBE_BLACK].Mana > 400000 and _gsi.Counts.GameTurn > (12*60)*9) then
+    if (_gsi.Players[TRIBE_BLACK].Mana > 400000 and GetTurn() > (12*60)*9) then
       if (_gsi.Players[TRIBE_BLACK].NumPeople > 60) then
         ATTACK(TRIBE_BLACK, G_RANDOM(2), 15+G_RANDOM(15), ATTACK_BUILDING, -1, 999, M_SPELL_INVISIBILITY, M_SPELL_INVISIBILITY, M_SPELL_INVISIBILITY, ATTACK_NORMAL, 0, NO_MARKER, NO_MARKER, NO_MARKER)
       end
     end
   end
-  
-  if (_gsi.Counts.GameTurn > tickPinkAttack) then
-    tickPinkAttack = _gsi.Counts.GameTurn + (1558 +(G_RANDOM(924)))
+
+  if (GetTurn() > tickPinkAttack) then
+    tickPinkAttack = GetTurn() + (1558 +(G_RANDOM(924)))
     local attacks = G_RANDOM(2)
     local marker1 = NO_MARKER
     local marker2 = NO_MARKER
     local spell1 = M_SPELL_INVISIBILITY
     local spell2 = M_SPELL_INVISIBILITY
-    
+
     if (GET_HEIGHT_AT_POS(25) == 0) then
       marker1 = 26
       spell1 = M_SPELL_LAND_BRIDGE
     end
-    
+
     if (GET_HEIGHT_AT_POS(28) == 0) then
       marker2 = 29
       spell2 = M_SPELL_LAND_BRIDGE
     end
-    
+
     if (attacks == 0) then
       if (PLAYERS_PEOPLE_OF_TYPE(TRIBE_PINK, M_PERSON_SUPER_WARRIOR) > 3 and _gsi.Players[TRIBE_PINK].NumPeople > 30) then
         WRITE_CP_ATTRIB(TRIBE_PINK, ATTR_AWAY_RELIGIOUS, 50)
@@ -171,9 +172,9 @@ function OnTurn()
       end
     end
   end
-  
+
   if (EVERY_2POW_TURNS(10)) then
-    if (_gsi.Counts.GameTurn > (12*60)*4) then
+    if (GetTurn() > (12*60)*4) then
       if (FREE_ENTRIES(TRIBE_PINK) > 4) then
         if (pinkTowers == 0) then
           BUILD_DRUM_TOWER(TRIBE_PINK,144, 204)
@@ -191,8 +192,8 @@ function OnTurn()
         end
       end
     end
-    
-    if (_gsi.Counts.GameTurn > (12*60)*5) then
+
+    if (GetTurn() > (12*60)*5) then
       if (FREE_ENTRIES(TRIBE_BLACK) > 2) then
         if (blackTowers == 0) then
           BUILD_DRUM_TOWER(TRIBE_BLACK,194, 86)
@@ -210,8 +211,8 @@ function OnTurn()
         end
       end
     end
-    
-    if (_gsi.Counts.GameTurn > (12*60)*7) then
+
+    if (GetTurn() > (12*60)*7) then
       if (PLAYERS_PEOPLE_OF_TYPE(TRIBE_BLACK, M_PERSON_SUPER_WARRIOR) > 10) then
         if (G_RANDOM(2) == 1) then
           for i=0,2 do
@@ -226,7 +227,7 @@ function OnTurn()
       end
     end
   end
-  
+
   if (EVERY_2POW_TURNS(9)) then
     if (PLAYERS_PEOPLE_OF_TYPE(TRIBE_PINK, M_PERSON_WARRIOR) > 3 and
         PLAYERS_PEOPLE_OF_TYPE(TRIBE_PINK, M_PERSON_RELIGIOUS) > 3 and
@@ -234,40 +235,40 @@ function OnTurn()
           MARKER_ENTRIES(TRIBE_PINK, 0, 1, 2, 3)
           MARKER_ENTRIES(TRIBE_PINK, 4, 5, 6, NO_MARKER)
     end
-    
+
     if (PLAYERS_PEOPLE_OF_TYPE(TRIBE_BLACK, M_PERSON_WARRIOR) > 3 and
         PLAYERS_PEOPLE_OF_TYPE(TRIBE_BLACK, M_PERSON_RELIGIOUS) > 3 and
         PLAYERS_PEOPLE_OF_TYPE(TRIBE_BLACK, M_PERSON_SUPER_WARRIOR) > 3) then
           MARKER_ENTRIES(TRIBE_BLACK, 0, 1, 2, 3)
           MARKER_ENTRIES(TRIBE_BLACK, 4, NO_MARKER, NO_MARKER, NO_MARKER)
     end
-    
+
     ProcessGlobalTypeList(T_BUILDING, function(t)
       if (t.Model < 4 and t.Owner > 1) then
         if (t.u.Bldg.SproggingCount < 2000) then
           t.u.Bldg.SproggingCount = t.u.Bldg.SproggingCount + 850
         end
       end
-      
+
       if (t.Model < 3 and t.Owner > 1) then
         if (t.u.Bldg.UpgradeCount < 500) then
           t.u.Bldg.UpgradeCount = t.u.Bldg.UpgradeCount + 150
         end
       end
-      
+
       return true
     end)
   end
-  
+
   if (EVERY_2POW_TURNS(3)) then
     if (_gsi.Players[TRIBE_PINK].NumPeople +
         _gsi.Players[TRIBE_BLACK].NumPeople < 120 and
-        _gsi.Counts.GameTurn < (12*60)*2 and
-        _gsi.Counts.GameTurn > (12*10)) then
+        GetTurn() < (12*60)*2 and
+        GetTurn() > (12*10)) then
       process(numthings)
     end
   end
-  
+
   for i,v in ipairs(spell_delay) do
     if (v > 0) then
       spell_delay[i] = v-1
@@ -276,9 +277,9 @@ function OnTurn()
 end
 
 ProcessGlobalTypeList(T_PERSON, function(t)
-  if (t.Model == M_PERSON_WILD) then 
+  if (t.Model == M_PERSON_WILD) then
     table.insert(wilds, t)
-  end 
+  end
   return true
 end)
 
@@ -309,10 +310,4 @@ function process(n)
       index = 1
     end
   end
-end
-
-function tablelength(te)
-  local count = 0
-  for _ in pairs(te) do count = count + 1 end
-  return count
 end

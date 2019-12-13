@@ -6,8 +6,10 @@ import(Module_Map)
 import(Module_MapWho)
 
 include("UtilPThings.lua")
-_constants.MaxManaValue = 2000000
-_constants.ShamenDeadManaPer256Gained = 16
+include("UtilRefs.lua")
+
+_c.MaxManaValue = 2000000
+_c.ShamenDeadManaPer256Gained = 16
 
 wilds = {}
 spell_delay = {0,0,0,0}
@@ -16,10 +18,10 @@ availableNums = {4,7,2,3}
 numthings = 16
 cyanEnemies = {0,1,2,3,7}
 orangeEnemies = {0,1,2,3,4}
-tickCyanAttack = _gsi.Counts.GameTurn + (1744+G_RANDOM(512))
-tickOrangeAttack = _gsi.Counts.GameTurn + (1744+G_RANDOM(512))
-tickCyanBoat = _gsi.Counts.GameTurn + (630+G_RANDOM(250))
-tickOrangeBoat = _gsi.Counts.GameTurn + (630+G_RANDOM(250))
+tickCyanAttack = GetTurn() + (1744+G_RANDOM(512))
+tickOrangeAttack = GetTurn() + (1744+G_RANDOM(512))
+tickCyanBoat = GetTurn() + (630+G_RANDOM(250))
+tickOrangeBoat = GetTurn() + (630+G_RANDOM(250))
 cyanTowers = {MAP_XZ_2_WORLD_XYZ(162, 150),
               MAP_XZ_2_WORLD_XYZ(154, 132),
               MAP_XZ_2_WORLD_XYZ(152, 156),
@@ -57,18 +59,18 @@ for i = 2,3 do
   for j = 0,1 do
     set_players_allied(i-2,j)
   end
-  
+
   for u,v in ipairs(botSpells) do
     PThing.SpellSet(availableNums[i-1], v, TRUE, FALSE)
     PThing.SpellSet(TRIBE_CYAN, M_SPELL_SWAMP, TRUE, FALSE)
   end
-  
+
   for y,v in ipairs(botBldgs) do
     PThing.BldgSet(availableNums[i-1], v, TRUE)
   end
-  
+
   computer_init_player(_gsi.Players[availableNums[i-1]])
-  
+
   WRITE_CP_ATTRIB(availableNums[i-1], ATTR_EXPANSION, 24+G_RANDOM(8))
   WRITE_CP_ATTRIB(availableNums[i-1], ATTR_HOUSE_PERCENTAGE, 36+G_RANDOM(28))
   WRITE_CP_ATTRIB(availableNums[i-1], ATTR_MAX_BUILDINGS_ON_GO, 3+G_RANDOM(5))
@@ -102,7 +104,7 @@ for i = 2,3 do
   WRITE_CP_ATTRIB(availableNums[i-1], ATTR_SPY_DISCOVER_CHANCE, 10)
   WRITE_CP_ATTRIB(availableNums[i-1], ATTR_MAX_TRAIN_AT_ONCE, 5)
   WRITE_CP_ATTRIB(availableNums[i-1], ATTR_SHAMEN_BLAST, 8)
-  
+
   STATE_SET(availableNums[i-1], TRUE, CP_AT_TYPE_FETCH_WOOD)
   STATE_SET(availableNums[i-1], TRUE, CP_AT_TYPE_CONSTRUCT_BUILDING)
   STATE_SET(availableNums[i-1], TRUE, CP_AT_TYPE_BUILD_OUTER_DEFENCES)
@@ -117,7 +119,7 @@ for i = 2,3 do
   STATE_SET(availableNums[i-1], TRUE, CP_AT_TYPE_POPULATE_DRUM_TOWER)
   STATE_SET(availableNums[i-1], TRUE, CP_AT_TYPE_FETCH_LOST_PEOPLE)
   STATE_SET(availableNums[i-1], TRUE, CP_AT_TYPE_MED_MAN_GET_WILD_PEEPS)
-  
+
   SET_BUCKET_USAGE(availableNums[i-1], TRUE)
   SET_BUCKET_COUNT_FOR_SPELL(availableNums[i-1], M_SPELL_BLAST, 8)
   SET_BUCKET_COUNT_FOR_SPELL(availableNums[i-1], M_SPELL_CONVERT_WILD, 8)
@@ -126,7 +128,7 @@ for i = 2,3 do
   SET_BUCKET_COUNT_FOR_SPELL(availableNums[i-1], M_SPELL_LAND_BRIDGE, 32)
   SET_BUCKET_COUNT_FOR_SPELL(availableNums[i-1], M_SPELL_LIGHTNING_BOLT, 40)
   SET_BUCKET_COUNT_FOR_SPELL(availableNums[i-1], M_SPELL_INVISIBILITY, 28)
-  
+
   SET_DEFENCE_RADIUS(availableNums[i-1], 7)
   SET_SPELL_ENTRY(availableNums[i-1], 0, M_SPELL_INSECT_PLAGUE, 25000, 64, 3, 0)
   SET_SPELL_ENTRY(availableNums[i-1], 1, M_SPELL_LIGHTNING_BOLT, 40000, 64, 2, 0)
@@ -157,15 +159,15 @@ SET_MARKER_ENTRY(TRIBE_ORANGE, 5, 44, 45, 0, 1, 1, 1)
 SET_MARKER_ENTRY(TRIBE_ORANGE, 6, 46, 47, 0, 2, 1, 2)
 
 function OnTurn()
-  if (_gsi.Counts.GameTurn > 1) then
-    if (_gsi.Counts.GameTurn > tickCyanAttack) then
-      tickCyanAttack = _gsi.Counts.GameTurn + (1744+G_RANDOM(512))
+  if (GetTurn() > 1) then
+    if (GetTurn() > tickCyanAttack) then
+      tickCyanAttack = GetTurn() + (1744+G_RANDOM(512))
       if (_gsi.Players[TRIBE_BLUE].NumPeople > 0 or _gsi.Players[TRIBE_RED].NumPeople > 0) then
         if (PLAYERS_PEOPLE_OF_TYPE(TRIBE_CYAN, M_PERSON_RELIGIOUS) > 4) then
           local wta = G_RANDOM(2)
           local tries = 16
           local mkr = 22+G_RANDOM(3)
-          
+
           while tries > 0 do
             tries = tries-1
             if (_gsi.Players[wta].NumPeople == 0) then
@@ -174,7 +176,7 @@ function OnTurn()
               break
             end
           end
-          
+
           WRITE_CP_ATTRIB(TRIBE_CYAN, ATTR_AWAY_RELIGIOUS, 20+G_RANDOM(80))
           WRITE_CP_ATTRIB(TRIBE_CYAN, ATTR_AWAY_SUPER_WARRIOR, 20+G_RANDOM(80))
           WRITE_CP_ATTRIB(TRIBE_CYAN, ATTR_AWAY_WARRIOR, 20+G_RANDOM(80))
@@ -185,7 +187,7 @@ function OnTurn()
         if (PLAYERS_PEOPLE_OF_TYPE(TRIBE_CYAN, M_PERSON_RELIGIOUS) > 4) then
           if (_gsi.Players[TRIBE_GREEN].NumPeople > 0) then
             local mkr = 25+G_RANDOM(3)
-            
+
             WRITE_CP_ATTRIB(TRIBE_CYAN, ATTR_AWAY_RELIGIOUS, 20+G_RANDOM(80))
             WRITE_CP_ATTRIB(TRIBE_CYAN, ATTR_AWAY_SUPER_WARRIOR, 20+G_RANDOM(80))
             WRITE_CP_ATTRIB(TRIBE_CYAN, ATTR_AWAY_WARRIOR, 20+G_RANDOM(80))
@@ -194,13 +196,13 @@ function OnTurn()
           end
         end
       end
-    elseif (_gsi.Counts.GameTurn > tickOrangeAttack) then
-      tickOrangeAttack = _gsi.Counts.GameTurn + (1744+G_RANDOM(512))
+    elseif (GetTurn() > tickOrangeAttack) then
+      tickOrangeAttack = GetTurn() + (1744+G_RANDOM(512))
       if (G_RANDOM(100) > 30) then
         if (PLAYERS_PEOPLE_OF_TYPE(TRIBE_ORANGE, M_PERSON_SUPER_WARRIOR) > 4) then
           local wta = G_RANDOM(2)
           local tries = 16
-          
+
           while tries > 0 do
             tries = tries-1
             if (_gsi.Players[wta].NumPeople == 0) then
@@ -209,7 +211,7 @@ function OnTurn()
               break
             end
           end
-          
+
           WRITE_CP_ATTRIB(TRIBE_ORANGE, ATTR_AWAY_RELIGIOUS, 20+G_RANDOM(80))
           WRITE_CP_ATTRIB(TRIBE_ORANGE, ATTR_AWAY_SUPER_WARRIOR, 20+G_RANDOM(80))
           WRITE_CP_ATTRIB(TRIBE_ORANGE, ATTR_AWAY_WARRIOR, 20+G_RANDOM(80))
@@ -228,14 +230,14 @@ function OnTurn()
         end
       end
     end
-    
-    if (_gsi.Counts.GameTurn > tickCyanBoat) then
-      tickCyanBoat = _gsi.Counts.GameTurn + (430+G_RANDOM(250))
+
+    if (GetTurn() > tickCyanBoat) then
+      tickCyanBoat = GetTurn() + (430+G_RANDOM(250))
       if (PLAYERS_VEHICLE_OF_TYPE(TRIBE_CYAN, M_VEHICLE_BOAT_1) > 0 and FREE_ENTRIES(TRIBE_CYAN) > 1) then
         if (PLAYERS_PEOPLE_OF_TYPE(TRIBE_CYAN, M_PERSON_RELIGIOUS) > 3) then
           local wta = cyanEnemies[G_RANDOM(tablelength(cyanEnemies))+1]
           local tries = 16
-          
+
           while tries > 0 do
             tries = tries-1
             if (_gsi.Players[wta].NumPeople == 0) then
@@ -244,7 +246,7 @@ function OnTurn()
               break
             end
           end
-          
+
           WRITE_CP_ATTRIB(TRIBE_CYAN, ATTR_AWAY_RELIGIOUS, G_RANDOM(30))
           WRITE_CP_ATTRIB(TRIBE_CYAN, ATTR_AWAY_SUPER_WARRIOR, G_RANDOM(30))
           WRITE_CP_ATTRIB(TRIBE_CYAN, ATTR_AWAY_WARRIOR, G_RANDOM(30))
@@ -252,13 +254,13 @@ function OnTurn()
           ATTACK(TRIBE_CYAN, wta, 4+G_RANDOM(4)*4, ATTACK_BUILDING, -1, 850, M_SPELL_INVISIBILITY, M_SPELL_SWAMP, M_SPELL_SWAMP, ATTACK_BY_BOAT, 0, NO_MARKER, NO_MARKER, NO_MARKER)
         end
       end
-    elseif (_gsi.Counts.GameTurn > tickOrangeBoat) then
-      tickOrangeBoat = _gsi.Counts.GameTurn + (430+G_RANDOM(250))
+    elseif (GetTurn() > tickOrangeBoat) then
+      tickOrangeBoat = GetTurn() + (430+G_RANDOM(250))
       if (PLAYERS_VEHICLE_OF_TYPE(TRIBE_ORANGE, M_VEHICLE_BOAT_1) > 0 and FREE_ENTRIES(TRIBE_ORANGE) > 1) then
         if (PLAYERS_PEOPLE_OF_TYPE(TRIBE_ORANGE, M_PERSON_RELIGIOUS) > 3) then
           local wta = orangeEnemies[G_RANDOM(tablelength(orangeEnemies))+1]
           local tries = 16
-          
+
           while tries > 0 do
             tries = tries-1
             if (_gsi.Players[wta].NumPeople == 0) then
@@ -267,7 +269,7 @@ function OnTurn()
               break
             end
           end
-          
+
           WRITE_CP_ATTRIB(TRIBE_ORANGE, ATTR_AWAY_RELIGIOUS, G_RANDOM(30))
           WRITE_CP_ATTRIB(TRIBE_ORANGE, ATTR_AWAY_SUPER_WARRIOR, G_RANDOM(30))
           WRITE_CP_ATTRIB(TRIBE_ORANGE, ATTR_AWAY_WARRIOR, G_RANDOM(30))
@@ -276,7 +278,7 @@ function OnTurn()
         end
       end
     end
-    
+
     if (EVERY_2POW_TURNS(10)) then
       if (tablelength(cyanTowers) > 0) then
         local t_idx = tablelength(cyanTowers)
@@ -288,7 +290,7 @@ function OnTurn()
           table.remove(cyanTowers, t_rnd)
         end
       end
-      
+
       if (tablelength(orangeTowers) > 0) then
         local t_idx = tablelength(orangeTowers)
         local t_rnd = G_RANDOM(t_idx)+1
@@ -299,13 +301,13 @@ function OnTurn()
           table.remove(orangeTowers, t_rnd)
         end
       end
-      
+
       MARKER_ENTRIES(TRIBE_CYAN, 0, 1, 2, 3)
       MARKER_ENTRIES(TRIBE_CYAN, 4, 5, NO_MARKER, NO_MARKER)
       MARKER_ENTRIES(TRIBE_ORANGE, 0, 1, 2, 3)
       MARKER_ENTRIES(TRIBE_ORANGE, 4, 5, 6, NO_MARKER)
     end
-    
+
     if (EVERY_2POW_TURNS(9)) then
       if (PLAYERS_BUILDING_OF_TYPE(TRIBE_BLUE, M_BUILDING_BOAT_HUT_1) > 0 or
           PLAYERS_BUILDING_OF_TYPE(TRIBE_RED, M_BUILDING_BOAT_HUT_1) > 0) then
@@ -315,7 +317,7 @@ function OnTurn()
           STATE_SET(availableNums[i+1], TRUE, CP_AT_TYPE_BUILD_VEHICLE)
           STATE_SET(availableNums[i+1], TRUE, CP_AT_TYPE_FETCH_FAR_VEHICLE)
         end
-      elseif (_gsi.Counts.GameTurn > (12*60)*15) then
+      elseif (GetTurn() > (12*60)*15) then
         for i = 0,1 do
           WRITE_CP_ATTRIB(availableNums[i+1], ATTR_PREF_BOAT_HUTS, 1)
           WRITE_CP_ATTRIB(availableNums[i+1], ATTR_PREF_BOAT_DRIVERS, 5)
@@ -323,35 +325,35 @@ function OnTurn()
           STATE_SET(availableNums[i+1], TRUE, CP_AT_TYPE_FETCH_FAR_VEHICLE)
         end
       end
-      
+
       ProcessGlobalTypeList(T_BUILDING, function(t)
         if (t.Model < 4 and t.Owner > 1) then
           if (t.u.Bldg.SproggingCount < 2000) then
             t.u.Bldg.SproggingCount = t.u.Bldg.SproggingCount + 950
           end
         end
-        
+
         if (t.Model < 3 and t.Owner > 1) then
           if (t.u.Bldg.UpgradeCount < 525) then
             t.u.Bldg.UpgradeCount = t.u.Bldg.UpgradeCount + 170
           end
         end
-        
+
         return true
       end)
     end
-    
+
     if (EVERY_2POW_TURNS(3)) then
       if (_gsi.Players[TRIBE_CYAN].NumPeople +
           _gsi.Players[TRIBE_ORANGE].NumPeople +
           _gsi.Players[TRIBE_YELLOW].NumPeople +
           _gsi.Players[TRIBE_GREEN].NumPeople < 160 and
-          _gsi.Counts.GameTurn < (12*60)*2 and
-          _gsi.Counts.GameTurn > (12*10)) then
+          GetTurn() < (12*60)*2 and
+          GetTurn() > (12*10)) then
         process(numthings)
       end
     end
-    
+
     for i,v in ipairs(spell_delay) do
       if (v > 0) then
         spell_delay[i] = v-1
@@ -361,9 +363,9 @@ function OnTurn()
 end
 
 ProcessGlobalTypeList(T_PERSON, function(t)
-  if (t.Model == M_PERSON_WILD) then 
+  if (t.Model == M_PERSON_WILD) then
     table.insert(wilds, t)
-  end 
+  end
   return true
 end)
 
@@ -394,10 +396,4 @@ function process(n)
       index = 1
     end
   end
-end
-
-function tablelength(te)
-  local count = 0
-  for _ in pairs(te) do count = count + 1 end
-  return count
 end

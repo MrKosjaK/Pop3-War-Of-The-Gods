@@ -8,6 +8,7 @@ import(Module_Globals)
 import(Module_Map)
 
 include("UtilPThings.lua")
+include("UtilRefs.lua")
 
 spell_delay = 0
 did_set_timer = FALSE
@@ -64,7 +65,7 @@ for i = 2,3 do
   for j = 0,1 do
     set_players_allied(i-2,j)
   end
-  
+
   SET_NO_REINC(i-2, FALSE)
 end
 
@@ -76,37 +77,37 @@ function OnTurn()
           t.u.Bldg.SproggingCount = t.u.Bldg.SproggingCount + 875
         end
       end
-      
+
       if (t.Model < 3 and t.Owner > 1) then
         if (t.u.Bldg.UpgradeCount < 500) then
           t.u.Bldg.UpgradeCount = t.u.Bldg.UpgradeCount + 155
         end
       end
-      
+
       return true
     end)
   end
-  
+
   if (EVERY_2POW_TURNS(6)) then
-    if (_gsi.Counts.GameTurn > 12*5 and _gsi.Counts.GameTurn < 12*120) then
+    if (GetTurn() > 12*5 and GetTurn() < 12*120) then
       if (erodeSpots[1] ~= nil and spell_delay == 0) then
         createThing(T_SPELL, M_SPELL_EROSION, TRIBE_ORANGE, erodeSpots[1], false, false)
         spell_delay = 36
         table.remove(erodeSpots, 1)
       end
-    elseif (_gsi.Counts.GameTurn > 12*120) then
+    elseif (GetTurn() > 12*120) then
       SHAMAN_DEFEND(TRIBE_ORANGE, 240, 226, TRUE)
       MARKER_ENTRIES(TRIBE_ORANGE, 2, NO_MARKER, NO_MARKER, NO_MARKER)
     end
   end
-  
+
   if (did_set_timer == TRUE and HAS_TIMER_REACHED_ZERO() == true) then
     REMOVE_TIMER()
     ProcessGlobalTypeList(T_PERSON, function(t)
       if (t.Owner == TRIBE_BLUE or t.Owner == TRIBE_RED) then
         damage_person(t, TRIBE_ORANGE, 65535, 1)
       end
-      
+
       return true
     end)
   elseif (did_set_timer == TRUE and GET_HEAD_TRIGGER_COUNT(238,210) == 0 and stone_prayed == FALSE) then
@@ -114,7 +115,7 @@ function OnTurn()
     super_erode = TRUE
     stone_prayed = TRUE
   end
-  
+
   if (EVERY_2POW_TURNS(4)) then
     if (COUNT_PEOPLE_IN_MARKER(TRIBE_ORANGE,TRIBE_BLUE,26,8) +
         COUNT_PEOPLE_IN_MARKER(TRIBE_ORANGE,TRIBE_RED,26,8) > 1 and
@@ -125,7 +126,7 @@ function OnTurn()
       createThing(T_EFFECT, M_EFFECT_EROSION, TRIBE_ORANGE, c3d, false, false)
     end
   end
-  
+
   if (spell_delay > 0) then
     spell_delay = spell_delay-1
   end
@@ -141,7 +142,7 @@ function OnCreateThing(t)
         check_for_people = TRUE
       end
     end
-    
+
     if (t.Model == M_EFFECT_EROSION and t.Owner < 2) then
       if (super_erode == TRUE) then
         super_erode = FALSE
@@ -158,16 +159,10 @@ end
 
 function randSign()
 	local sign = -1
-	
+
 	if (G_RANDOM(2) == 0) then
 		sign = 1
 	end
-	
-	return sign;
-end
 
-function tablelength(te)
-  local count = 0
-  for _ in pairs(te) do count = count + 1 end
-  return count
+	return sign;
 end

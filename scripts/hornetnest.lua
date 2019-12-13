@@ -6,6 +6,7 @@ import(Module_Objects)
 import(Module_Map)
 
 include("UtilPThings.lua")
+include("UtilRefs.lua")
 
 wilds = {}
 spell_delay = {0,0}
@@ -28,17 +29,17 @@ for i = 2,3 do
     set_players_allied(i-2,j)
     set_players_allied(availaibleNums[i-1], availaibleNums[j+1])
   end
-  
+
   for u,v in ipairs(botSpells) do
     PThing.SpellSet(TRIBE_BLACK, v, TRUE, FALSE)
   end
-  
+
   for y,v in ipairs(botBldgs) do
     PThing.BldgSet(TRIBE_BLACK, v, TRUE)
   end
-  
+
   computer_init_player(_gsi.Players[TRIBE_BLACK])
-  
+
   WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_EXPANSION, 12+G_RANDOM(8))
   WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_HOUSE_PERCENTAGE, 24+G_RANDOM(12))
   WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_MAX_BUILDINGS_ON_GO, 5+G_RANDOM(5))
@@ -72,7 +73,7 @@ for i = 2,3 do
   WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_SPY_DISCOVER_CHANCE, 10)
   WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_MAX_TRAIN_AT_ONCE, 3)
   WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_SHAMEN_BLAST, 8)
-  
+
   STATE_SET(TRIBE_BLACK, TRUE, CP_AT_TYPE_FETCH_WOOD)
   STATE_SET(TRIBE_BLACK, TRUE, CP_AT_TYPE_CONSTRUCT_BUILDING)
   STATE_SET(TRIBE_BLACK, TRUE, CP_AT_TYPE_BUILD_OUTER_DEFENCES)
@@ -87,13 +88,13 @@ for i = 2,3 do
   STATE_SET(TRIBE_BLACK, TRUE, CP_AT_TYPE_POPULATE_DRUM_TOWER)
   STATE_SET(TRIBE_BLACK, TRUE, CP_AT_TYPE_FETCH_LOST_PEOPLE)
   STATE_SET(TRIBE_BLACK, TRUE, CP_AT_TYPE_MED_MAN_GET_WILD_PEEPS)
-  
+
   SET_BUCKET_USAGE(TRIBE_BLACK, TRUE)
   SET_BUCKET_COUNT_FOR_SPELL(TRIBE_BLACK, M_SPELL_BLAST, 8)
   SET_BUCKET_COUNT_FOR_SPELL(TRIBE_BLACK, M_SPELL_CONVERT_WILD, 8)
   SET_BUCKET_COUNT_FOR_SPELL(TRIBE_BLACK, M_SPELL_INSECT_PLAGUE, 16)
   SET_BUCKET_COUNT_FOR_SPELL(TRIBE_BLACK, M_SPELL_LAND_BRIDGE, 32)
-  
+
   SET_DEFENCE_RADIUS(TRIBE_BLACK, 7)
 end
 
@@ -104,7 +105,7 @@ SET_DRUM_TOWER_POS(TRIBE_BLACK, 60, 124)
 
 function OnTurn()
   if (EVERY_2POW_TURNS(11)) then
-    if (_gsi.Counts.GameTurn > 12 * 300) then
+    if (GetTurn() > 12 * 300) then
       if (_gsi.Players[TRIBE_BLACK].NumPeople > 45) then
         if (IS_SHAMAN_AVAILABLE_FOR_ATTACK(TRIBE_BLACK) == 1) then
           if (GET_HEIGHT_AT_POS(2) > 0) then
@@ -115,7 +116,7 @@ function OnTurn()
       end
     end
   end
-  
+
   if (EVERY_2POW_TURNS(8)) then
     if (GET_HEIGHT_AT_POS(2) > 0) then
       if (PLAYERS_PEOPLE_OF_TYPE(TRIBE_BLACK, M_PERSON_WARRIOR) > 3) then
@@ -124,7 +125,7 @@ function OnTurn()
       end
     end
   end
-  
+
   if (EVERY_2POW_TURNS(9)) then
     ProcessGlobalTypeList(T_BUILDING, function(t)
       if (t.Model < 4 and t.Owner > 1) then
@@ -132,26 +133,26 @@ function OnTurn()
           t.u.Bldg.SproggingCount = t.u.Bldg.SproggingCount + 750
         end
       end
-      
+
       return true
     end)
-    
+
     if (COUNT_PEOPLE_IN_MARKER(TRIBE_BLACK, TRIBE_BLUE, 8, 2) +
         COUNT_PEOPLE_IN_MARKER(TRIBE_BLACK, TRIBE_RED, 8, 2) > 0) then
       WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_MEDICINE_MAN, 100)
       ATTACK(TRIBE_BLACK, G_RANDOM(2), 1+G_RANDOM(3), ATTACK_BUILDING, -1, 250+G_RANDOM(700), M_SPELL_BLAST, M_SPELL_BLAST, M_SPELL_BLAST, ATTACK_NORMAL, 0, NO_MARKER, NO_MARKER, NO_MARKER)
     end
   end
-  
+
   if (EVERY_2POW_TURNS(3)) then
     if (_gsi.Players[TRIBE_YELLOW].NumPeople +
         _gsi.Players[TRIBE_BLACK].NumPeople < 70 and
-        _gsi.Counts.GameTurn < (12*60)*2 and
-        _gsi.Counts.GameTurn > (12*10)) then
+        GetTurn() < (12*60)*2 and
+        GetTurn() > (12*10)) then
       process(numthings)
     end
   end
-  
+
   for i,v in ipairs(spell_delay) do
     if (v > 0) then
       spell_delay[i] = v-1
@@ -160,9 +161,9 @@ function OnTurn()
 end
 
 ProcessGlobalTypeList(T_PERSON, function(t)
-  if (t.Model == M_PERSON_WILD) then 
+  if (t.Model == M_PERSON_WILD) then
     table.insert(wilds, t)
-  end 
+  end
   return true
 end)
 
@@ -197,10 +198,4 @@ function process(n)
       index = 1
     end
   end
-end
-
-function tablelength(te)
-  local count = 0
-  for _ in pairs(te) do count = count + 1 end
-  return count
 end

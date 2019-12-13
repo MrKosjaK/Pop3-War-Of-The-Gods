@@ -6,6 +6,7 @@ import(Module_Objects)
 import(Module_Map)
 
 include("UtilPThings.lua")
+include("UtilRefs.lua")
 
 spell_delay = 0
 index = 0
@@ -59,17 +60,17 @@ for i = 2,3 do
   for j = 0,1 do
     set_players_allied(i-2,j)
   end
-  
+
   for u,v in ipairs(botSpells) do
     PThing.SpellSet(TRIBE_BLACK, v, TRUE, FALSE)
   end
-  
+
   for y,v in ipairs(botBldgs) do
     PThing.BldgSet(TRIBE_BLACK, v, TRUE)
   end
-  
+
   computer_init_player(_gsi.Players[TRIBE_BLACK])
-  
+
   WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_EXPANSION, 12+G_RANDOM(8))
   WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_HOUSE_PERCENTAGE, 42+G_RANDOM(35))
   WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_MAX_BUILDINGS_ON_GO, 5+G_RANDOM(5))
@@ -103,7 +104,7 @@ for i = 2,3 do
   WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_SPY_DISCOVER_CHANCE, 10)
   WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_MAX_TRAIN_AT_ONCE, 3)
   WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_SHAMEN_BLAST, 8)
-  
+
   STATE_SET(TRIBE_BLACK, TRUE, CP_AT_TYPE_FETCH_WOOD)
   STATE_SET(TRIBE_BLACK, TRUE, CP_AT_TYPE_CONSTRUCT_BUILDING)
   STATE_SET(TRIBE_BLACK, TRUE, CP_AT_TYPE_BUILD_OUTER_DEFENCES)
@@ -118,14 +119,14 @@ for i = 2,3 do
   STATE_SET(TRIBE_BLACK, TRUE, CP_AT_TYPE_POPULATE_DRUM_TOWER)
   STATE_SET(TRIBE_BLACK, TRUE, CP_AT_TYPE_FETCH_LOST_PEOPLE)
   STATE_SET(TRIBE_BLACK, TRUE, CP_AT_TYPE_MED_MAN_GET_WILD_PEEPS)
-  
+
   SET_BUCKET_USAGE(TRIBE_BLACK, TRUE)
   SET_BUCKET_COUNT_FOR_SPELL(TRIBE_BLACK, M_SPELL_BLAST, 8)
   SET_BUCKET_COUNT_FOR_SPELL(TRIBE_BLACK, M_SPELL_CONVERT_WILD, 8)
   SET_BUCKET_COUNT_FOR_SPELL(TRIBE_BLACK, M_SPELL_INSECT_PLAGUE, 16)
   SET_BUCKET_COUNT_FOR_SPELL(TRIBE_BLACK, M_SPELL_LAND_BRIDGE, 32)
   SET_BUCKET_COUNT_FOR_SPELL(TRIBE_BLACK, M_SPELL_LIGHTNING_BOLT, 40)
-  
+
   SET_DEFENCE_RADIUS(TRIBE_BLACK, 7)
 end
 
@@ -155,10 +156,10 @@ function OnTurn()
           t.Flags3 = t.Flags3 | TF3_BLOODLUST_ACTIVE
           t.Flags3 = t.Flags3 | TF3_SHIELD_ACTIVE
         end
-        
+
         return true
       end)
-        
+
       if (final_blow == FALSE and winner == TRIBE_BLACK) then
         WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_BRAVE, 100)
         WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_MEDICINE_MAN, 0)
@@ -170,7 +171,7 @@ function OnTurn()
       end
     end
   end
-  
+
   if (EVERY_2POW_TURNS(9)) then
     local shaman = getShaman(TRIBE_BLACK)
     if (shaman ~= nil) then
@@ -190,12 +191,12 @@ function OnTurn()
             end
           end
         end
-        
+
         return true
       end)
     end
   end
-  
+
   if (EVERY_2POW_TURNS(8)) then
     if (GET_HEAD_TRIGGER_COUNT(238,12) > 0) then
       ProcessGlobalTypeList(T_BUILDING, function(t)
@@ -204,11 +205,11 @@ function OnTurn()
             t.u.Bldg.SproggingCount = t.u.Bldg.SproggingCount + 750
           end
         end
-        
+
         return true
       end)
     end
-    
+
     if (statue_has_prayed == TRUE and winner == TRIBE_BLACK) then
       WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_BRAVE, 0)
       WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_MEDICINE_MAN, 0)
@@ -217,11 +218,11 @@ function OnTurn()
       WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_DONT_GROUP_AT_DT, 1)
       ATTACK(TRIBE_BLACK, G_RANDOM(2), 5, ATTACK_BUILDING, -1, 999, M_SPELL_NONE, M_SPELL_NONE, M_SPELL_NONE, ATTACK_NORMAL, 0, NO_MARKER, NO_MARKER, NO_MARKER)
     end
-    
+
     MARKER_ENTRIES(TRIBE_BLACK, 0, 1, 2, 3)
     MARKER_ENTRIES(TRIBE_BLACK, 4, 5, NO_MARKER, NO_MARKER)
   end
-  
+
   if (EVERY_2POW_TURNS(5)) then
     for k,v in ipairs(backdoor_points) do
       if (point_altitude(v.Xpos,v.Zpos) ~= 0) then
@@ -231,7 +232,7 @@ function OnTurn()
       end
     end
   end
-  
+
   if (EVERY_2POW_TURNS(7)) then
     if (HAS_TIMER_REACHED_ZERO()) then
       if (connected == FALSE) then
@@ -240,7 +241,7 @@ function OnTurn()
         end
         connected = TRUE
       end
-      
+
       if (IS_SHAMAN_AVAILABLE_FOR_ATTACK(TRIBE_BLACK) == 1 and GET_HEAD_TRIGGER_COUNT(238,12) > 0) then
         WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_BRAVE, 0)
         WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_MEDICINE_MAN, 100)
@@ -250,7 +251,7 @@ function OnTurn()
       end
     end
   end
-  
+
   if (EVERY_2POW_TURNS(4)) then
     if (statue_has_prayed == FALSE and GET_HEAD_TRIGGER_COUNT(238,12) == 0) then
       ProcessGlobalTypeList(T_PERSON, function(t)
@@ -263,16 +264,16 @@ function OnTurn()
           winner = t.Owner
           return false
         end
-        
+
         return true
       end)
-      
+
       REMOVE_TIMER()
     end
   end
-  
+
   if (EVERY_2POW_TURNS(2)) then
-    if (_gsi.Counts.GameTurn > 12*15 and not tip_shown) then
+    if (GetTurn() > 12*15 and not tip_shown) then
       tip_shown = true
       log_msg(TRIBE_NEUTRAL,"TIP: Invoking the ancient flying creature will fill Your blood with determination.")
     end

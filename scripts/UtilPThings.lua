@@ -5,8 +5,6 @@ import(Module_Players)
 import(Module_Level)
 
 PThing = {}
-_gsi = gsi()
-_constants = constants()
 
 PThing.SpellSet = function (player, spell, input, charge)
   if (input == 0) then
@@ -17,7 +15,7 @@ PThing.SpellSet = function (player, spell, input, charge)
 		else
 			_gsi.ThisLevelInfo.PlayerThings[player].SpellsNotCharging = _gsi.ThisLevelInfo.PlayerThings[player].SpellsNotCharging ~ (1<<spell-1);
 		end
-		
+
 		_gsi.ThisLevelInfo.PlayerThings[player].SpellsAvailable = _gsi.ThisLevelInfo.PlayerThings[player].SpellsAvailable | (1<<spell);
 	end
 end

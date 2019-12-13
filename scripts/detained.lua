@@ -7,9 +7,10 @@ import(Module_Map)
 import(Module_MapWho)
 
 include("UtilPThings.lua")
+include("UtilRefs.lua")
 
-_constants.MaxManaValue = 2500000
-_constants.ShamenDeadManaPer256Gained = 16
+_c.MaxManaValue = 2500000
+_c.ShamenDeadManaPer256Gained = 16
 
 availableNums = {4,5}
 SET_TIMER_GOING((12*60)*15,1)
@@ -60,13 +61,13 @@ for i = 4,5 do
   for u,v in ipairs(botSpells) do
     PThing.SpellSet(availableNums[i-3], v, TRUE, FALSE)
   end
-  
+
   for y,v in ipairs(botBldgs) do
     PThing.BldgSet(availableNums[i-3], v, TRUE)
   end
-  
+
   computer_init_player(_gsi.Players[availableNums[i-3]])
-  
+
   WRITE_CP_ATTRIB(availableNums[i-3], ATTR_EXPANSION, 24+G_RANDOM(16))
   WRITE_CP_ATTRIB(availableNums[i-3], ATTR_HOUSE_PERCENTAGE, 5+G_RANDOM(38))
   WRITE_CP_ATTRIB(availableNums[i-3], ATTR_MAX_BUILDINGS_ON_GO, 6+G_RANDOM(5))
@@ -100,7 +101,7 @@ for i = 4,5 do
   WRITE_CP_ATTRIB(availableNums[i-3], ATTR_SPY_DISCOVER_CHANCE, 5)
   WRITE_CP_ATTRIB(availableNums[i-3], ATTR_MAX_TRAIN_AT_ONCE, 3)
   WRITE_CP_ATTRIB(availableNums[i-3], ATTR_SHAMEN_BLAST, 8)
-  
+
   STATE_SET(availableNums[i-3], TRUE, CP_AT_TYPE_FETCH_WOOD)
   STATE_SET(availableNums[i-3], TRUE, CP_AT_TYPE_CONSTRUCT_BUILDING)
   STATE_SET(availableNums[i-3], TRUE, CP_AT_TYPE_BUILD_OUTER_DEFENCES)
@@ -115,7 +116,7 @@ for i = 4,5 do
   STATE_SET(availableNums[i-3], TRUE, CP_AT_TYPE_POPULATE_DRUM_TOWER)
   STATE_SET(availableNums[i-3], TRUE, CP_AT_TYPE_FETCH_LOST_PEOPLE)
   STATE_SET(availableNums[i-3], FALSE, CP_AT_TYPE_MED_MAN_GET_WILD_PEEPS)
-  
+
   SET_BUCKET_USAGE(availableNums[i-3], TRUE)
   SET_BUCKET_COUNT_FOR_SPELL(availableNums[i-3], M_SPELL_BLAST, 8)
   SET_BUCKET_COUNT_FOR_SPELL(availableNums[i-3], M_SPELL_CONVERT_WILD, 8)
@@ -175,15 +176,15 @@ PREACH_AT_MARKER(TRIBE_PINK, 19)
 PREACH_AT_MARKER(TRIBE_PINK, 20)
 
 function OnTurn()
-  if (_gsi.Counts.GameTurn > 1) then
-    if (_gsi.Counts.GameTurn > 12*15 and not tip_shown1) then
+  if (GetTurn() > 1) then
+    if (GetTurn() > 12*15 and not tip_shown1) then
       tip_shown1 = true
       log_msg(TRIBE_NEUTRAL, "[green] Provided god-like power is not the something You can hold.")
-    elseif(_gsi.Counts.GameTurn > 12*20 and not tip_shown2) then
+    elseif(GetTurn() > 12*20 and not tip_shown2) then
       tip_shown2 = true
       log_msg(TRIBE_NEUTRAL, "[green] Although, You seem destined to be one of us.")
     end
-    
+
     if (EVERY_2POW_TURNS(9)) then
       ProcessGlobalTypeList(T_BUILDING, function(t)
         if (t.Model < 4 and t.Owner > 1) then
@@ -191,40 +192,40 @@ function OnTurn()
             t.u.Bldg.SproggingCount = t.u.Bldg.SproggingCount + 1400
           end
         end
-        
+
         if (t.Model < 3 and t.Owner > 1) then
           if (t.u.Bldg.UpgradeCount < 825) then
             t.u.Bldg.UpgradeCount = t.u.Bldg.UpgradeCount + 235
           end
         end
-        
+
         return true
       end)
     end
-    
+
     if (EVERY_2POW_TURNS(5)) then
       if (not timer_removed) then
         local prisons = 0
-        
+
         ProcessGlobalTypeList(T_BUILDING, function(t)
           if (t.Model == M_BUILDING_PRISON) then
             prisons = prisons+1
           end
-          
+
           return true
         end)
-        
+
         if (prisons == 0 and not penalty) then
           REMOVE_TIMER()
           timer_removed = true
         end
       end
     end
-    
+
     if (HAS_TIMER_REACHED_ZERO() == true and not penalty) then
       REMOVE_TIMER()
       penalty = true
-      
+
       ProcessGlobalTypeList(T_PERSON, function(t)
         if (t.Owner == TRIBE_BLUE or t.Owner == TRIBE_RED) then
           damage_person(t, TRIBE_CYAN, 65535, 1)
@@ -235,7 +236,7 @@ function OnTurn()
         if (t.Owner == TRIBE_BLUE or t.Owner == TRIBE_RED) then
           createThing(T_EFFECT,M_EFFECT_FIRESTORM,TRIBE_HOSTBOT,t.Pos.D3,false,false)
         end
-        
+
         if (t.Model == M_BUILDING_PRISON) then
           createThing(T_EFFECT,M_EFFECT_LIGHTNING_BOLT,TRIBE_HOSTBOT,t.Pos.D3,false,false)
         end

@@ -56,6 +56,9 @@ EXTRADST: levels\levl2014.dat
 EXTRASRC: levl2015.dat
 EXTRADST: levels\levl2015.dat
 
+EXTRASRC: levl2016.dat
+EXTRADST: levels\levl2016.dat
+
 EXTRASRC: levlspc2.dat
 EXTRADST: levels\levlspc2.dat
 

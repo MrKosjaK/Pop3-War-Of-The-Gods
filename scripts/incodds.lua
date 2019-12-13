@@ -7,6 +7,7 @@ import(Module_Globals)
 import(Module_Map)
 
 include("UtilPThings.lua")
+include("UtilRefs.lua")
 
 wilds = {}
 spell_delay = {0,0}
@@ -30,24 +31,24 @@ function OnTurn()
           t.u.Bldg.SproggingCount = t.u.Bldg.SproggingCount + 875
         end
       end
-      
+
       return true
     end)
-    
+
     for i,v in ipairs(lights_used) do
       if (v > 0) then
         lights_used[i] = v-1
       end
     end
   end
-  
+
   if (EVERY_2POW_TURNS(5)) then
     local idx = G_RANDOM(tablelength(availableNums))+1
     local shaman = getShaman(availableNums[idx])
-            
+
     local enemyshaman = G_RANDOM(tablelength(shamansNums))+1
     local est = getShaman(shamansNums[enemyshaman])
-    
+
     if (shaman ~= nil and est ~= nil and shaman.Owner ~= est.Owner) then
       if (get_world_dist_xyz(shaman.Pos.D3, est.Pos.D3) < 6144 + shaman.Pos.D3.Ypos*3) then
         if (spell_delay[idx] == 0 and is_thing_on_ground(shaman) == 1 and lights_used[idx] < 4) then
@@ -58,16 +59,16 @@ function OnTurn()
       end
     end
   end
-  
+
   if (EVERY_2POW_TURNS(3)) then
     if (_gsi.Players[TRIBE_YELLOW].NumPeople +
         _gsi.Players[TRIBE_GREEN].NumPeople < 140 and
-        _gsi.Counts.GameTurn < (12*60)*2 and
-        _gsi.Counts.GameTurn > (12*10)) then
+        GetTurn() < (12*60)*2 and
+        GetTurn() > (12*10)) then
       process(numthings)
     end
   end
-  
+
   for i,v in ipairs(spell_delay) do
     if (v > 0) then
       spell_delay[i] = v-1
@@ -76,9 +77,9 @@ function OnTurn()
 end
 
 ProcessGlobalTypeList(T_PERSON, function(t)
-  if (t.Model == M_PERSON_WILD) then 
+  if (t.Model == M_PERSON_WILD) then
     table.insert(wilds, t)
-  end 
+  end
   return true
 end)
 
@@ -109,10 +110,4 @@ function process(n)
       index = 1
     end
   end
-end
-
-function tablelength(te)
-  local count = 0
-  for _ in pairs(te) do count = count + 1 end
-  return count
 end
