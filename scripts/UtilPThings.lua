@@ -27,3 +27,11 @@ PThing.BldgSet = function (player, building, input)
 		_gsi.ThisLevelInfo.PlayerThings[player].BuildingsAvailable = _gsi.ThisLevelInfo.PlayerThings[player].BuildingsAvailable | (1<<building);
 	end
 end
+
+PThing.GiveShot = function (player, spell, amount)
+  if (amount > 4) then
+    _gsi.ThisLevelInfo.PlayerThings[player].SpellsAvailableOnce[spell] = 4
+  else
+    _gsi.ThisLevelInfo.PlayerThings[player].SpellsAvailableOnce[spell] = _gsi.ThisLevelInfo.PlayerThings[player].SpellsAvailableOnce[spell] + amount
+  end
+end

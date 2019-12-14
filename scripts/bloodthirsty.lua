@@ -16,15 +16,25 @@ _c.ShamenDeadManaPer256Gained = 16
 
 wilds = {}
 spell_delay = {0,0,0,0,0,0}
-spell_ms_delay = {0,0,0,0,0,0}
+spell_ms_delay = {720,720,720,720,720,720}
 spell_ms_used = {5,5,5,5,5,5}
 spell_ms_radius = 3
 spell_ms_max_use = 5
 spell_ms_charge_time = 720
+stone_head_pos = MAP_XZ_2_WORLD_XYZ(236,254)
+prayer = nil
 index = 1
 availableNums = {4,5,6,7,2,3}
 numthings = 16
 atk_tick_black = GetTurn() + (555 + G_RANDOM(733))
+atk_tick_orange = GetTurn() + (654 + G_RANDOM(1000))
+atk_tick_cyan = GetTurn() + (355 + G_RANDOM(1233))
+atk_tick_magenta = GetTurn() + (457 + G_RANDOM(533))
+atkb_tick_cyan = GetTurn() + (1759 + G_RANDOM(512))
+atkb_tick_magenta = GetTurn() + (1659 + G_RANDOM(512))
+atkb_tick_black = GetTurn() + (1359 + G_RANDOM(512))
+atkb_tick_orange = GetTurn() + (1559 + G_RANDOM(512))
+pray_tick_all = GetTurn() + (256 + G_RANDOM(256))
 conv_center_pos = {
 MAP_XZ_2_WORLD_XYZ(156,12),
 MAP_XZ_2_WORLD_XYZ(194,58),
@@ -196,6 +206,141 @@ function OnTurn()
           end
         end
       end
+    elseif (GetTurn() > atk_tick_orange) then
+      atk_tick_orange = GetTurn() + (654 + G_RANDOM(1000))
+      if (FREE_ENTRIES(TRIBE_ORANGE) > 2) then
+        local amt_trps = count_troops(TRIBE_ORANGE)
+        if (amt_trps > 8) then
+          WRITE_CP_ATTRIB(TRIBE_ORANGE, ATTR_AWAY_RELIGIOUS, 70)
+          WRITE_CP_ATTRIB(TRIBE_ORANGE, ATTR_AWAY_SPY, 0)
+          WRITE_CP_ATTRIB(TRIBE_ORANGE, ATTR_AWAY_WARRIOR, 20)
+          WRITE_CP_ATTRIB(TRIBE_ORANGE, ATTR_AWAY_SUPER_WARRIOR, 25)
+          WRITE_CP_ATTRIB(TRIBE_ORANGE, ATTR_AWAY_MEDICINE_MAN, 0)
+          local enemy = decide_an_enemy_to_attack(TRIBE_ORANGE)
+          ATTACK(TRIBE_ORANGE,enemy,math.ceil(amt_trps/4),1,0,G_RANDOM(999),0,0,0,ATTACK_NORMAL,0,-1,-1,-1)
+        end
+      end
+    elseif (GetTurn() > atk_tick_cyan) then
+      atk_tick_cyan = GetTurn() + (355 + G_RANDOM(1233))
+      if (FREE_ENTRIES(TRIBE_CYAN) > 2) then
+        local amt_trps = count_troops(TRIBE_CYAN)
+        if (amt_trps > 10) then
+          WRITE_CP_ATTRIB(TRIBE_CYAN, ATTR_AWAY_RELIGIOUS, 30)
+          WRITE_CP_ATTRIB(TRIBE_CYAN, ATTR_AWAY_SPY, 0)
+          WRITE_CP_ATTRIB(TRIBE_CYAN, ATTR_AWAY_WARRIOR, 50)
+          WRITE_CP_ATTRIB(TRIBE_CYAN, ATTR_AWAY_SUPER_WARRIOR, 85)
+          WRITE_CP_ATTRIB(TRIBE_CYAN, ATTR_AWAY_MEDICINE_MAN, 0)
+          local enemy = decide_an_enemy_to_attack(TRIBE_CYAN)
+          ATTACK(TRIBE_CYAN,enemy,math.ceil(amt_trps/4),1,0,G_RANDOM(999),0,0,0,ATTACK_NORMAL,0,-1,-1,-1)
+        end
+      end
+    elseif (GetTurn() > atk_tick_magenta) then
+      atk_tick_magenta = GetTurn() + (457 + G_RANDOM(533))
+      if (FREE_ENTRIES(TRIBE_PINK) > 2) then
+        local amt_trps = count_troops(TRIBE_PINK)
+        if (amt_trps > 12) then
+          WRITE_CP_ATTRIB(TRIBE_PINK, ATTR_AWAY_RELIGIOUS, 50)
+          WRITE_CP_ATTRIB(TRIBE_PINK, ATTR_AWAY_SPY, 0)
+          WRITE_CP_ATTRIB(TRIBE_PINK, ATTR_AWAY_WARRIOR, 50)
+          WRITE_CP_ATTRIB(TRIBE_PINK, ATTR_AWAY_SUPER_WARRIOR, 50)
+          WRITE_CP_ATTRIB(TRIBE_PINK, ATTR_AWAY_MEDICINE_MAN, 0)
+          local enemy = decide_an_enemy_to_attack(TRIBE_PINK)
+          ATTACK(TRIBE_PINK,enemy,math.ceil(amt_trps/4),1,0,G_RANDOM(999),0,0,0,ATTACK_NORMAL,0,-1,-1,-1)
+        end
+      end
+    end
+
+    if (GetTurn() > atkb_tick_cyan) then
+      atkb_tick_cyan = GetTurn() + (1759 + G_RANDOM(512))
+      if (FREE_ENTRIES(TRIBE_CYAN) > 5) then
+        local force = count_troops(TRIBE_CYAN)
+        if (force > 16) then
+          local enemy = GetPopLeader()
+          if (enemy ~= TRIBE_CYAN) then
+            if (NAV_CHECK(TRIBE_CYAN,enemy,ATTACK_BUILDING,3,0) == 1) then
+              local spell = 0
+              if (IS_SHAMAN_AVAILABLE_FOR_ATTACK(TRIBE_CYAN) == 1) then
+                spell = 19
+                WRITE_CP_ATTRIB(TRIBE_CYAN, ATTR_AWAY_MEDICINE_MAN, 1)
+              end
+              ATTACK(TRIBE_CYAN,enemy,math.ceil(force/2),1,3,999,spell,spell,spell,ATTACK_NORMAL,0,-1,-1,-1)
+            end
+          end
+        end
+      end
+    elseif (GetTurn() > atkb_tick_magenta) then
+      atkb_tick_magenta = GetTurn() + (1659 + G_RANDOM(512))
+      if (FREE_ENTRIES(TRIBE_PINK) > 5) then
+        local force = count_troops(TRIBE_PINK)
+        if (force > 16) then
+          local enemy = GetPopLeader()
+          if (enemy ~= TRIBE_PINK) then
+            if (NAV_CHECK(TRIBE_PINK,enemy,ATTACK_BUILDING,3,0) == 1) then
+              local spell = 0
+              if (IS_SHAMAN_AVAILABLE_FOR_ATTACK(TRIBE_PINK) == 1) then
+                spell = 19
+                WRITE_CP_ATTRIB(TRIBE_PINK, ATTR_AWAY_MEDICINE_MAN, 1)
+              end
+              ATTACK(TRIBE_PINK,enemy,math.ceil(force/2),1,3,999,spell,spell,spell,ATTACK_NORMAL,0,-1,-1,-1)
+            end
+          end
+        end
+      end
+    elseif (GetTurn() > atkb_tick_black) then
+      atkb_tick_black = GetTurn() + (1359 + G_RANDOM(512))
+      if (FREE_ENTRIES(TRIBE_BLACK) > 5) then
+        local force = count_troops(TRIBE_BLACK)
+        if (force > 22) then
+          local enemy = GetPopLeader()
+          if (enemy ~= TRIBE_BLACK) then
+            if (NAV_CHECK(TRIBE_BLACK,enemy,ATTACK_BUILDING,3,0) == 1) then
+              local spell = 0
+              if (IS_SHAMAN_AVAILABLE_FOR_ATTACK(TRIBE_BLACK) == 1) then
+                spell = 19
+                WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_MEDICINE_MAN, 1)
+              end
+              ATTACK(TRIBE_BLACK,enemy,math.ceil(force/2),1,3,999,spell,spell,spell,ATTACK_NORMAL,0,-1,-1,-1)
+            end
+          end
+        end
+      end
+    elseif (GetTurn() > atkb_tick_orange) then
+      atkb_tick_orange = GetTurn() + (1559 + G_RANDOM(512))
+      if (FREE_ENTRIES(TRIBE_ORANGE) > 5) then
+        local force = count_troops(TRIBE_ORANGE)
+        if (force > 22) then
+          local enemy = GetPopLeader()
+          if (enemy ~= TRIBE_ORANGE) then
+            if (NAV_CHECK(TRIBE_ORANGE,enemy,ATTACK_BUILDING,3,0) == 1) then
+              local spell = 0
+              if (IS_SHAMAN_AVAILABLE_FOR_ATTACK(TRIBE_ORANGE) == 1) then
+                spell = 19
+                WRITE_CP_ATTRIB(TRIBE_ORANGE, ATTR_AWAY_MEDICINE_MAN, 1)
+              end
+              ATTACK(TRIBE_ORANGE,enemy,math.ceil(force/2),1,3,999,spell,spell,spell,ATTACK_NORMAL,0,-1,-1,-1)
+            end
+          end
+        end
+      end
+    end
+
+    if (GetTurn() > pray_tick_all) then
+      pray_tick_all = GetTurn() + (300 + G_RANDOM(256))
+      for i=0,7 do
+        if (_gsi.Players[i].PlayerType == COMPUTER_PLAYER) then
+          if (GetPlayerPeople(i) > 40) then
+            local people_near_stone = count_people(i,stone_head_pos,3)
+            if (people_near_stone < 6) then
+              if (i == GetPopLeader()) then
+                PRAY_AT_HEAD(i,6,8)
+                prayer = i
+              end
+            else
+              ATTACK(i,prayer,10,0,9,999,0,0,0,ATTACK_NORMAL,0,-1,-1,-1)
+            end
+          end
+        end
+      end
     end
 
     if (EVERY_2POW_TURNS(9)) then
@@ -216,6 +361,10 @@ function OnTurn()
           WRITE_CP_ATTRIB(i, ATTR_PREF_SUPER_WARRIOR_TRAINS, 0)
           WRITE_CP_ATTRIB(i, ATTR_PREF_SUPER_WARRIOR_PEOPLE, 5)
           STATE_SET(i, TRUE, CP_AT_TYPE_MED_MAN_GET_WILD_PEEPS)
+        end
+
+        if (READ_CP_ATTRIB(i,ATTR_HOUSE_PERCENTAGE) < 200) then
+          WRITE_CP_ATTRIB(i,ATTR_HOUSE_PERCENTAGE,READ_CP_ATTRIB(i,ATTR_HOUSE_PERCENTAGE)+2)
         end
       end
 
@@ -300,7 +449,12 @@ function OnTurn()
             end)
 
             if (last_thing ~= nil and total_count > 2) then
-              createThing(T_SPELL,M_SPELL_SHIELD,s.Owner,last_thing.Pos.D3,false,false)
+              local thing_s = M_SPELL_SHIELD
+              if (GET_NUM_ONE_OFF_SPELLS(s.Owner,M_SPELL_BLOODLUST) > 0) then
+                thing_s = M_SPELL_BLOODLUST
+                PThing.GiveShot(s.Owner,M_SPELL_BLOODLUST,-1)
+              end
+              createThing(T_SPELL,thing_s,s.Owner,last_thing.Pos.D3,false,false)
               spell_ms_used[i]=spell_ms_used[i]+1
               if (spell_ms_delay[i] == 0) then
                 spell_ms_delay[i]=calc_limit(v)
@@ -389,12 +543,12 @@ function count_enemy_bldgs_around(myself,x,z,radiii)
   return count
 end
 
-function count_people(coord2,radii)
+function count_people(myself,coord2,radii)
   local count = 0
-  SearchMapCells(CIRCULAR, 0, 0, radii, world_coord2d_to_map_idx(coord2), function(me)
+  SearchMapCells(CIRCULAR, 0, 0, radii, world_coord3d_to_map_idx(coord2), function(me)
     me.MapWhoList:processList(function (t)
       if (t.Type == T_PERSON) then
-        if (t.Owner == TRIBE_BLUE or t.Owner == TRIBE_RED) then
+        if (t.Owner ~= myself and are_players_allied(myself,t.Owner) == 0) then
           count = count+1
         end
       end
@@ -404,6 +558,23 @@ function count_people(coord2,radii)
   end)
 
   return count
+end
+
+function decide_an_enemy_to_attack(myself)
+  local i = myself
+  local tries = 16
+  while (tries > 0) do
+    tries=tries-1
+    i = G_RANDOM(MAX_NUM_REAL_PLAYERS)
+    if (i ~= myself and are_players_allied(i,myself) == 0) then
+      if (GetPlayerPeople(i) > 0) then
+        if (NAV_CHECK(myself,i,ATTACK_BUILDING,0,0) == 1) then
+          break
+        end
+      end
+    end
+  end
+  return i
 end
 
 function count_troops(pn)

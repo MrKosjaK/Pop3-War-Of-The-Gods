@@ -1,6 +1,7 @@
 import(Module_DataTypes)
 import(Module_Globals)
 import(Module_Players)
+import(Module_Table)
 
 _gsi = gsi()
 _sti = scenery_type_info()
@@ -20,6 +21,25 @@ function randSign()
     a = 1
   end
   return a
+end
+
+function GetPopLeader()
+  local plr_pops = {}
+  for i=0,7 do
+    local pop = GetPlayerPeople(i)
+    table.insert(plr_pops,pop)
+  end
+
+  local max = plr_pops[1];
+  maxIndex = 1;
+
+  for i,v in ipairs(plr_pops) do
+    if (v > max) then
+      maxIndex = i
+      max = plr_pops[i]
+    end
+  end
+  return maxIndex-1;
 end
 
 function tablelength(te)
