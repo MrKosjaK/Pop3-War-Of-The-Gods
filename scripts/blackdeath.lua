@@ -147,7 +147,7 @@ SET_MARKER_ENTRY(TRIBE_BLACK, 5, 10, 11, 0, 3, 0, 2)
 SET_TIMER_GOING((12*60)*15, 1)
 
 function OnTurn()
-  if (EVERY_2POW_TURNS(10)) then
+  if (every2Pow(10)) then
     if (statue_has_prayed == TRUE) then
       ProcessGlobalSpecialList(winner, PEOPLELIST, function(t)
         if (t.Model > 1 and t.Model < 8) then
@@ -172,7 +172,7 @@ function OnTurn()
     end
   end
 
-  if (EVERY_2POW_TURNS(9)) then
+  if (every2Pow(9)) then
     local shaman = getShaman(TRIBE_BLACK)
     if (shaman ~= nil) then
       ProcessGlobalTypeList(T_PERSON, function(t)
@@ -197,7 +197,7 @@ function OnTurn()
     end
   end
 
-  if (EVERY_2POW_TURNS(8)) then
+  if (every2Pow(8)) then
     if (GET_HEAD_TRIGGER_COUNT(238,12) > 0) then
       ProcessGlobalTypeList(T_BUILDING, function(t)
         if (t.Model < 4 and t.Owner > 1) then
@@ -223,7 +223,7 @@ function OnTurn()
     MARKER_ENTRIES(TRIBE_BLACK, 4, 5, NO_MARKER, NO_MARKER)
   end
 
-  if (EVERY_2POW_TURNS(5)) then
+  if (every2Pow(5)) then
     for k,v in ipairs(backdoor_points) do
       if (point_altitude(v.Xpos,v.Zpos) ~= 0) then
         for i=0,3 do
@@ -233,7 +233,7 @@ function OnTurn()
     end
   end
 
-  if (EVERY_2POW_TURNS(7)) then
+  if (every2Pow(7)) then
     if (HAS_TIMER_REACHED_ZERO()) then
       if (connected == FALSE) then
         for i,v in ipairs(connectionPoints) do
@@ -252,7 +252,7 @@ function OnTurn()
     end
   end
 
-  if (EVERY_2POW_TURNS(4)) then
+  if (every2Pow(4)) then
     if (statue_has_prayed == FALSE and GET_HEAD_TRIGGER_COUNT(238,12) == 0) then
       ProcessGlobalTypeList(T_PERSON, function(t)
         if (t.Model == M_PERSON_ANGEL and t.Owner == TRIBE_BLACK) then
@@ -272,7 +272,7 @@ function OnTurn()
     end
   end
 
-  if (EVERY_2POW_TURNS(2)) then
+  if (every2Pow(2)) then
     if (GetTurn() > 12*15 and not tip_shown) then
       tip_shown = true
       log_msg(TRIBE_NEUTRAL,"TIP: Invoking the ancient flying creature will fill Your blood with determination.")

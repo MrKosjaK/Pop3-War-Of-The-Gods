@@ -278,7 +278,7 @@ function OnTurn()
       end
     end
 
-    if (EVERY_2POW_TURNS(10)) then
+    if (every2Pow(10)) then
       if (tablelength(p_towers) > 0) then
         local t_idx = tablelength(p_towers)
         local t_rnd = G_RANDOM(t_idx)+1
@@ -302,7 +302,7 @@ function OnTurn()
       end
     end
 
-    if (EVERY_2POW_TURNS(9)) then
+    if (every2Pow(9)) then
       for i = 4,7 do
         if (PLAYERS_PEOPLE_OF_TYPE(i, M_PERSON_BRAVE) > 15 and GetPlayerPeople(i) > 25) then
           WRITE_CP_ATTRIB(i, ATTR_PREF_WARRIOR_TRAINS, 1)
@@ -340,7 +340,7 @@ function OnTurn()
       end)
     end
 
-    if (EVERY_2POW_TURNS(5)) then
+    if (every2Pow(5)) then
       local shaman = getShaman(TRIBE_YELLOW)
       if (shaman ~= nil) then
         SearchMapCells(CIRCULAR, 0, 0, 2, world_coord2d_to_map_idx(shaman.Pos.D2), function(me)
@@ -391,7 +391,7 @@ function OnTurn()
       end
     end
 
-    if (EVERY_2POW_TURNS(4)) then
+    if (every2Pow(4)) then
       if (should_i_check_for_flats) then
         if (flats_to_use > 0) then
           local s = getShaman(TRIBE_ORANGE)
@@ -414,7 +414,7 @@ function OnTurn()
       end
     end
 
-    if (EVERY_2POW_TURNS(2)) then
+    if (every2Pow(2)) then
       for i=1,tablelength(availableNums) do
         local shaman = getShaman(availableNums[i])
         if (shaman ~= nil) then
@@ -437,7 +437,7 @@ function OnTurn()
       end
     end
 
-    if (EVERY_2POW_TURNS(3)) then
+    if (every2Pow(3)) then
       if (GetPlayerPeople(TRIBE_ORANGE) +
           GetPlayerPeople(TRIBE_YELLOW) +
           GetPlayerPeople(TRIBE_GREEN) +

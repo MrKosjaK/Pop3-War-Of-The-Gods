@@ -70,7 +70,7 @@ for i = 2,3 do
 end
 
 function OnTurn()
-  if (EVERY_2POW_TURNS(9)) then
+  if (every2Pow(9)) then
     ProcessGlobalTypeList(T_BUILDING, function(t)
       if (t.Model < 4 and t.Owner > 1) then
         if (t.u.Bldg.SproggingCount < 2000) then
@@ -88,7 +88,7 @@ function OnTurn()
     end)
   end
 
-  if (EVERY_2POW_TURNS(6)) then
+  if (every2Pow(6)) then
     if (GetTurn() > 12*5 and GetTurn() < 12*120) then
       if (erodeSpots[1] ~= nil and spell_delay == 0) then
         createThing(T_SPELL, M_SPELL_EROSION, TRIBE_ORANGE, erodeSpots[1], false, false)
@@ -116,7 +116,7 @@ function OnTurn()
     stone_prayed = TRUE
   end
 
-  if (EVERY_2POW_TURNS(4)) then
+  if (every2Pow(4)) then
     if (COUNT_PEOPLE_IN_MARKER(TRIBE_ORANGE,TRIBE_BLUE,26,8) +
         COUNT_PEOPLE_IN_MARKER(TRIBE_ORANGE,TRIBE_RED,26,8) > 1 and
         check_for_people == TRUE and island_sank == FALSE) then

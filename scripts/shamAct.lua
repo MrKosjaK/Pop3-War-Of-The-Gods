@@ -89,7 +89,7 @@ AIShaman.reg = function(...)
             if (t.Type == T_BUILDING) then
               if (t.Owner ~= data.ShamanThing.Owner and are_players_allied(t.Owner,data.ShamanThing.Owner) == 0) then
                 if not (DoesExist(data.BldgsIdxs,t.ThingNum)) then
-                  if (t.u.Bldg.Damaged == 0) then
+                  if (t.u.Bldg.ShapeThingIdx:isNull()) then
                     if (DoesExist(ww_models,t.Model) and spell_input == M_SPELL_WHIRLWIND) then
                       createThing(T_SPELL,spell_input,data.ShamanThing.Owner,t.Pos.D3,false,false)
                       found = true

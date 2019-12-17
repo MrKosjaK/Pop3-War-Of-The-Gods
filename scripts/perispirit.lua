@@ -279,7 +279,7 @@ function OnTurn()
       end
     end
 
-    if (EVERY_2POW_TURNS(10)) then
+    if (every2Pow(10)) then
       if (tablelength(cyanTowers) > 0) then
         local t_idx = tablelength(cyanTowers)
         local t_rnd = G_RANDOM(t_idx)+1
@@ -308,7 +308,7 @@ function OnTurn()
       MARKER_ENTRIES(TRIBE_ORANGE, 4, 5, 6, NO_MARKER)
     end
 
-    if (EVERY_2POW_TURNS(9)) then
+    if (every2Pow(9)) then
       if (PLAYERS_BUILDING_OF_TYPE(TRIBE_BLUE, M_BUILDING_BOAT_HUT_1) > 0 or
           PLAYERS_BUILDING_OF_TYPE(TRIBE_RED, M_BUILDING_BOAT_HUT_1) > 0) then
         for i = 0,1 do
@@ -343,7 +343,7 @@ function OnTurn()
       end)
     end
 
-    if (EVERY_2POW_TURNS(3)) then
+    if (every2Pow(3)) then
       if (_gsi.Players[TRIBE_CYAN].NumPeople +
           _gsi.Players[TRIBE_ORANGE].NumPeople +
           _gsi.Players[TRIBE_YELLOW].NumPeople +

@@ -24,7 +24,7 @@ for i = 2,3 do
 end
 
 function OnTurn()
-  if (EVERY_2POW_TURNS(9)) then
+  if (every2Pow(9)) then
     ProcessGlobalTypeList(T_BUILDING, function(t)
       if (t.Model < 4 and t.Owner > 1) then
         if (t.u.Bldg.SproggingCount < 2000) then
@@ -42,7 +42,7 @@ function OnTurn()
     end
   end
 
-  if (EVERY_2POW_TURNS(5)) then
+  if (every2Pow(5)) then
     local idx = G_RANDOM(tablelength(availableNums))+1
     local shaman = getShaman(availableNums[idx])
 
@@ -60,7 +60,7 @@ function OnTurn()
     end
   end
 
-  if (EVERY_2POW_TURNS(3)) then
+  if (every2Pow(3)) then
     if (_gsi.Players[TRIBE_YELLOW].NumPeople +
         _gsi.Players[TRIBE_GREEN].NumPeople < 140 and
         GetTurn() < (12*60)*2 and

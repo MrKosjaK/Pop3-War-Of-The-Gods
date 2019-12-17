@@ -45,7 +45,7 @@ for i = 0,bushes_groups do
 end
 
 function OnTurn()
-  if (EVERY_2POW_TURNS(6)) then
+  if (every2Pow(6)) then
     ProcessGlobalSpecialList(TRIBE_NEUTRAL, WOODLIST, function(t)
       if (t.Model == 4) then
         if (t.DrawInfo.DrawNum == 159) then

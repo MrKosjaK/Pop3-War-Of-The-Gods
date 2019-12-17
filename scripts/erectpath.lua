@@ -103,7 +103,7 @@ SET_DRUM_TOWER_POS(TRIBE_CYAN, 230, 244)
 SET_DRUM_TOWER_POS(TRIBE_PINK, 28, 12)
 
 function OnTurn()
-  if (EVERY_2POW_TURNS(11)) then
+  if (every2Pow(11)) then
     local h1 = GET_HEIGHT_AT_POS(12)
     local h2 = GET_HEIGHT_AT_POS(14)
     if (MANA(TRIBE_PINK) > SPELL_COST(M_SPELL_LAND_BRIDGE)) then
@@ -147,7 +147,7 @@ function OnTurn()
     end
   end
 
-  if (EVERY_2POW_TURNS(9)) then
+  if (every2Pow(9)) then
     ProcessGlobalTypeList(T_BUILDING, function(t)
       if (t.Model < 4 and t.Owner > 2) then
         if (t.u.Bldg.SproggingCount < 2000) then
@@ -159,7 +159,7 @@ function OnTurn()
     end)
   end
 
-  if (EVERY_2POW_TURNS(3)) then
+  if (every2Pow(3)) then
     if (_gsi.Players[TRIBE_GREEN].NumPeople +
         _gsi.Players[TRIBE_CYAN].NumPeople +
         _gsi.Players[TRIBE_PINK].NumPeople < 80 and

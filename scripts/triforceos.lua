@@ -118,7 +118,7 @@ SET_MARKER_ENTRY(TRIBE_PINK, 1, 9, 10, 0, 2, 0, 3)
 SET_MARKER_ENTRY(TRIBE_PINK, 2, 14, 15, 0, 3, 0, 2)
 
 function OnTurn()
-  if (EVERY_2POW_TURNS(11)) then
+  if (every2Pow(11)) then
     local who_i_attack = playernum[G_RANDOM(tablelength(playernum))+1]
     local tries = 8
 
@@ -191,7 +191,7 @@ function OnTurn()
     end
   end
 
-  if (EVERY_2POW_TURNS(10)) then
+  if (every2Pow(10)) then
     if (G_RANDOM(2) == 1) then
       shaman_patrol = TRUE
     else
@@ -199,7 +199,7 @@ function OnTurn()
     end
   end
 
-  if (EVERY_2POW_TURNS(9)) then
+  if (every2Pow(9)) then
     if (PLAYERS_PEOPLE_OF_TYPE(TRIBE_PINK, M_PERSON_WARRIOR) > 4 and PLAYERS_PEOPLE_OF_TYPE(TRIBE_PINK, M_PERSON_RELIGIOUS) > 3) then
       MARKER_ENTRIES(TRIBE_PINK, 0, 1, NO_MARKER, NO_MARKER)
       if (GET_HEAD_TRIGGER_COUNT(232, 78) > 0) then
@@ -256,7 +256,7 @@ function OnTurn()
     end
   end
 
-  if (EVERY_2POW_TURNS(7)) then
+  if (every2Pow(7)) then
     ProcessGlobalTypeList(T_BUILDING, function(t)
       if (t.Model < 4 and t.Owner > 1) then
         if (t.u.Bldg.SproggingCount < 2000) then
@@ -279,7 +279,7 @@ function OnTurn()
     end
   end
 
-  if (EVERY_2POW_TURNS(6)) then
+  if (every2Pow(6)) then
     local shaman = getShaman(TRIBE_PINK)
     if (shaman ~= nil) then
       ProcessGlobalTypeList(T_PERSON, function(t)
@@ -298,13 +298,13 @@ function OnTurn()
             end
           end
         end
-        
+
         return true
       end)
     end
   end
 
-  if (EVERY_2POW_TURNS(3)) then
+  if (every2Pow(3)) then
     if (_gsi.Players[TRIBE_PINK].NumPeople < 70 and
         GetTurn() < (12*60)*2 and
         GetTurn() > (12*10)) then

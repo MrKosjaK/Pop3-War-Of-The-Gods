@@ -385,7 +385,7 @@ function OnTurn()
       end
     end
 
-    if (EVERY_2POW_TURNS(9)) then
+    if (every2Pow(9)) then
       for i = 4,7 do
         if (PLAYERS_PEOPLE_OF_TYPE(i, M_PERSON_BRAVE) > 20 and _gsi.Players[i].NumPeople > 35) then
           WRITE_CP_ATTRIB(i, ATTR_PREF_WARRIOR_TRAINS, 1)
@@ -427,7 +427,7 @@ function OnTurn()
       end)
     end
 
-    if (EVERY_2POW_TURNS(2)) then
+    if (every2Pow(2)) then
       for i=1,tablelength(availableNums) do
         local shaman = getShaman(availableNums[i])
         if (shaman ~= nil) then
@@ -450,7 +450,7 @@ function OnTurn()
       end
     end
 
-    if (EVERY_2POW_TURNS(3)) then
+    if (every2Pow(3)) then
       if (_gsi.Players[TRIBE_CYAN].NumPeople +
           _gsi.Players[TRIBE_ORANGE].NumPeople +
           _gsi.Players[TRIBE_YELLOW].NumPeople +
@@ -463,7 +463,7 @@ function OnTurn()
       end
     end
 
-    if (EVERY_2POW_TURNS(5)) then
+    if (every2Pow(5)) then
       for i,v in ipairs(availableNums) do
         if (spell_ms_used[i] < spell_ms_max_use) then
           local s = getShaman(v)

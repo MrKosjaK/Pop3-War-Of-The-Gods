@@ -104,7 +104,7 @@ SHAMAN_DEFEND(TRIBE_BLACK, 60, 124, TRUE)
 SET_DRUM_TOWER_POS(TRIBE_BLACK, 60, 124)
 
 function OnTurn()
-  if (EVERY_2POW_TURNS(11)) then
+  if (every2Pow(11)) then
     if (GetTurn() > 12 * 300) then
       if (_gsi.Players[TRIBE_BLACK].NumPeople > 45) then
         if (IS_SHAMAN_AVAILABLE_FOR_ATTACK(TRIBE_BLACK) == 1) then
@@ -117,7 +117,7 @@ function OnTurn()
     end
   end
 
-  if (EVERY_2POW_TURNS(8)) then
+  if (every2Pow(8)) then
     if (GET_HEIGHT_AT_POS(2) > 0) then
       if (PLAYERS_PEOPLE_OF_TYPE(TRIBE_BLACK, M_PERSON_WARRIOR) > 3) then
         WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_MEDICINE_MAN, 0)
@@ -126,7 +126,7 @@ function OnTurn()
     end
   end
 
-  if (EVERY_2POW_TURNS(9)) then
+  if (every2Pow(9)) then
     ProcessGlobalTypeList(T_BUILDING, function(t)
       if (t.Model < 4 and t.Owner > 1) then
         if (t.u.Bldg.SproggingCount < 2000) then
@@ -144,7 +144,7 @@ function OnTurn()
     end
   end
 
-  if (EVERY_2POW_TURNS(3)) then
+  if (every2Pow(3)) then
     if (_gsi.Players[TRIBE_YELLOW].NumPeople +
         _gsi.Players[TRIBE_BLACK].NumPeople < 70 and
         GetTurn() < (12*60)*2 and

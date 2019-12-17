@@ -30,6 +30,12 @@ function everyPow(a,b)
   end
 end
 
+function every2Pow(a)
+  if (_gsi.Counts.GameTurn % 2^a == 0) then
+    return true else return false
+  end
+end
+
 function DoesExist(table,input)
   for i,v in ipairs(table) do
     if (v == input) then

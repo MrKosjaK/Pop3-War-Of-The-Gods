@@ -488,7 +488,7 @@ function OnTurn()
       end
     end
 
-    if (EVERY_2POW_TURNS(10)) then
+    if (every2Pow(10)) then
       if (tablelength(cyanTowers) > 0) then
         local t_idx = tablelength(cyanTowers)
         local t_rnd = G_RANDOM(t_idx)+1
@@ -518,7 +518,7 @@ function OnTurn()
       end
     end
 
-    if (EVERY_2POW_TURNS(9)) then
+    if (every2Pow(9)) then
       for i = 4,7 do
         if (PLAYERS_PEOPLE_OF_TYPE(i, M_PERSON_BRAVE) > 15 and _gsi.Players[i].NumPeople > 25) then
           WRITE_CP_ATTRIB(i, ATTR_PREF_WARRIOR_TRAINS, 1)
@@ -578,7 +578,7 @@ function OnTurn()
       end)
     end
 
-    if (EVERY_2POW_TURNS(2)) then
+    if (every2Pow(2)) then
       for i=1,tablelength(availableNums) do
         local shaman = getShaman(availableNums[i])
         if (shaman ~= nil) then
@@ -601,7 +601,7 @@ function OnTurn()
       end
     end
 
-    if (EVERY_2POW_TURNS(3)) then
+    if (every2Pow(3)) then
       if (_gsi.Players[TRIBE_CYAN].NumPeople +
           _gsi.Players[TRIBE_ORANGE].NumPeople +
           _gsi.Players[TRIBE_YELLOW].NumPeople +

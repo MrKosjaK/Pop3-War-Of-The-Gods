@@ -130,7 +130,7 @@ SET_MARKER_ENTRY(TRIBE_BLACK, 3, 42, 43, 0, 1, 1, 2)
 SET_MARKER_ENTRY(TRIBE_BLACK, 4, 44, 45, 0, 2, 0, 2)
 
 function OnTurn()
-  if (EVERY_2POW_TURNS(12)) then
+  if (every2Pow(12)) then
     if (_gsi.Players[TRIBE_BLACK].Mana > 400000 and GetTurn() > (12*60)*9) then
       if (_gsi.Players[TRIBE_BLACK].NumPeople > 60) then
         ATTACK(TRIBE_BLACK, G_RANDOM(2), 15+G_RANDOM(15), ATTACK_BUILDING, -1, 999, M_SPELL_INVISIBILITY, M_SPELL_INVISIBILITY, M_SPELL_INVISIBILITY, ATTACK_NORMAL, 0, NO_MARKER, NO_MARKER, NO_MARKER)
@@ -173,7 +173,7 @@ function OnTurn()
     end
   end
 
-  if (EVERY_2POW_TURNS(10)) then
+  if (every2Pow(10)) then
     if (GetTurn() > (12*60)*4) then
       if (FREE_ENTRIES(TRIBE_PINK) > 4) then
         if (pinkTowers == 0) then
@@ -228,7 +228,7 @@ function OnTurn()
     end
   end
 
-  if (EVERY_2POW_TURNS(9)) then
+  if (every2Pow(9)) then
     if (PLAYERS_PEOPLE_OF_TYPE(TRIBE_PINK, M_PERSON_WARRIOR) > 3 and
         PLAYERS_PEOPLE_OF_TYPE(TRIBE_PINK, M_PERSON_RELIGIOUS) > 3 and
         PLAYERS_PEOPLE_OF_TYPE(TRIBE_PINK, M_PERSON_SUPER_WARRIOR) > 3) then
@@ -260,7 +260,7 @@ function OnTurn()
     end)
   end
 
-  if (EVERY_2POW_TURNS(3)) then
+  if (every2Pow(3)) then
     if (_gsi.Players[TRIBE_PINK].NumPeople +
         _gsi.Players[TRIBE_BLACK].NumPeople < 120 and
         GetTurn() < (12*60)*2 and

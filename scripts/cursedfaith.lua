@@ -111,7 +111,7 @@ SET_MARKER_ENTRY(TRIBE_ORANGE, 3, 7, 8, 0, 2, 0, 3)
 SET_MARKER_ENTRY(TRIBE_ORANGE, 4, 12, 13, 0, 2, 0, 3)
 
 function OnTurn()
-  if (EVERY_2POW_TURNS(11) and GetTurn() > 120) then
+  if (every2Pow(11) and GetTurn() > 120) then
     attack_idx = G_RANDOM(3)
     if (attack_idx == 0) then
       if (GET_HEIGHT_AT_POS(9) == 0) then
@@ -132,7 +132,7 @@ function OnTurn()
     end
   end
 
-  if (EVERY_2POW_TURNS(10)) then
+  if (every2Pow(10)) then
     if (GetTurn() > 12*120 and mark_towers_planned == FALSE) then
       BUILD_DRUM_TOWER(TRIBE_ORANGE, 198, 68)
       BUILD_DRUM_TOWER(TRIBE_ORANGE, 186, 42)
@@ -140,7 +140,7 @@ function OnTurn()
     end
   end
 
-  if (EVERY_2POW_TURNS(9)) then
+  if (every2Pow(9)) then
     if (mark_towers_planned == TRUE) then
       if (PLAYERS_PEOPLE_OF_TYPE(TRIBE_ORANGE, M_PERSON_WARRIOR) > 5 and
           PLAYERS_PEOPLE_OF_TYPE(TRIBE_ORANGE, M_PERSON_RELIGIOUS) > 5) then
@@ -153,7 +153,7 @@ function OnTurn()
     end
   end
 
-  if (EVERY_2POW_TURNS(7)) then
+  if (every2Pow(7)) then
     ProcessGlobalTypeList(T_BUILDING, function(t)
       if (t.Model < 4 and t.Owner == TRIBE_ORANGE) then
         if (t.u.Bldg.SproggingCount < 2000) then
@@ -165,7 +165,7 @@ function OnTurn()
     end)
   end
 
-  if (EVERY_2POW_TURNS(6)) then
+  if (every2Pow(6)) then
     local shaman = getShaman(TRIBE_ORANGE)
     if (shaman ~= nil) then
       ProcessGlobalTypeList(T_PERSON, function(t)
@@ -183,7 +183,7 @@ function OnTurn()
     end
   end
 
-  if (EVERY_2POW_TURNS(3)) then
+  if (every2Pow(3)) then
     if (_gsi.Players[TRIBE_ORANGE].NumPeople < 70 and
         GetTurn() < (12*60)*2 and
         GetTurn() > (12*10)) then
