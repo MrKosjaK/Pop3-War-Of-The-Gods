@@ -34,6 +34,10 @@ atkb_tick_cyan = GetTurn() + (1759 + G_RANDOM(512))
 atkb_tick_magenta = GetTurn() + (1659 + G_RANDOM(512))
 atkb_tick_black = GetTurn() + (1359 + G_RANDOM(512))
 atkb_tick_orange = GetTurn() + (1559 + G_RANDOM(512))
+shaman_tick_cyan = GetTurn() + (3048 + G_RANDOM(2048))
+shaman_tick_magenta = GetTurn() + (3048 + G_RANDOM(2048))
+shaman_tick_black = GetTurn() + (3048 + G_RANDOM(2048))
+shaman_tick_orange = GetTurn() + (3048 + G_RANDOM(2048))
 pray_tick_all = GetTurn() + (256 + G_RANDOM(256))
 conv_center_pos = {
 MAP_XZ_2_WORLD_XYZ(156,12),
@@ -256,7 +260,7 @@ function OnTurn()
         local force = count_troops(TRIBE_CYAN)
         if (force > 16) then
           local enemy = GetPopLeader()
-          if (enemy ~= TRIBE_CYAN) then
+          if (enemy ~= TRIBE_CYAN and are_players_allied(TRIBE_CYAN,enemy) == 0) then
             if (NAV_CHECK(TRIBE_CYAN,enemy,ATTACK_BUILDING,3,0) == 1) then
               local spell = 0
               if (IS_SHAMAN_AVAILABLE_FOR_ATTACK(TRIBE_CYAN) == 1) then
@@ -274,7 +278,7 @@ function OnTurn()
         local force = count_troops(TRIBE_PINK)
         if (force > 16) then
           local enemy = GetPopLeader()
-          if (enemy ~= TRIBE_PINK) then
+          if (enemy ~= TRIBE_PINK and are_players_allied(TRIBE_PINK,enemy) == 0) then
             if (NAV_CHECK(TRIBE_PINK,enemy,ATTACK_BUILDING,3,0) == 1) then
               local spell = 0
               if (IS_SHAMAN_AVAILABLE_FOR_ATTACK(TRIBE_PINK) == 1) then
@@ -292,7 +296,7 @@ function OnTurn()
         local force = count_troops(TRIBE_BLACK)
         if (force > 22) then
           local enemy = GetPopLeader()
-          if (enemy ~= TRIBE_BLACK) then
+          if (enemy ~= TRIBE_BLACK and are_players_allied(TRIBE_BLACK,enemy) == 0) then
             if (NAV_CHECK(TRIBE_BLACK,enemy,ATTACK_BUILDING,3,0) == 1) then
               local spell = 0
               if (IS_SHAMAN_AVAILABLE_FOR_ATTACK(TRIBE_BLACK) == 1) then
@@ -310,7 +314,7 @@ function OnTurn()
         local force = count_troops(TRIBE_ORANGE)
         if (force > 22) then
           local enemy = GetPopLeader()
-          if (enemy ~= TRIBE_ORANGE) then
+          if (enemy ~= TRIBE_ORANGE and are_players_allied(TRIBE_ORANGE,enemy) == 0) then
             if (NAV_CHECK(TRIBE_ORANGE,enemy,ATTACK_BUILDING,3,0) == 1) then
               local spell = 0
               if (IS_SHAMAN_AVAILABLE_FOR_ATTACK(TRIBE_ORANGE) == 1) then
@@ -320,6 +324,44 @@ function OnTurn()
               ATTACK(TRIBE_ORANGE,enemy,math.ceil(force/2),1,3,999,spell,spell,spell,ATTACK_NORMAL,0,-1,-1,-1)
             end
           end
+        end
+      end
+    end
+
+    if (GetTurn() > shaman_tick_cyan) then
+      shaman_tick_cyan = GetTurn() + (512 + G_RANDOM(2048))
+      if (FREE_ENTRIES(TRIBE_CYAN) > 6) then
+        if (IS_SHAMAN_AVAILABLE_FOR_ATTACK(TRIBE_CYAN) > 0 and MANA(TRIBE_CYAN) > 225000) then
+          WRITE_CP_ATTRIB(TRIBE_CYAN, ATTR_AWAY_MEDICINE_MAN, 1)
+          local enemy = decide_an_enemy_to_attack(TRIBE_CYAN)
+          ATTACK(TRIBE_CYAN,enemy,0,1,0,999,7,7,7,ATTACK_NORMAL,0,-1,-1,-1)
+        end
+      end
+    elseif (GetTurn() > shaman_tick_magenta) then
+      shaman_tick_magenta = GetTurn() + (512 + G_RANDOM(2048))
+      if (FREE_ENTRIES(TRIBE_PINK) > 6) then
+        if (IS_SHAMAN_AVAILABLE_FOR_ATTACK(TRIBE_PINK) > 0 and MANA(TRIBE_PINK) > 225000) then
+          WRITE_CP_ATTRIB(TRIBE_PINK, ATTR_AWAY_MEDICINE_MAN, 1)
+          local enemy = decide_an_enemy_to_attack(TRIBE_PINK)
+          ATTACK(TRIBE_PINK,enemy,0,1,0,999,7,7,7,ATTACK_NORMAL,0,-1,-1,-1)
+        end
+      end
+    elseif (GetTurn() > shaman_tick_black) then
+      shaman_tick_black = GetTurn() + (512 + G_RANDOM(2048))
+      if (FREE_ENTRIES(TRIBE_BLACK) > 6) then
+        if (IS_SHAMAN_AVAILABLE_FOR_ATTACK(TRIBE_BLACK) > 0 and MANA(TRIBE_BLACK) > 225000) then
+          WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_MEDICINE_MAN, 1)
+          local enemy = decide_an_enemy_to_attack(TRIBE_BLACK)
+          ATTACK(TRIBE_BLACK,enemy,0,1,0,999,7,7,7,ATTACK_NORMAL,0,-1,-1,-1)
+        end
+      end
+    elseif (GetTurn() > shaman_tick_orange) then
+      shaman_tick_orange = GetTurn() + (512 + G_RANDOM(2048))
+      if (FREE_ENTRIES(TRIBE_ORANGE) > 6) then
+        if (IS_SHAMAN_AVAILABLE_FOR_ATTACK(TRIBE_ORANGE) > 0 and MANA(TRIBE_ORANGE) > 225000) then
+          WRITE_CP_ATTRIB(TRIBE_ORANGE, ATTR_AWAY_MEDICINE_MAN, 1)
+          local enemy = decide_an_enemy_to_attack(TRIBE_ORANGE)
+          ATTACK(TRIBE_ORANGE,enemy,0,1,0,999,7,7,7,ATTACK_NORMAL,0,-1,-1,-1)
         end
       end
     end

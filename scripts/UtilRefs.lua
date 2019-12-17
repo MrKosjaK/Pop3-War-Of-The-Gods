@@ -5,6 +5,7 @@ import(Module_Table)
 
 _gsi = gsi()
 _sti = scenery_type_info()
+_spti = spells_type_info()
 _c = constants()
 
 function GetTurn()
@@ -21,6 +22,22 @@ function randSign()
     a = 1
   end
   return a
+end
+
+function everyPow(a,b)
+  if (_gsi.Counts.GameTurn % a^b == 0) then
+    return true else return false
+  end
+end
+
+function DoesExist(table,input)
+  for i,v in ipairs(table) do
+    if (v == input) then
+      return true
+    end
+  end
+
+  return false
 end
 
 function GetPopLeader()
