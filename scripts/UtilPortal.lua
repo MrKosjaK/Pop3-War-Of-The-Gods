@@ -9,42 +9,42 @@ import(Module_Draw)
 
 IPortal = {}
 IPortal.reg  = function(_level, _angle, _x, _z, _spr, _diff)
-  local p = {}
-  
-  p.level = _level
-  p.angle = _angle
-  p.holo_spr = _spr
-  p.holo_diff = _diff
-  p.coord = MAP_XZ_2_WORLD_XYZ(_x, _z)
-  p.activetransfer = false
-  p.transferdelay = 0
-  
-  function p:init_portal()
-    local portal = createThing(T_SCENERY,M_SCENERY_TOP_LEVEL_SCENERY,TRIBE_HOSTBOT,p.coord,false,false)
-    portal.AngleXZ = p.angle
+  local data = {}
+
+  data.pLevel = _level
+  data.pAngle = _angle
+  data.pHoloSpr = _spr
+  data.pHoloDiff = _diff
+  data.pCoord3D = MAP_XZ_2_WORLD_XYZ(_x, _z)
+  data.pWarpActive = false
+  data.pWarpCooldown = 0
+
+  function data:InitPortal()
+    local portal = createThing(T_SCENERY,M_SCENERY_TOP_LEVEL_SCENERY,TRIBE_HOSTBOT,data.pCoord3D,false,false)
+    portal.AngleXZ = data.pAngle
     portal.DrawInfo.DrawNum = 160
     portal.DrawInfo.Flags = portal.DrawInfo.Flags | (1<<7)
     ensure_thing_on_ground(portal)
     centre_coord3d_on_block(portal.Pos.D3)
   end
-  
-  function p:init_holo()
-    local holo_level = createThing(T_GENERAL,M_GENERAL_MAPWHO_THING,TRIBE_HOSTBOT,p.coord,false,false)
-    local holo_difficulty = createThing(T_GENERAL,M_GENERAL_MAPWHO_THING,TRIBE_HOSTBOT,p.coord,false,false)
-    centre_coord3d_on_block(holo_level.Pos.D3)
-    centre_coord3d_on_block(holo_difficulty.Pos.D3)
-    holo_level.Pos.D3.Ypos = holo_level.Pos.D3.Ypos + 512 + 128
-    holo_level.DrawInfo.DrawNum = p.holo_spr
-    holo_level.DrawInfo.Alpha = -16
-    holo_difficulty.Pos.D3.Ypos = holo_difficulty.Pos.D3.Ypos + 512 + 16
-    holo_difficulty.DrawInfo.DrawNum = p.holo_diff
-    holo_difficulty.DrawInfo.Alpha = -16
+
+  function data:InitHologram()
+    local hLevel = createThing(T_GENERAL,M_GENERAL_MAPWHO_THING,TRIBE_HOSTBOT,data.pCoord3D,false,false)
+    local hDiff = createThing(T_GENERAL,M_GENERAL_MAPWHO_THING,TRIBE_HOSTBOT,data.pCoord3D,false,false)
+    centre_coord3d_on_block(hLevel.Pos.D3)
+    centre_coord3d_on_block(hDiff.Pos.D3)
+    hLevel.Pos.D3.Ypos = hLevel.Pos.D3.Ypos + 512 + 128
+    hLevel.DrawInfo.DrawNum = data.pHoloSpr
+    hLevel.DrawInfo.Alpha = -16
+    hDiff.Pos.D3.Ypos = hDiff.Pos.D3.Ypos + 512 + 16
+    hDiff.DrawInfo.DrawNum = data.pHoloDiff
+    hDiff.DrawInfo.Alpha = -16
   end
-  
-  function p:process()
-    if not (p.activetransfer) then
+
+  function data:ProcessThis()
+    if not (data.pWarpActive) then
       local shamans_present = 0
-      SearchMapCells(SQUARE, 0, 0, 1, world_coord3d_to_map_idx(p.coord), function(me)
+      SearchMapCells(SQUARE, 0, 0, 1, world_coord3d_to_map_idx(data.pCoord3D), function(me)
         me.MapWhoList:processList(function (t)
           if (t.Type == T_PERSON) then
             if (t.Model == M_PERSON_MEDICINE_MAN) then
@@ -57,27 +57,27 @@ IPortal.reg  = function(_level, _angle, _x, _z, _spr, _diff)
         end)
         return true
       end)
-      
-      if (shamans_present == 2 and not p.activetransfer) then
-        p.activetransfer = true
-        p.transferdelay = 36
+
+      if (shamans_present == 2 and not data.pWarpActive) then
+        data.pWarpActive = true
+        data.pWarpCooldown = 36
       end
     else
-      if (p.transferdelay > 0) then
-        p.transferdelay = p.transferdelay-1
+      if (data.pWarpCooldown > 0) then
+        data.pWarpCooldown = data.pWarpCooldown-1
       else
-        change_level(p.level)
-        level_load_in_level_details_and_computer_player_info(p.level)
-        current_level = p.level
+        change_level(data.pLevel)
+        level_load_in_level_details_and_computer_player_info(data.pLevel)
+        current_level = data.pLevel
         in_hub = false
         upd_level = true
-        p.activetransfer = false
+        data.pWarpActive = false
       end
     end
   end
-  
-  p:init_portal()
-  p:init_holo()
-  
-  return p
+
+  data:InitPortal()
+  data:InitHologram()
+
+  return data
 end
