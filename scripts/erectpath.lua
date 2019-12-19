@@ -199,7 +199,7 @@ function process(n)
           if(get_world_dist_xyz(t.Pos.D3, s.Pos.D3) < (8192 + s.Pos.D3.Ypos*3) and spell_delay[s.Owner-2] == 0 and MANA(s.Owner) > 2000) then
             createThing(T_SPELL, M_SPELL_CONVERT_WILD, s.Owner, t.Pos.D3, false, false)
             _gsi.Players[s.Owner].Mana = _gsi.Players[s.Owner].Mana - 2000
-            spell_delay[s.Owner-2] = 32
+            spell_delay[s.Owner-2] = 96
           end
         end
       else

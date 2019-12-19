@@ -385,7 +385,7 @@ function process(n)
         if (s ~= nil) then
           if(get_world_dist_xyz(t.Pos.D3, s.Pos.D3) < (8192 + s.Pos.D3.Ypos*3) and spell_delay[idx] == 0) then
             createThing(T_SPELL, M_SPELL_CONVERT_WILD, s.Owner, t.Pos.D3, false, false)
-            spell_delay[idx] = 26
+            spell_delay[idx] = 72
           end
         end
       else

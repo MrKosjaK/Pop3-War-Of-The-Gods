@@ -184,9 +184,9 @@ function process(n)
           if(get_world_dist_xyz(t.Pos.D3, s.Pos.D3) < (8192 + s.Pos.D3.Ypos*3) and spell_delay[idx] == 0) then
             createThing(T_SPELL, M_SPELL_CONVERT_WILD, s.Owner, t.Pos.D3, false, false)
             if (s.Owner == TRIBE_BLACK) then
-              spell_delay[2] = 32
+              spell_delay[2] = 96
             else
-              spell_delay[1] = 32
+              spell_delay[1] = 96
             end
           end
         end
