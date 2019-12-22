@@ -29,7 +29,7 @@ AIShaman.reg = function(...)
     M_SPELL_FIRESTORM
   }
   data.SpellsDelay = {
-    0,0,0
+    720,720*2,720*3
   }
   data.SpellsUsed = {
     0,0,0
@@ -67,11 +67,11 @@ AIShaman.reg = function(...)
 
   function data:ProcessSpells()
     for i,v in ipairs(data.SpellsDelay) do
-      if (v > 0) then
+      if (v > 0 and data.SpellsUsed[i] ~= 0) then
         data.SpellsDelay[i] = v-16
       end
 
-      if (v <= 0 and data.SpellsUsed >= _spti[data.Spells[i]].OneOffMaximum) then
+      if (v <= 0 and data.SpellsUsed[i] >= _spti[data.Spells[i]].OneOffMaximum) then
         data.SpellsDelay[i] = data.SpellsCost[i]
         data.SpellsUsed[i] = data.SpellsUsed[i]-1
       end
@@ -122,11 +122,6 @@ AIShaman.reg = function(...)
           if (found) then
             return false
           end
-          --local c2d = Coord2D.new()
-          --map_ptr_to_world_coord2d(me,c2d)
-          --local c3d = Coord3D.new()
-          --coord2D_to_coord3D(c2d,c3d)
-          --createThing(T_EFFECT,M_EFFECT_SMOKE,TRIBE_BLUE,c3d,false,false)
           return true
         end)
       end
@@ -156,6 +151,7 @@ function OnTurn()
   if (everyPow(2,4)) then
     for i in ipairs(shamans) do
       shamans[i]:Process()
+      shamans[i]:ProcessSpells()
     end
   end
 end
