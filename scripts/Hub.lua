@@ -3,6 +3,7 @@ import(Module_PopScript)
 import(Module_DataTypes)
 import(Module_Globals)
 import(Module_Game)
+import(Module_System)
 
 include("UtilFlags.lua")
 include("UtilPortal.lua")
@@ -61,6 +62,12 @@ function OnTurn()
     end
   elseif not (in_hub) then
     if (upd_level) then
+      if (current_level >= 11) then
+        load_script("BetterSwamp.lua")
+      end
+      if (current_level >= 8) then
+        load_script("fws.lua")
+      end
       log_msg(TRIBE_NEUTRAL, "[green] Entering " .. current_level .. " level!")
       _gnsi.GameParams.Flags2 = disable_flag(_gnsi.GameParams.Flags2,GPF2_GAME_NO_WIN)
       upd_level = false
