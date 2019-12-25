@@ -367,7 +367,7 @@ function OnTurn()
     end
 
     if (GetTurn() > pray_tick_all) then
-      pray_tick_all = GetTurn() + (300 + G_RANDOM(256))
+      pray_tick_all = GetTurn() + (300 + G_RANDOM(1024))
       for i=0,7 do
         if (_gsi.Players[i].PlayerType == COMPUTER_PLAYER) then
           if (GetPlayerPeople(i) > 40) then
@@ -378,7 +378,7 @@ function OnTurn()
                 prayer = i
               end
             else
-              ATTACK(i,prayer,10,0,9,999,0,0,0,ATTACK_NORMAL,0,-1,-1,-1)
+              ATTACK(i,prayer,6,0,9,999,0,0,0,ATTACK_NORMAL,0,-1,-1,-1)
             end
           end
         end
