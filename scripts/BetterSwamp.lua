@@ -116,7 +116,7 @@ function OnCreateThing(t)
     if (t.Model == M_EFFECT_SWAMP) then
       if (t.Owner ~= TRIBE_NEUTRAL or TRIBE_HOSTBOT) then
         if (is_map_point_land(t.Pos.D2) ~= 0) then
-          local swamp = DOTSwamp.new(t.Owner,t.Pos.D3,1,720*3,128)
+          local swamp = DOTSwamp.new(t.Owner,t.Pos.D3,1,720*3,64)
           table.insert(swamps, swamp)
         end
         DestroyThing(t)
