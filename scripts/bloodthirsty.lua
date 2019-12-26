@@ -7,6 +7,7 @@ import(Module_Map)
 import(Module_MapWho)
 import(Module_Math)
 import(Module_Helpers)
+import(Module_System)
 
 include("UtilPThings.lua")
 include("UtilRefs.lua")
@@ -26,10 +27,10 @@ prayer = nil
 index = 1
 availableNums = {4,5,6,7,2,3}
 numthings = 16
-atk_tick_black = GetTurn() + (555 + G_RANDOM(733))
-atk_tick_orange = GetTurn() + (654 + G_RANDOM(1000))
-atk_tick_cyan = GetTurn() + (355 + G_RANDOM(1233))
-atk_tick_magenta = GetTurn() + (457 + G_RANDOM(533))
+atk_tick_black = GetTurn() + (655 + G_RANDOM(733))
+atk_tick_orange = GetTurn() + (754 + G_RANDOM(1000))
+atk_tick_cyan = GetTurn() + (455 + G_RANDOM(1233))
+atk_tick_magenta = GetTurn() + (557 + G_RANDOM(533))
 atkb_tick_cyan = GetTurn() + (1759 + G_RANDOM(512))
 atkb_tick_magenta = GetTurn() + (1659 + G_RANDOM(512))
 atkb_tick_black = GetTurn() + (1359 + G_RANDOM(512))
@@ -172,7 +173,7 @@ for i = 4,7 do
   SET_BUCKET_COUNT_FOR_SPELL(availableNums[i-3], M_SPELL_EROSION, 200)
   SET_BUCKET_COUNT_FOR_SPELL(availableNums[i-3], M_SPELL_FLATTEN, 125)
   SET_BUCKET_COUNT_FOR_SPELL(availableNums[i-3], M_SPELL_FIRESTORM, 275)
-  SET_BUCKET_COUNT_FOR_SPELL(availableNums[i-3], M_SPELL_SHIELD, 32)
+  SET_BUCKET_COUNT_FOR_SPELL(availableNums[i-3], M_SPELL_SHIELD, 28)
 
   SET_DEFENCE_RADIUS(availableNums[i-3], 7)
   SET_SPELL_ENTRY(availableNums[i-3], 0, M_SPELL_INSECT_PLAGUE, 25000, 64, 3, 0)
@@ -195,7 +196,7 @@ SET_DRUM_TOWER_POS(TRIBE_ORANGE, 214, 190)
 function OnTurn()
   if (GetTurn() > 1) then
     if (GetTurn() > atk_tick_black) then
-      atk_tick_black = GetTurn() + (555 + G_RANDOM(733))
+      atk_tick_black = GetTurn() + (655 + G_RANDOM(733))
       if (FREE_ENTRIES(TRIBE_BLACK) > 2) then
         if (count_troops(TRIBE_BLACK) > 10) then
           if (count_enemy_bldgs_around(TRIBE_BLACK,42,208,10) > 0) then
@@ -203,7 +204,6 @@ function OnTurn()
             WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_SPY, 0)
             WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_WARRIOR, 50)
             WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_SUPER_WARRIOR, 50)
-            WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_MEDICINE_MAN, 0)
             ATTACK(TRIBE_BLACK, 2+G_RANDOM(2), 2+G_RANDOM(3), 0, 20, 555, 0, 0, 0, ATTACK_NORMAL, 0, -1, -1, -1)
             ATTACK(TRIBE_BLACK, 2+G_RANDOM(2), 2+G_RANDOM(3), 0, 20, 555, 0, 0, 0, ATTACK_NORMAL, 0, -1, -1, -1)
             ATTACK(TRIBE_BLACK, 2+G_RANDOM(2), 2+G_RANDOM(3), 1, 4, 555, 0, 0, 0, ATTACK_NORMAL, 0, -1, -1, -1)
@@ -211,7 +211,7 @@ function OnTurn()
         end
       end
     elseif (GetTurn() > atk_tick_orange) then
-      atk_tick_orange = GetTurn() + (654 + G_RANDOM(1000))
+      atk_tick_orange = GetTurn() + (754 + G_RANDOM(1000))
       if (FREE_ENTRIES(TRIBE_ORANGE) > 2) then
         local amt_trps = count_troops(TRIBE_ORANGE)
         if (amt_trps > 8) then
@@ -225,7 +225,7 @@ function OnTurn()
         end
       end
     elseif (GetTurn() > atk_tick_cyan) then
-      atk_tick_cyan = GetTurn() + (355 + G_RANDOM(1233))
+      atk_tick_cyan = GetTurn() + (455 + G_RANDOM(1233))
       if (FREE_ENTRIES(TRIBE_CYAN) > 2) then
         local amt_trps = count_troops(TRIBE_CYAN)
         if (amt_trps > 10) then
@@ -239,7 +239,7 @@ function OnTurn()
         end
       end
     elseif (GetTurn() > atk_tick_magenta) then
-      atk_tick_magenta = GetTurn() + (457 + G_RANDOM(533))
+      atk_tick_magenta = GetTurn() + (557 + G_RANDOM(533))
       if (FREE_ENTRIES(TRIBE_PINK) > 2) then
         local amt_trps = count_troops(TRIBE_PINK)
         if (amt_trps > 12) then
@@ -267,7 +267,7 @@ function OnTurn()
                 spell = 19
                 WRITE_CP_ATTRIB(TRIBE_CYAN, ATTR_AWAY_MEDICINE_MAN, 1)
               end
-              ATTACK(TRIBE_CYAN,enemy,math.ceil(force/2),1,3,999,spell,spell,spell,ATTACK_NORMAL,0,-1,-1,-1)
+              ATTACK(TRIBE_CYAN,enemy,math.ceil(force/2),1,3,999,spell,0,0,ATTACK_NORMAL,0,-1,-1,-1)
             end
           end
         end
@@ -285,7 +285,7 @@ function OnTurn()
                 spell = 19
                 WRITE_CP_ATTRIB(TRIBE_PINK, ATTR_AWAY_MEDICINE_MAN, 1)
               end
-              ATTACK(TRIBE_PINK,enemy,math.ceil(force/2),1,3,999,spell,spell,spell,ATTACK_NORMAL,0,-1,-1,-1)
+              ATTACK(TRIBE_PINK,enemy,math.ceil(force/2),1,3,999,spell,0,0,ATTACK_NORMAL,0,-1,-1,-1)
             end
           end
         end
@@ -303,7 +303,7 @@ function OnTurn()
                 spell = 19
                 WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_MEDICINE_MAN, 1)
               end
-              ATTACK(TRIBE_BLACK,enemy,math.ceil(force/2),1,3,999,spell,spell,spell,ATTACK_NORMAL,0,-1,-1,-1)
+              ATTACK(TRIBE_BLACK,enemy,math.ceil(force/2),1,3,999,spell,0,0,ATTACK_NORMAL,0,-1,-1,-1)
             end
           end
         end
@@ -321,7 +321,7 @@ function OnTurn()
                 spell = 19
                 WRITE_CP_ATTRIB(TRIBE_ORANGE, ATTR_AWAY_MEDICINE_MAN, 1)
               end
-              ATTACK(TRIBE_ORANGE,enemy,math.ceil(force/2),1,3,999,spell,spell,spell,ATTACK_NORMAL,0,-1,-1,-1)
+              ATTACK(TRIBE_ORANGE,enemy,math.ceil(force/2),1,3,999,spell,0,0,ATTACK_NORMAL,0,-1,-1,-1)
             end
           end
         end
