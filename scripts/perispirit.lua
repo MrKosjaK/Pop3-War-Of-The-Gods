@@ -97,8 +97,8 @@ for i = 2,3 do
   WRITE_CP_ATTRIB(availableNums[i-1], ATTR_BASE_UNDER_ATTACK_RETREAT, 0)
   WRITE_CP_ATTRIB(availableNums[i-1], ATTR_RANDOM_BUILD_SIDE, 1)
   WRITE_CP_ATTRIB(availableNums[i-1], ATTR_GROUP_OPTION, 1)
-  WRITE_CP_ATTRIB(availableNums[i-1], ATTR_PEOPLE_PER_BOAT, 8)
-  WRITE_CP_ATTRIB(availableNums[i-1], ATTR_PEOPLE_PER_BALLOON, 1)
+  WRITE_CP_ATTRIB(availableNums[i-1], ATTR_PEOPLE_PER_BOAT, 7)
+  WRITE_CP_ATTRIB(availableNums[i-1], ATTR_PEOPLE_PER_BALLOON, 8)
   WRITE_CP_ATTRIB(availableNums[i-1], ATTR_ENEMY_SPY_MAX_STAND, 255)
   WRITE_CP_ATTRIB(availableNums[i-1], ATTR_SPY_CHECK_FREQUENCY, 128)
   WRITE_CP_ATTRIB(availableNums[i-1], ATTR_SPY_DISCOVER_CHANCE, 10)
@@ -313,14 +313,14 @@ function OnTurn()
           PLAYERS_BUILDING_OF_TYPE(TRIBE_RED, M_BUILDING_BOAT_HUT_1) > 0) then
         for i = 0,1 do
           WRITE_CP_ATTRIB(availableNums[i+1], ATTR_PREF_BOAT_HUTS, 1)
-          WRITE_CP_ATTRIB(availableNums[i+1], ATTR_PREF_BOAT_DRIVERS, 5)
+          WRITE_CP_ATTRIB(availableNums[i+1], ATTR_PREF_BOAT_DRIVERS, 4)
           STATE_SET(availableNums[i+1], TRUE, CP_AT_TYPE_BUILD_VEHICLE)
           STATE_SET(availableNums[i+1], TRUE, CP_AT_TYPE_FETCH_FAR_VEHICLE)
         end
       elseif (GetTurn() > (12*60)*15) then
         for i = 0,1 do
           WRITE_CP_ATTRIB(availableNums[i+1], ATTR_PREF_BOAT_HUTS, 1)
-          WRITE_CP_ATTRIB(availableNums[i+1], ATTR_PREF_BOAT_DRIVERS, 5)
+          WRITE_CP_ATTRIB(availableNums[i+1], ATTR_PREF_BOAT_DRIVERS, 4)
           STATE_SET(availableNums[i+1], TRUE, CP_AT_TYPE_BUILD_VEHICLE)
           STATE_SET(availableNums[i+1], TRUE, CP_AT_TYPE_FETCH_FAR_VEHICLE)
         end

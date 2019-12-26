@@ -116,8 +116,8 @@ for i = 4,7 do
   WRITE_CP_ATTRIB(availableNums[i-3], ATTR_BASE_UNDER_ATTACK_RETREAT, 0)
   WRITE_CP_ATTRIB(availableNums[i-3], ATTR_RANDOM_BUILD_SIDE, 1)
   WRITE_CP_ATTRIB(availableNums[i-3], ATTR_GROUP_OPTION, 0)
-  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_PEOPLE_PER_BOAT, 8)
-  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_PEOPLE_PER_BALLOON, 1)
+  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_PEOPLE_PER_BOAT, 7)
+  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_PEOPLE_PER_BALLOON, 8)
   WRITE_CP_ATTRIB(availableNums[i-3], ATTR_ENEMY_SPY_MAX_STAND, 255)
   WRITE_CP_ATTRIB(availableNums[i-3], ATTR_SPY_CHECK_FREQUENCY, 128)
   WRITE_CP_ATTRIB(availableNums[i-3], ATTR_SPY_DISCOVER_CHANCE, 30)
@@ -539,14 +539,14 @@ function OnTurn()
 
             if (GetTurn() > (12*60)*8) then
               WRITE_CP_ATTRIB(i, ATTR_PREF_BOAT_HUTS, 1)
-              WRITE_CP_ATTRIB(i, ATTR_PREF_BOAT_DRIVERS, 7)
+              WRITE_CP_ATTRIB(i, ATTR_PREF_BOAT_DRIVERS, 4)
               STATE_SET(i, TRUE, CP_AT_TYPE_BUILD_VEHICLE)
               STATE_SET(i, TRUE, CP_AT_TYPE_FETCH_FAR_VEHICLE)
             end
           end
           if (i == TRIBE_ORANGE and GetTurn() > (12*60)*6) then
             WRITE_CP_ATTRIB(i, ATTR_PREF_BOAT_HUTS, 1)
-            WRITE_CP_ATTRIB(i, ATTR_PREF_BOAT_DRIVERS, 7)
+            WRITE_CP_ATTRIB(i, ATTR_PREF_BOAT_DRIVERS, 4)
             STATE_SET(i, TRUE, CP_AT_TYPE_BUILD_VEHICLE)
             STATE_SET(i, TRUE, CP_AT_TYPE_FETCH_FAR_VEHICLE)
           end
