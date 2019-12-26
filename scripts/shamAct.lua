@@ -79,51 +79,53 @@ AIShaman.reg = function(...)
   end
 
   function data:Process()
-    if (not data.ShamanProxy:isNull() and is_thing_on_ground(data.ShamanThing) == 1) then
-      local spell_input = data:DecideSpellToUse()
-      if (spell_input ~= M_SPELL_NONE) then
-        local radXZ = data:CalculateRadiusXZ(spell_input)
-        SearchMapCells(CIRCULAR,0,radXZ-4,radXZ-2,world_coord2d_to_map_idx(data.ShamanThing.Pos.D2),function(me)
-          local found = false
-          me.MapWhoList:processList(function(t)
-            if (t.Type == T_BUILDING) then
-              if (t.Owner ~= data.ShamanThing.Owner and are_players_allied(t.Owner,data.ShamanThing.Owner) == 0) then
-                if not (DoesExist(data.BldgsIdxs,t.ThingNum)) then
-                  if (t.u.Bldg.ShapeThingIdx:isNull()) then
-                    if (DoesExist(ww_models,t.Model) and spell_input == M_SPELL_WHIRLWIND) then
-                      createThing(T_SPELL,spell_input,data.ShamanThing.Owner,t.Pos.D3,false,false)
-                      found = true
-                      data.SpellsUsed[1] = data.SpellsUsed[1]+1
-                      table.insert(data.BldgsIdxs,t.ThingNum)
-                      return false
-                    end
+    if (not data.ShamanProxy:isNull()) then
+      if (data.ShamanThing.Model == M_PERSON_MEDICINE_MAN and not isFlagEnabled(data.ShamanThing.Flags2, TF2_THING_IN_AIR)) then
+        local spell_input = data:DecideSpellToUse()
+        if (spell_input ~= M_SPELL_NONE) then
+          local radXZ = data:CalculateRadiusXZ(spell_input)
+          SearchMapCells(CIRCULAR,0,radXZ-4,radXZ-2,world_coord2d_to_map_idx(data.ShamanThing.Pos.D2),function(me)
+            local found = false
+            me.MapWhoList:processList(function(t)
+              if (t.Type == T_BUILDING) then
+                if (t.Owner ~= data.ShamanThing.Owner and are_players_allied(t.Owner,data.ShamanThing.Owner) == 0) then
+                  if not (DoesExist(data.BldgsIdxs,t.ThingNum)) then
+                    if (t.u.Bldg.ShapeThingIdx:isNull()) then
+                      if (DoesExist(ww_models,t.Model) and spell_input == M_SPELL_WHIRLWIND) then
+                        createThing(T_SPELL,spell_input,data.ShamanThing.Owner,t.Pos.D3,false,false)
+                        found = true
+                        data.SpellsUsed[1] = data.SpellsUsed[1]+1
+                        table.insert(data.BldgsIdxs,t.ThingNum)
+                        return false
+                      end
 
-                    if (DoesExist(eq_models,t.Model) and spell_input == M_SPELL_EARTHQUAKE) then
-                      createThing(T_SPELL,spell_input,data.ShamanThing.Owner,t.Pos.D3,false,false)
-                      found = true
-                      data.SpellsUsed[2] = data.SpellsUsed[2]+1
-                      table.insert(data.BldgsIdxs,t.ThingNum)
-                      return false
-                    end
+                      if (DoesExist(eq_models,t.Model) and spell_input == M_SPELL_EARTHQUAKE) then
+                        createThing(T_SPELL,spell_input,data.ShamanThing.Owner,t.Pos.D3,false,false)
+                        found = true
+                        data.SpellsUsed[2] = data.SpellsUsed[2]+1
+                        table.insert(data.BldgsIdxs,t.ThingNum)
+                        return false
+                      end
 
-                    if (DoesExist(fs_models,t.Model) and spell_input == M_SPELL_FIRESTORM) then
-                      createThing(T_SPELL,spell_input,data.ShamanThing.Owner,t.Pos.D3,false,false)
-                      found = true
-                      data.SpellsUsed[3] = data.SpellsUsed[3]+1
-                      table.insert(data.BldgsIdxs,t.ThingNum)
-                      return false
+                      if (DoesExist(fs_models,t.Model) and spell_input == M_SPELL_FIRESTORM) then
+                        createThing(T_SPELL,spell_input,data.ShamanThing.Owner,t.Pos.D3,false,false)
+                        found = true
+                        data.SpellsUsed[3] = data.SpellsUsed[3]+1
+                        table.insert(data.BldgsIdxs,t.ThingNum)
+                        return false
+                      end
                     end
                   end
                 end
               end
+              return true
+            end)
+            if (found) then
+              return false
             end
             return true
           end)
-          if (found) then
-            return false
-          end
-          return true
-        end)
+        end
       end
     else
       local shaman = getShaman(data.Owner)
