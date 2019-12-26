@@ -79,7 +79,7 @@ AIShaman.reg = function(...)
   end
 
   function data:Process()
-    if not (data.ShamanProxy:isNull() and is_thing_on_ground(data.ShamanThing) == 1) then
+    if (not data.ShamanProxy:isNull() and is_thing_on_ground(data.ShamanThing) == 1) then
       local spell_input = data:DecideSpellToUse()
       if (spell_input ~= M_SPELL_NONE) then
         local radXZ = data:CalculateRadiusXZ(spell_input)
