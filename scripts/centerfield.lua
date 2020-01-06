@@ -28,9 +28,9 @@ availableNums = {4,5,6,2,3}
 numthings = 16
 pray_tick_all = GetTurn() + (256 + G_RANDOM(1024))
 lite_attack = {
-  GetTurn() + (1024 + G_RANDOM(768)),
-  GetTurn() + (1024 + G_RANDOM(768)),
-  GetTurn() + (1024 + G_RANDOM(768)),
+  GetTurn() + (1280 + G_RANDOM(768)),
+  GetTurn() + (1280 + G_RANDOM(768)),
+  GetTurn() + (1280 + G_RANDOM(768)),
 }
 shaman_attack = {
   GetTurn() + (1536 + G_RANDOM(2560)),
@@ -187,7 +187,7 @@ function OnTurn()
     if every2Pow(1) then
       for index,turn in ipairs(lite_attack) do
         if (GetTurn() > turn) then
-          lite_attack[index] = GetTurn() + (1024 + G_RANDOM(768))
+          lite_attack[index] = GetTurn() + (1280 + G_RANDOM(768))
           if (FREE_ENTRIES(index+3) > 2) then
             local troops = count_troops(index+3)
             if (troops > 5) then
@@ -203,7 +203,7 @@ function OnTurn()
     if every2Pow(2) then
       for index,turn in ipairs(shaman_attack) do
         if (GetTurn() > turn) then
-          shaman_attack[index] = GetTurn() + (1536 + G_RANDOM(2048))
+          shaman_attack[index] = GetTurn() + (1536 + G_RANDOM(2560))
           if (FREE_ENTRIES(index+3) > 2) then
             if (IS_SHAMAN_AVAILABLE_FOR_ATTACK(index+3) == 1 and MANA(index+3) > 300000) then
               WRITE_CP_ATTRIB(index+3,ATTR_AWAY_MEDICINE_MAN,1)
@@ -228,6 +228,7 @@ function OnTurn()
               end
             else
               if (count_troops(i) > 4) then
+                WRITE_CP_ATTRIB(i,ATTR_AWAY_MEDICINE_MAN,0)
                 ATTACK(i,prayer,6,0,30,999,0,0,0,ATTACK_NORMAL,0,-1,-1,-1)
               end
             end
