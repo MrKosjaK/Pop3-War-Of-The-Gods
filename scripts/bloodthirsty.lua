@@ -378,7 +378,9 @@ function OnTurn()
                 prayer = i
               end
             else
-              ATTACK(i,prayer,6,0,9,999,0,0,0,ATTACK_NORMAL,0,-1,-1,-1)
+              if (count_troops(i) > 4) then
+                ATTACK(i,prayer,6,0,30,999,0,0,0,ATTACK_NORMAL,0,-1,-1,-1)
+              end
             end
           end
         end
@@ -405,7 +407,7 @@ function OnTurn()
           STATE_SET(i, TRUE, CP_AT_TYPE_MED_MAN_GET_WILD_PEEPS)
         end
 
-        if (READ_CP_ATTRIB(i,ATTR_HOUSE_PERCENTAGE) < 200) then
+        if (READ_CP_ATTRIB(i,ATTR_HOUSE_PERCENTAGE) < 200 and GetPlayerPeople(i) > READ_CP_ATTRIB(i,ATTR_HOUSE_PERCENTAGE)) then
           WRITE_CP_ATTRIB(i,ATTR_HOUSE_PERCENTAGE,READ_CP_ATTRIB(i,ATTR_HOUSE_PERCENTAGE)+2)
         end
       end
