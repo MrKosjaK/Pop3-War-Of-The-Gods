@@ -27,6 +27,11 @@ index = 1
 availableNums = {4,5,6,2,3}
 numthings = 16
 pray_tick_all = GetTurn() + (256 + G_RANDOM(1024))
+land_bridge = {
+  GetTurn() + (2000 + G_RANDOM(3000)),
+  GetTurn() + (2000 + G_RANDOM(3000)),
+  GetTurn() + (2000 + G_RANDOM(3000))
+}
 lite_attack = {
   GetTurn() + (1280 + G_RANDOM(768)),
   GetTurn() + (1280 + G_RANDOM(768)),
@@ -181,6 +186,15 @@ SHAMAN_DEFEND(TRIBE_BLACK, 78, 84, TRUE)
 SET_DRUM_TOWER_POS(TRIBE_CYAN, 216, 204)
 SET_DRUM_TOWER_POS(TRIBE_PINK, 194, 188)
 SET_DRUM_TOWER_POS(TRIBE_BLACK, 78, 84)
+SET_MARKER_ENTRY(TRIBE_CYAN,0,44,45,0,2,2,2)
+SET_MARKER_ENTRY(TRIBE_CYAN,1,43,42,0,0,4,0)
+SET_MARKER_ENTRY(TRIBE_CYAN,2,39,40,0,2,2,2)
+SET_MARKER_ENTRY(TRIBE_PINK,0,48,49,0,2,2,2)
+SET_MARKER_ENTRY(TRIBE_PINK,1,47,46,0,0,4,0)
+SET_MARKER_ENTRY(TRIBE_PINK,2,39,41,0,2,2,2)
+SET_MARKER_ENTRY(TRIBE_BLACK,0,34,35,0,2,2,2)
+SET_MARKER_ENTRY(TRIBE_BLACK,1,36,37,0,2,2,2)
+SET_MARKER_ENTRY(TRIBE_BLACK,2,37,38,0,2,2,2)
 
 function OnTurn()
   if (GetTurn() > 1) then
@@ -200,6 +214,42 @@ function OnTurn()
       end
     end
 
+    if every2Pow(3) then
+      for index,turn in ipairs(land_bridge) do
+        if (GetTurn() > turn) then
+          land_bridge[index] = GetTurn() + (2000 + G_RANDOM(4000))
+          if (FREE_ENTRIES(index+3) > 2) then
+            if (IS_SHAMAN_AVAILABLE_FOR_ATTACK(index+3) == 1) then
+              if (MANA(index+3) > 100000) then
+                local marker = -1
+                local stand_marker = -1
+                if (index == 1) then
+                  marker = 15
+                  stand_marker = 16
+                elseif (index == 2) then
+                  marker = 27
+                  stand_marker = 28
+                elseif (index == 3) then
+                  if (G_RANDOM(2) == 1) then
+                    marker = 18
+                    stand_marker = 19
+                  else
+                    marker = 21
+                    stand_marker = 22
+                  end
+                end
+                if (GET_HEIGHT_AT_POS(marker) == 0) then
+                  WRITE_CP_ATTRIB(index+3,ATTR_AWAY_MEDICINE_MAN,1)
+                  local fakeenemy = decide_an_enemy_to_attack(index+3)
+                  ATTACK(index+3,fakeenemy,0,1,0,0,12,0,0,ATTACK_NORMAL,0,stand_marker,marker-1,-1)
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+
     if every2Pow(2) then
       for index,turn in ipairs(shaman_attack) do
         if (GetTurn() > turn) then
@@ -208,7 +258,11 @@ function OnTurn()
             if (IS_SHAMAN_AVAILABLE_FOR_ATTACK(index+3) == 1 and MANA(index+3) > 300000) then
               WRITE_CP_ATTRIB(index+3,ATTR_AWAY_MEDICINE_MAN,1)
               local enemy = decide_an_enemy_to_attack(index+3)
-              ATTACK(index+3,enemy,0,1,0,999,7,7,7,ATTACK_NORMAL,0,-1,-1,-1)
+              if (GET_NUM_ONE_OFF_SPELLS(index+3,M_SPELL_ARMAGEDDON) == 0) then
+                ATTACK(index+3,enemy,0,1,0,999,7,7,7,ATTACK_NORMAL,0,-1,-1,-1)
+              else
+                SPELL_ATTACK(index+3,M_SPELL_ARMAGEDDON,29,0)
+              end
             end
           end
         end
@@ -217,14 +271,16 @@ function OnTurn()
 
     if (GetTurn() > pray_tick_all) then
       pray_tick_all = GetTurn() + (300 + G_RANDOM(1024))
-      for i=0,7 do
+      for i=2,6 do
         if (_gsi.Players[i].PlayerType == COMPUTER_PLAYER) then
           if (GetPlayerPeople(i) > 40) then
             local people_near_stone = count_people(i,stone_head_pos,3)
             if (people_near_stone < 6) then
               if (i == GetPopLeader()) then
-                PRAY_AT_HEAD(i,6,29)
-                prayer = i
+                if (GET_HEAD_TRIGGER_COUNT(4,146) > 0) then
+                  PRAY_AT_HEAD(i,6,29)
+                  prayer = i
+                end
               end
             else
               if (count_troops(i) > 4) then
@@ -257,8 +313,12 @@ function OnTurn()
           STATE_SET(i, TRUE, CP_AT_TYPE_MED_MAN_GET_WILD_PEEPS)
         end
 
-        if (READ_CP_ATTRIB(i,ATTR_HOUSE_PERCENTAGE) < 200 and GetPlayerPeople(i) > READ_CP_ATTRIB(i,ATTR_HOUSE_PERCENTAGE)) then
+        if (READ_CP_ATTRIB(i,ATTR_HOUSE_PERCENTAGE) < 160 and GetPlayerPeople(i) > READ_CP_ATTRIB(i,ATTR_HOUSE_PERCENTAGE)) then
           WRITE_CP_ATTRIB(i,ATTR_HOUSE_PERCENTAGE,READ_CP_ATTRIB(i,ATTR_HOUSE_PERCENTAGE)+2)
+        end
+
+        if (count_troops(i) > 10) then
+          MARKER_ENTRIES(i,0,1,2,-1)
         end
       end
 
