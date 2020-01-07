@@ -63,7 +63,7 @@ function OnTurn()
   elseif not (in_hub) then
     if (upd_level) then
       load_script("AITrain.lua")
-      if (current_level >= 11) then
+      if (current_level >= 6) then
         load_script("BetterSwamp.lua")
       end
       if (current_level >= 8) then
