@@ -368,7 +368,7 @@ function OnTurn()
 
     if (GetTurn() > pray_tick_all) then
       pray_tick_all = GetTurn() + (300 + G_RANDOM(1024))
-      for i=0,7 do
+      for i=2,6 do
         if (_gsi.Players[i].PlayerType == COMPUTER_PLAYER) then
           if (GetPlayerPeople(i) > 40) then
             local people_near_stone = count_people(i,stone_head_pos,3)
@@ -407,7 +407,7 @@ function OnTurn()
           STATE_SET(i, TRUE, CP_AT_TYPE_MED_MAN_GET_WILD_PEEPS)
         end
 
-        if (READ_CP_ATTRIB(i,ATTR_HOUSE_PERCENTAGE) < 200 and GetPlayerPeople(i) > READ_CP_ATTRIB(i,ATTR_HOUSE_PERCENTAGE)) then
+        if (READ_CP_ATTRIB(i,ATTR_HOUSE_PERCENTAGE) < 140 and GetPlayerPeople(i) > READ_CP_ATTRIB(i,ATTR_HOUSE_PERCENTAGE)) then
           WRITE_CP_ATTRIB(i,ATTR_HOUSE_PERCENTAGE,READ_CP_ATTRIB(i,ATTR_HOUSE_PERCENTAGE)+2)
         end
       end

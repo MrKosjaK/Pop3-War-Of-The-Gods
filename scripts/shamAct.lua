@@ -23,7 +23,6 @@ AIShaman.reg = function(...)
   data.ShamanProxy = ObjectProxy.new()
   data.ShamanProxy:set(args[1])
   data.ShamanThing = data.ShamanProxy:get()
-  --PRIORITY, MODEL, DELAY
   data.Spells = {
     M_SPELL_WHIRLWIND,
     M_SPELL_EARTHQUAKE,
@@ -33,7 +32,7 @@ AIShaman.reg = function(...)
     720,720*2,720*3
   }
   data.SpellsUsed = {
-    0,0,0
+    3,2,2
   }
   data.SpellsCost = {
     720,720*2,720*3
