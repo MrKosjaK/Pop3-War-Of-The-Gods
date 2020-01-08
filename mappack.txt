@@ -647,8 +647,17 @@ EXTRADST: objects\objs0-2.ver
 EXTRASRC: pnts0-2.dat
 EXTRADST: objects\pnts0-2.dat
 
+EXTRASRC: morph0-3.dat
+EXTRADST: objects\morph0-3.dat
+
+EXTRASRC: morph0-4.dat
+EXTRADST: objects\morph0-4.dat
+
 EXTRASRC: facs0-5.dat
 EXTRADST: objects\facs0-5.dat
+
+EXTRASRC: morph0-5.dat
+EXTRADST: objects\morph0-5.dat
 
 EXTRASRC: objs0-5.dat
 EXTRADST: objects\objs0-5.dat
@@ -658,6 +667,9 @@ EXTRADST: objects\objs0-5.ver
 
 EXTRASRC: pnts0-5.dat
 EXTRADST: objects\pnts0-5.dat
+
+EXTRASRC: morph0-6.dat
+EXTRADST: objects\morph0-6.dat
 
 EXTRASRC: shapes.dat
 EXTRADST: objects\shapes.dat
