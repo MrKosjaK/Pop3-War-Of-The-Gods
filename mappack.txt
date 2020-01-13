@@ -521,6 +521,27 @@ EXTRADST: data\pal0-n.dat
 EXTRASRC: sky0-n.dat
 EXTRADST: data\sky0-n.dat
 
+EXTRASRC: al0-o.dat
+EXTRADST: data\al0-o.dat
+
+EXTRASRC: bigf0-o.dat
+EXTRADST: data\bigf0-o.dat
+
+EXTRASRC: fade0-o.dat
+EXTRADST: data\fade0-o.dat
+
+EXTRASRC: cliff0-o.dat
+EXTRADST: data\cliff0-o.dat
+
+EXTRASRC: ghost0-o.dat
+EXTRADST: data\ghost0-o.dat
+
+EXTRASRC: pal0-o.dat
+EXTRADST: data\pal0-o.dat
+
+EXTRASRC: sky0-o.dat
+EXTRADST: data\sky0-o.dat
+
 EXTRASRC: al0-q.dat
 EXTRADST: data\al0-q.dat
 
@@ -671,8 +692,20 @@ EXTRADST: objects\pnts0-2.dat
 EXTRASRC: morph0-3.dat
 EXTRADST: objects\morph0-3.dat
 
+EXTRASRC: facs0-4.dat
+EXTRADST: objects\facs0-4.dat
+
 EXTRASRC: morph0-4.dat
 EXTRADST: objects\morph0-4.dat
+
+EXTRASRC: objs0-4.dat
+EXTRADST: objects\objs0-4.dat
+
+EXTRASRC: objs0-4.ver
+EXTRADST: objects\objs0-4.ver
+
+EXTRASRC: pnts0-4.dat
+EXTRADST: objects\pnts0-4.dat
 
 EXTRASRC: facs0-5.dat
 EXTRADST: objects\facs0-5.dat
