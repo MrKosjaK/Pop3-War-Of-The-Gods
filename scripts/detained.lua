@@ -9,6 +9,8 @@ import(Module_MapWho)
 include("UtilPThings.lua")
 include("UtilRefs.lua")
 
+local STurn = GetTurn()
+
 _c.MaxManaValue = 2500000
 _c.ShamenDeadManaPer256Gained = 16
 
@@ -176,11 +178,11 @@ PREACH_AT_MARKER(TRIBE_PINK, 19)
 PREACH_AT_MARKER(TRIBE_PINK, 20)
 
 function OnTurn()
-  if (GetTurn() > 1) then
-    if (GetTurn() > 12*15 and not tip_shown1) then
+  if (GetTurn() > STurn + 1) then
+    if (GetTurn() > STurn + (12*15) and not tip_shown1) then
       tip_shown1 = true
       log_msg(TRIBE_NEUTRAL, "[green] Provided god-like power is not the something You can hold.")
-    elseif(GetTurn() > 12*20 and not tip_shown2) then
+    elseif(GetTurn() > STurn + (12*20) and not tip_shown2) then
       tip_shown2 = true
       log_msg(TRIBE_NEUTRAL, "[green] Although, You seem destined to be one of us.")
     end

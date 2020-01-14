@@ -8,6 +8,8 @@ import(Module_Map)
 include("UtilPThings.lua")
 include("UtilRefs.lua")
 
+local STurn = GetTurn()
+
 wilds = {}
 spell_delay = {0,0}
 index = 1
@@ -105,7 +107,7 @@ SET_DRUM_TOWER_POS(TRIBE_BLACK, 60, 124)
 
 function OnTurn()
   if (every2Pow(11)) then
-    if (GetTurn() > 12 * 300) then
+    if (GetTurn() > STurn + (12 * 300)) then
       if (_gsi.Players[TRIBE_BLACK].NumPeople > 45) then
         if (IS_SHAMAN_AVAILABLE_FOR_ATTACK(TRIBE_BLACK) == 1) then
           if (GET_HEIGHT_AT_POS(2) > 0) then
@@ -147,8 +149,8 @@ function OnTurn()
   if (every2Pow(3)) then
     if (_gsi.Players[TRIBE_YELLOW].NumPeople +
         _gsi.Players[TRIBE_BLACK].NumPeople < 70 and
-        GetTurn() < (12*60)*2 and
-        GetTurn() > (12*10)) then
+        GetTurn() < STurn + (12*60)*2 and
+        GetTurn() > STurn + (12*10)) then
       process(numthings)
     end
   end

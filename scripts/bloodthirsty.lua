@@ -12,6 +12,8 @@ import(Module_System)
 include("UtilPThings.lua")
 include("UtilRefs.lua")
 
+local STurn = GetTurn()
+
 _c.MaxManaValue = 2500000
 _c.ShamenDeadManaPer256Gained = 16
 
@@ -194,7 +196,7 @@ SET_DRUM_TOWER_POS(TRIBE_BLACK, 240, 152)
 SET_DRUM_TOWER_POS(TRIBE_ORANGE, 214, 190)
 
 function OnTurn()
-  if (GetTurn() > 1) then
+  if (GetTurn() > STurn + 1) then
     if (GetTurn() > atk_tick_black) then
       atk_tick_black = GetTurn() + (655 + G_RANDOM(733))
       if (FREE_ENTRIES(TRIBE_BLACK) > 2) then
@@ -459,8 +461,8 @@ function OnTurn()
           _gsi.Players[TRIBE_GREEN].NumPeople +
           _gsi.Players[TRIBE_PINK].NumPeople +
           _gsi.Players[TRIBE_BLACK].NumPeople < 300 and
-          GetTurn() < (12*60)*4 and
-          GetTurn() > (12*10)) then
+          GetTurn() < STurn + (12*60)*4 and
+          GetTurn() > STurn + (12*10)) then
         process(numthings)
       end
     end

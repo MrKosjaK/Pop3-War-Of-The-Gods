@@ -8,6 +8,8 @@ import(Module_Map)
 include("UtilPThings.lua")
 include("UtilRefs.lua")
 
+local STurn = GetTurn()
+
 spell_delay = 0
 index = 0
 tip_shown = false
@@ -273,7 +275,7 @@ function OnTurn()
   end
 
   if (every2Pow(2)) then
-    if (GetTurn() > 12*15 and not tip_shown) then
+    if (GetTurn() > STurn + (12*15) and not tip_shown) then
       tip_shown = true
       log_msg(TRIBE_NEUTRAL,"TIP: Invoking the ancient flying creature will fill Your blood with determination.")
     end

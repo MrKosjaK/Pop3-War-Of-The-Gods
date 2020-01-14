@@ -9,6 +9,8 @@ import(Module_Map)
 include("UtilPThings.lua")
 include("UtilRefs.lua")
 
+local STurn = GetTurn()
+
 wilds = {}
 spell_delay = {0,0,0}
 index = 1
@@ -428,7 +430,7 @@ function OnTurn()
       end
     end
 
-    if (GetTurn() > 3000 and CyanTowers < 3) then
+    if (GetTurn() > STurn + 3000 and CyanTowers < 3) then
       if (CyanTowers == 0) then
         if (FREE_ENTRIES(TRIBE_CYAN) > 4) then
           BUILD_DRUM_TOWER(TRIBE_CYAN, 108, 68)
@@ -448,7 +450,7 @@ function OnTurn()
       end
     end
 
-    if (GetTurn() > 3250 and OrangeTowers < 3) then
+    if (GetTurn() > STurn + 3250 and OrangeTowers < 3) then
       if (OrangeTowers == 0 and FREE_ENTRIES(TRIBE_ORANGE) > 2) then
         BUILD_DRUM_TOWER(TRIBE_ORANGE, 44, 122)
         OrangeTowers = 1
@@ -467,8 +469,8 @@ function OnTurn()
     if (_gsi.Players[TRIBE_YELLOW].NumPeople +
         _gsi.Players[TRIBE_CYAN].NumPeople +
         _gsi.Players[TRIBE_ORANGE].NumPeople < 140 and
-        GetTurn() < (12*60)*2 and
-        GetTurn() > (12*10)) then
+        GetTurn() < STurn + (12*60)*2 and
+        GetTurn() > STurn + (12*10)) then
       process(numthings)
     end
   end

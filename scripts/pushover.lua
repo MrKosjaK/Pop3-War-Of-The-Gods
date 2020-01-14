@@ -9,6 +9,8 @@ import(Module_Math)
 include("UtilPThings.lua")
 include("UtilRefs.lua")
 
+local STurn = GetTurn()
+
 _c.MaxManaValue = 2500000
 _c.ShamenDeadManaPer256Gained = 16
 
@@ -184,7 +186,7 @@ SET_MARKER_ENTRY(TRIBE_BLACK, 7, 48, 47, 0, 1, 1, 1)
 SET_MARKER_ENTRY(TRIBE_BLACK, 8, 46, 45, 0, 1, 1, 1)
 
 function OnTurn()
-  if (GetTurn() > 1) then
+  if (GetTurn() > STurn + 1) then
     if (GetTurn() > tick_c_attack) then
       tick_c_attack = GetTurn() + (1840 + G_RANDOM(512))
       if (FREE_ENTRIES(TRIBE_CYAN) > 4) then
@@ -537,14 +539,14 @@ function OnTurn()
             WRITE_CP_ATTRIB(i, ATTR_HOUSE_PERCENTAGE, 85+G_RANDOM(50))
             STATE_SET(i, FALSE, CP_AT_TYPE_MED_MAN_GET_WILD_PEEPS)
 
-            if (GetTurn() > (12*60)*8) then
+            if (GetTurn() > STurn + (12*60)*8) then
               WRITE_CP_ATTRIB(i, ATTR_PREF_BOAT_HUTS, 1)
               WRITE_CP_ATTRIB(i, ATTR_PREF_BOAT_DRIVERS, 4)
               STATE_SET(i, TRUE, CP_AT_TYPE_BUILD_VEHICLE)
               STATE_SET(i, TRUE, CP_AT_TYPE_FETCH_FAR_VEHICLE)
             end
           end
-          if (i == TRIBE_ORANGE and GetTurn() > (12*60)*6) then
+          if (i == TRIBE_ORANGE and GetTurn() > STurn + (12*60)*6) then
             WRITE_CP_ATTRIB(i, ATTR_PREF_BOAT_HUTS, 1)
             WRITE_CP_ATTRIB(i, ATTR_PREF_BOAT_DRIVERS, 4)
             STATE_SET(i, TRUE, CP_AT_TYPE_BUILD_VEHICLE)
@@ -608,8 +610,8 @@ function OnTurn()
           _gsi.Players[TRIBE_GREEN].NumPeople +
           _gsi.Players[TRIBE_PINK].NumPeople +
           _gsi.Players[TRIBE_BLACK].NumPeople < 300 and
-          GetTurn() < (12*60)*4 and
-          GetTurn() > (12*10)) then
+          GetTurn() < STurn + (12*60)*4 and
+          GetTurn() > STurn + (12*10)) then
         process(numthings)
       end
     end

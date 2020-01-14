@@ -12,6 +12,8 @@ import(Module_System)
 include("UtilPThings.lua")
 include("UtilRefs.lua")
 
+local STurn = GetTurn()
+
 _c.MaxManaValue = 2500000
 _c.ShamenDeadManaPer256Gained = 16
 
@@ -187,7 +189,7 @@ MARKER_ENTRIES(TRIBE_BLACK,4,5,6,7)
 MARKER_ENTRIES(TRIBE_BLACK,8,9,-1,-1)
 
 function OnTurn()
-  if (GetTurn() > 1) then
+  if (GetTurn() > STurn + 1) then
     if every2Pow(1) then
       for index,turn in ipairs(lite_attack) do
         if (GetTurn() > turn) then
@@ -261,7 +263,7 @@ function OnTurn()
     if (GetTurn() > black_pray) then
       black_pray = GetTurn() + (3072 + G_RANDOM(2048))
       if (FREE_ENTRIES(TRIBE_BLACK) > 2) then
-        if (GetTurn() > (720*15)) then
+        if (GetTurn() > STurn + (720*15)) then
           if (GET_HEAD_TRIGGER_COUNT(64, 190) > 0) then
             if (count_people(TRIBE_BLACK,stone_head_pos,3) < 4) then
               PRAY_AT_HEAD(TRIBE_BLACK,6,26)
@@ -362,8 +364,8 @@ function OnTurn()
       if (_gsi.Players[TRIBE_CYAN].NumPeople +
           _gsi.Players[TRIBE_ORANGE].NumPeople +
           _gsi.Players[TRIBE_BLACK].NumPeople < 200 and
-          GetTurn() < (12*60)*4 and
-          GetTurn() > (12*10)) then
+          GetTurn() < STurn + (12*60)*4 and
+          GetTurn() > STurn + (12*10)) then
         process(numthings)
       end
     end

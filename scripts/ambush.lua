@@ -11,6 +11,8 @@ import(Module_Helpers)
 include("UtilPThings.lua")
 include("UtilRefs.lua")
 
+local STurn = GetTurn()
+
 _c.MaxManaValue = 2500000
 _c.ShamenDeadManaPer256Gained = 16
 
@@ -200,7 +202,7 @@ SET_DRUM_TOWER_POS(TRIBE_PINK, 234, 18)
 SET_DRUM_TOWER_POS(TRIBE_ORANGE, 62, 182)
 
 function OnTurn()
-  if (GetTurn() > 1) then
+  if (GetTurn() > STurn + 1) then
     if (GetTurn() > tick_p_attack) then
       tick_p_attack = GetTurn() + (1300 + G_RANDOM(800))
       if (FREE_ENTRIES(TRIBE_PINK) > 2 and IS_SHAMAN_AVAILABLE_FOR_ATTACK(TRIBE_PINK) > 0) then
@@ -442,8 +444,8 @@ function OnTurn()
           GetPlayerPeople(TRIBE_YELLOW) +
           GetPlayerPeople(TRIBE_GREEN) +
           GetPlayerPeople(TRIBE_PINK) < 255 and
-          GetTurn() < (12*60)*4 and
-          GetTurn() > (12*10)) then
+          GetTurn() < STurn + (12*60)*4 and
+          GetTurn() > STurn + (12*10)) then
         process(numthings)
       end
     end

@@ -9,6 +9,8 @@ import(Module_Helpers)
 include("UtilPThings.lua")
 include("UtilRefs.lua")
 
+local STurn = GetTurn()
+
 wilds = {}
 spell_delay = 0
 attack_idx = 0
@@ -305,9 +307,10 @@ function OnTurn()
   end
 
   if (every2Pow(3)) then
-    if (_gsi.Players[TRIBE_PINK].NumPeople < 70 and
-        GetTurn() < (12*60)*2 and
-        GetTurn() > (12*10)) then
+    if (_gsi.Players[TRIBE_GREEN].NumPeople +
+        _gsi.Players[TRIBE_PINK].NumPeople < 80 and
+        GetTurn() < STurn + (12*60)*2 and
+        GetTurn() > STurn + (12*10)) then
       process(numthings)
     end
   end

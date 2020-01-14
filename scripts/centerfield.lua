@@ -12,6 +12,8 @@ import(Module_System)
 include("UtilPThings.lua")
 include("UtilRefs.lua")
 
+local STurn = GetTurn()
+
 _c.MaxManaValue = 2500000
 _c.ShamenDeadManaPer256Gained = 16
 
@@ -197,7 +199,7 @@ SET_MARKER_ENTRY(TRIBE_BLACK,1,36,37,0,2,2,2)
 SET_MARKER_ENTRY(TRIBE_BLACK,2,37,38,0,2,2,2)
 
 function OnTurn()
-  if (GetTurn() > 1) then
+  if (GetTurn() > STurn + 1) then
     if every2Pow(1) then
       for index,turn in ipairs(lite_attack) do
         if (GetTurn() > turn) then
@@ -368,8 +370,8 @@ function OnTurn()
           _gsi.Players[TRIBE_GREEN].NumPeople +
           _gsi.Players[TRIBE_PINK].NumPeople +
           _gsi.Players[TRIBE_BLACK].NumPeople < 300 and
-          GetTurn() < (12*60)*4 and
-          GetTurn() > (12*10)) then
+          GetTurn() < STurn + (12*60)*4 and
+          GetTurn() > STurn + (12*10)) then
         process(numthings)
       end
     end

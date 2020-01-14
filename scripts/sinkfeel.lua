@@ -10,6 +10,8 @@ import(Module_Map)
 include("UtilPThings.lua")
 include("UtilRefs.lua")
 
+local STurn = GetTurn()
+
 spell_delay = 0
 did_set_timer = FALSE
 stone_prayed = FALSE
@@ -89,13 +91,13 @@ function OnTurn()
   end
 
   if (every2Pow(6)) then
-    if (GetTurn() > 12*5 and GetTurn() < 12*120) then
+    if (GetTurn() > STurn + (12*5) and GetTurn() < STurn + (12*120)) then
       if (erodeSpots[1] ~= nil and spell_delay == 0) then
         createThing(T_SPELL, M_SPELL_EROSION, TRIBE_ORANGE, erodeSpots[1], false, false)
         spell_delay = 36
         table.remove(erodeSpots, 1)
       end
-    elseif (GetTurn() > 12*120) then
+    elseif (GetTurn() > STurn + (12*120)) then
       SHAMAN_DEFEND(TRIBE_ORANGE, 240, 226, TRUE)
       MARKER_ENTRIES(TRIBE_ORANGE, 2, NO_MARKER, NO_MARKER, NO_MARKER)
     end
@@ -155,14 +157,4 @@ function OnCreateThing(t)
       end
     end
   end
-end
-
-function randSign()
-	local sign = -1
-
-	if (G_RANDOM(2) == 0) then
-		sign = 1
-	end
-
-	return sign;
 end

@@ -8,6 +8,8 @@ import(Module_MapWho)
 include("UtilPThings.lua")
 include("UtilRefs.lua")
 
+local STurn = GetTurn()
+
 _c.MaxManaValue = 2000000
 _c.ShamenDeadManaPer256Gained = 16
 
@@ -159,7 +161,7 @@ SET_MARKER_ENTRY(TRIBE_ORANGE, 5, 44, 45, 0, 1, 1, 1)
 SET_MARKER_ENTRY(TRIBE_ORANGE, 6, 46, 47, 0, 2, 1, 2)
 
 function OnTurn()
-  if (GetTurn() > 1) then
+  if (GetTurn() > STurn + 1) then
     if (GetTurn() > tickCyanAttack) then
       tickCyanAttack = GetTurn() + (1744+G_RANDOM(512))
       if (_gsi.Players[TRIBE_BLUE].NumPeople > 0 or _gsi.Players[TRIBE_RED].NumPeople > 0) then
@@ -317,7 +319,7 @@ function OnTurn()
           STATE_SET(availableNums[i+1], TRUE, CP_AT_TYPE_BUILD_VEHICLE)
           STATE_SET(availableNums[i+1], TRUE, CP_AT_TYPE_FETCH_FAR_VEHICLE)
         end
-      elseif (GetTurn() > (12*60)*15) then
+      elseif (GetTurn() > STurn + (12*60)*15) then
         for i = 0,1 do
           WRITE_CP_ATTRIB(availableNums[i+1], ATTR_PREF_BOAT_HUTS, 1)
           WRITE_CP_ATTRIB(availableNums[i+1], ATTR_PREF_BOAT_DRIVERS, 4)
@@ -348,8 +350,8 @@ function OnTurn()
           _gsi.Players[TRIBE_ORANGE].NumPeople +
           _gsi.Players[TRIBE_YELLOW].NumPeople +
           _gsi.Players[TRIBE_GREEN].NumPeople < 160 and
-          GetTurn() < (12*60)*2 and
-          GetTurn() > (12*10)) then
+          GetTurn() < STurn + (12*60)*2 and
+          GetTurn() > STurn + (12*10)) then
         process(numthings)
       end
     end

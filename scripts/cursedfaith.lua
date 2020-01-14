@@ -8,6 +8,8 @@ import(Module_Map)
 include("UtilPThings.lua")
 include("UtilRefs.lua")
 
+local STurn = GetTurn()
+
 wilds = {}
 spell_delay = 0
 attack_idx = 0
@@ -111,7 +113,7 @@ SET_MARKER_ENTRY(TRIBE_ORANGE, 3, 7, 8, 0, 2, 0, 3)
 SET_MARKER_ENTRY(TRIBE_ORANGE, 4, 12, 13, 0, 2, 0, 3)
 
 function OnTurn()
-  if (every2Pow(11) and GetTurn() > 120) then
+  if (every2Pow(11) and GetTurn() > STurn + 120) then
     attack_idx = G_RANDOM(3)
     if (attack_idx == 0) then
       if (GET_HEIGHT_AT_POS(9) == 0) then
@@ -133,7 +135,7 @@ function OnTurn()
   end
 
   if (every2Pow(10)) then
-    if (GetTurn() > 12*120 and mark_towers_planned == FALSE) then
+    if (GetTurn() > STurn + (12*120) and mark_towers_planned == FALSE) then
       BUILD_DRUM_TOWER(TRIBE_ORANGE, 198, 68)
       BUILD_DRUM_TOWER(TRIBE_ORANGE, 186, 42)
       mark_towers_planned = TRUE
@@ -185,8 +187,8 @@ function OnTurn()
 
   if (every2Pow(3)) then
     if (_gsi.Players[TRIBE_ORANGE].NumPeople < 70 and
-        GetTurn() < (12*60)*2 and
-        GetTurn() > (12*10)) then
+        GetTurn() < STurn + (12*60)*2 and
+        GetTurn() > STurn + (12*10)) then
       process(numthings)
     end
   end

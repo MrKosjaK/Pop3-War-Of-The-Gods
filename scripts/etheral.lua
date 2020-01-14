@@ -10,6 +10,8 @@ import(Module_Helpers)
 include("UtilPThings.lua")
 include("UtilRefs.lua")
 
+local STurn = GetTurn()
+
 _c.MaxManaValue = 2500000
 _c.ShamenDeadManaPer256Gained = 16
 
@@ -165,7 +167,7 @@ SET_DRUM_TOWER_POS(TRIBE_CYAN, 76, 244)
 SET_DRUM_TOWER_POS(TRIBE_BLACK, 218, 186)
 
 function OnTurn()
-  if (GetTurn() > 1) then
+  if (GetTurn() > STurn + 1) then
     if (GetTurn() > tick_c_balloon) then
       tick_c_balloon = GetTurn() + (1000 + G_RANDOM(1000))
       if (PLAYERS_VEHICLE_OF_TYPE(TRIBE_CYAN, M_VEHICLE_AIRSHIP_1) > 0 and FREE_ENTRIES(TRIBE_CYAN) > 2) then
@@ -429,8 +431,8 @@ function OnTurn()
     if (every2Pow(3)) then
       if (_gsi.Players[TRIBE_CYAN].NumPeople +
           _gsi.Players[TRIBE_BLACK].NumPeople < 150 and
-          GetTurn() < (12*60)*4 and
-          GetTurn() > (12*10)) then
+          GetTurn() < STurn + (12*60)*4 and
+          GetTurn() > STurn + (12*10)) then
         process(numthings)
       end
     end
