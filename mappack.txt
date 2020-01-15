@@ -608,6 +608,18 @@ EXTRADST: data\sky0-s.dat
 EXTRASRC: hfx0-0.dat
 EXTRADST: data\hfx0-0.dat
 
+EXTRASRC: AITrain.lua
+EXTRADST: scripts\AITrain.lua
+
+EXTRASRC: shamAct.lua
+EXTRADST: scripts\shamAct.lua
+
+EXTRASRC: BetterSwamp.lua
+EXTRADST: scripts\BetterSwamp.lua
+
+EXTRASRC: SprDefs.lua
+EXTRADST: scripts\SprDefs.lua
+
 EXTRASRC: UtilPThings.lua
 EXTRADST: scripts\UtilPThings.lua
 
@@ -616,6 +628,9 @@ EXTRADST: scripts\UtilPortal.lua
 
 EXTRASRC: UtilFlags.lua
 EXTRADST: scripts\UtilFlags.lua
+
+EXTRASRC: UtilRefs.lua
+EXTRADST: scripts\UtilRefs.lua
 
 EXTRASRC: Hub.lua
 EXTRADST: scripts\Hub.lua
@@ -670,6 +685,18 @@ EXTRADST: scripts\ambush.lua
 
 EXTRASRC: detained.lua
 EXTRADST: scripts\detained.lua
+
+EXTRASRC: bloodthirsty.lua
+EXTRADST: scripts\bloodthirsty.lua
+
+EXTRASRC: centerfield.lua
+EXTRADST: scripts\centerfield.lua
+
+EXTRASRC: topstalker.lua
+EXTRADST: scripts\topstalker.lua
+
+EXTRASRC: absurd.lua
+EXTRADST: scripts\absurd.lua
 
 EXTRASRC: aniob0-2.dat
 EXTRADST: objects\aniob0-2.dat
