@@ -59,6 +59,15 @@ EXTRADST: levels\levl2015.dat
 EXTRASRC: levl2016.dat
 EXTRADST: levels\levl2016.dat
 
+EXTRASRC: levl2017.dat
+EXTRADST: levels\levl2017.dat
+
+EXTRASRC: levl2018.dat
+EXTRADST: levels\levl2018.dat
+
+EXTRASRC: levl2019.dat
+EXTRADST: levels\levl2019.dat
+
 EXTRASRC: levlspc2.dat
 EXTRADST: levels\levlspc2.dat
 
@@ -131,6 +140,21 @@ EXTRADST: levels\cpatr023.dat
 EXTRASRC: cpatr024.dat
 EXTRADST: levels\cpatr024.dat
 
+EXTRASRC: cpatr025.dat
+EXTRADST: levels\cpatr025.dat
+
+EXTRASRC: cpatr026.dat
+EXTRADST: levels\cpatr026.dat
+
+EXTRASRC: cpatr027.dat
+EXTRADST: levels\cpatr027.dat
+
+EXTRASRC: cpatr028.dat
+EXTRADST: levels\cpatr028.dat
+
+EXTRASRC: cpatr029.dat
+EXTRADST: levels\cpatr029.dat
+
 EXTRASRC: cpatr122.dat
 EXTRADST: levels\cpatr122.dat
 
@@ -202,6 +226,21 @@ EXTRADST: levels\cpscr023.dat
 
 EXTRASRC: cpscr024.dat
 EXTRADST: levels\cpscr024.dat
+
+EXTRASRC: cpscr025.dat
+EXTRADST: levels\cpscr025.dat
+
+EXTRASRC: cpscr026.dat
+EXTRADST: levels\cpscr026.dat
+
+EXTRASRC: cpscr027.dat
+EXTRADST: levels\cpscr027.dat
+
+EXTRASRC: cpscr028.dat
+EXTRADST: levels\cpscr028.dat
+
+EXTRASRC: cpscr029.dat
+EXTRADST: levels\cpscr029.dat
 
 EXTRASRC: cpscr122.dat
 EXTRADST: levels\cpscr122.dat
