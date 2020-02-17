@@ -33,7 +33,7 @@ levels = {
   [15] = {DATA = {15,0,44,118,1764,diff_medium}},
   [16] = {DATA = {16,0,16,152,1745,diff_medium}},
   [17] = {DATA = {17,512,238,162,1750,diff_hard}},
-  [18] = {DATA = {18,0,252,200,1754,diff_medium}},
+  [18] = {DATA = {18,0,252,200,1755,diff_medium}},
   [19] = {DATA = {19,512,236,194,1760,diff_medium}},
   [20] = {DATA = {20,512,0,168,1765,diff_hard}},
   [21] = {DATA = {21,512,6,130,1746,diff_hard}},
