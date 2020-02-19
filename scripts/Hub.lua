@@ -15,7 +15,7 @@ upd_level = false
 
 portals = {}
 --@[0] = {DATA = {LEVEL_NUM,ANGLE,X,Z,HOLO_LEVELNUM,HOLO_LEVELDIFF}}
-levels = {
+local levels = {
   [1] = {DATA = {1,0,84,156,1742,diff_easy}},
   [2] = {DATA = {2,0,82,172,1747,diff_easy}},
   [3] = {DATA = {3,0,66,160,1752,diff_easy}},
