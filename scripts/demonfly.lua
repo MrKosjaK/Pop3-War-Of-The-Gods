@@ -20,7 +20,7 @@ _c.ShamenDeadManaPer256Gained = 16
 local rt = function() return G_RANDOM(4)+1 end
 water_marker = 16
 water_marker_num = 11
-angel_counter = GetTurn() + (12*60)*3
+angel_counter = GetTurn() + (12*60)*7
 wilds = {}
 spell_delay = {0,0,0,0,0,0}
 spell_ms_delay = {720,720,720,720,720,720}
@@ -180,7 +180,7 @@ function OnTurn()
             if (G_RANDOM(10) == 0) then
               angel_counter = GetTurn() + (12*60)*1
             else
-              angel_counter = GetTurn() + (12*60)*3+G_RANDOM(2)
+              angel_counter = GetTurn() + (12*60)*4+G_RANDOM(3)
             end
           end
         end
