@@ -172,9 +172,18 @@ MARKER_ENTRIES(TRIBE_BLACK,4,5,6,-1)
 function OnTurn()
   if (GetTurn() > STurn + 1) then
     if (GetTurn() > angel_counter) then
-      if (IS_SHAMAN_AVAILABLE_FOR_ATTACK(TRIBE_BLACK) > 0) then
-        SPELL_ATTACK(TRIBE_BLACK,M_SPELL_ANGEL_OF_DEATH,2,0)
-        angel_counter = GetTurn() + (12*60)*3
+      local sham = getShaman(TRIBE_BLACK)
+      if (sham ~= nil) then
+        if (not isFlagEnabled(sham.Flags, TF_LOST_CONTROL)) then
+          if (not isFlagEnabled(sham.Flags2, TF2_THING_IN_AIR)) then
+            createThing(T_SPELL,M_SPELL_ANGEL_OF_DEATH,sham.Owner,sham.Pos.D3,false,false)
+            if (G_RANDOM(10) == 0) then
+              angel_counter = GetTurn() + (12*60)*1
+            else
+              angel_counter = GetTurn() + (12*60)*3+G_RANDOM(2)
+            end
+          end
+        end
       end
     end
 
