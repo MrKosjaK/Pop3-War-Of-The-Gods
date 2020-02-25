@@ -24,8 +24,8 @@ spell_ms_radius = 3
 spell_ms_max_use = 5
 spell_ms_charge_time = 720
 availableNums = {6}
-big_attack = GetTurn() + (3072 + G_RANDOM(2048))
-medium_attack = GetTurn() + (2048 + G_RANDOM(1024))
+big_attack = GetTurn() + (2048 + G_RANDOM(1024))
+medium_attack = GetTurn() + (1536 + G_RANDOM(512))
 botSpells = {M_SPELL_CONVERT_WILD,
              M_SPELL_BLAST,
              M_SPELL_LAND_BRIDGE,
@@ -150,7 +150,7 @@ SET_DRUM_TOWER_POS(TRIBE_BLACK, 226, 76)
 function OnTurn()
   if (GetTurn() > STurn + 1) then
     if (GetTurn() > big_attack) then
-      big_attack = GetTurn() + (3072 + G_RANDOM(2048))
+      big_attack = GetTurn() + (2048 + G_RANDOM(1024))
       if (FREE_ENTRIES(TRIBE_BLACK) > 2) then
         if (MANA(TRIBE_BLACK) > 250000 and IS_SHAMAN_AVAILABLE_FOR_ATTACK(TRIBE_BLACK) > 0) then
           if (GET_HEIGHT_AT_POS(7) > 512) then
@@ -166,7 +166,7 @@ function OnTurn()
 
     if (GetTurn() > STurn + 5000) then
       if (GetTurn() > medium_attack) then
-        medium_attack = GetTurn() + (2048 + G_RANDOM(1024))
+        medium_attack = GetTurn() + (1536 + G_RANDOM(512))
         if (FREE_ENTRIES(TRIBE_BLACK) > 2) then
           if (IS_SHAMAN_AVAILABLE_FOR_ATTACK(TRIBE_BLACK) > 0) then
             if (count_troops(TRIBE_BLACK) > 8) then
