@@ -17,10 +17,6 @@ local STurn = GetTurn()
 _c.MaxManaValue = 2500000
 _c.ShamenDeadManaPer256Gained = 16
 
-local rt = function() return G_RANDOM(4)+1 end
-water_marker = 16
-water_marker_num = 11
-angel_counter = GetTurn() + (12*60)*3
 wilds = {}
 spell_delay = {0,0,0,0,0,0}
 spell_ms_delay = {720,720,720,720,720,720}
@@ -30,11 +26,20 @@ spell_ms_max_use = 5
 spell_ms_charge_time = 720
 prayer = nil
 index = 1
-availableNums = {6}
+availableNums = {6,7}
 numthings = 16
-tick_attack_boat = GetTurn() + (2048 + G_RANDOM(512))
+orange_start_pray = GetTurn() + 1536
+lite_attack = {
+  GetTurn() + (1024 + G_RANDOM(512)),
+  GetTurn() + (1024 + G_RANDOM(512))
+}
+shaman_attack = {
+  GetTurn() + (1536 + G_RANDOM(758)),
+  GetTurn() + (1536 + G_RANDOM(758))
+}
 conv_center_pos = {
-MAP_XZ_2_WORLD_XYZ(136, 124)
+MAP_XZ_2_WORLD_XYZ(242, 224),
+MAP_XZ_2_WORLD_XYZ(102, 228)
 }
 botSpells = {M_SPELL_CONVERT_WILD,
              M_SPELL_BLAST,
@@ -51,7 +56,7 @@ botSpells = {M_SPELL_CONVERT_WILD,
              M_SPELL_FIRESTORM,
              M_SPELL_SHIELD,
              M_SPELL_FLATTEN,
-             M_SPELL_ANGEL_OF_DEATH
+             M_SPELL_VOLCANO
 }
 botBldgs = {M_BUILDING_TEPEE,
             M_BUILDING_DRUM_TOWER,
@@ -66,145 +71,149 @@ botBldgs = {M_BUILDING_TEPEE,
 for i=0,1 do
   for j=0,1 do
     set_players_allied(i,j)
+    set_players_allied(i+6,j+6)
   end
 end
 
-for u,v in ipairs(botSpells) do
-  PThing.SpellSet(TRIBE_BLACK, v, TRUE, FALSE)
+for i = 4,5 do
+  for u,v in ipairs(botSpells) do
+    PThing.SpellSet(availableNums[i-3], v, TRUE, FALSE)
+  end
+
+  for y,v in ipairs(botBldgs) do
+    PThing.BldgSet(availableNums[i-3], v, TRUE)
+  end
+
+  computer_init_player(_gsi.Players[availableNums[i-3]])
+
+  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_EXPANSION, 24+G_RANDOM(16))
+  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_HOUSE_PERCENTAGE, 30+G_RANDOM(28))
+  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_MAX_BUILDINGS_ON_GO, 6+G_RANDOM(5))
+  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_PREF_WARRIOR_TRAINS, 0)
+  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_PREF_WARRIOR_PEOPLE, 0)
+  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_PREF_RELIGIOUS_TRAINS, 0)
+  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_PREF_RELIGIOUS_PEOPLE, 0)
+  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_PREF_SUPER_WARRIOR_TRAINS, 0)
+  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_PREF_SUPER_WARRIOR_PEOPLE, 0)
+  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_PREF_SPY_TRAINS, G_RANDOM(2))
+  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_PREF_SPY_PEOPLE, G_RANDOM(5)+2)
+  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_AWAY_BRAVE, 5)
+  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_AWAY_WARRIOR, 80)
+  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_AWAY_RELIGIOUS, 69)
+  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_AWAY_SUPER_WARRIOR, 47)
+  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_AWAY_SPY, 5)
+  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_AWAY_MEDICINE_MAN, 100)
+  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_USE_PREACHER_FOR_DEFENCE, 1)
+  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_DEFENSE_RAD_INCR, 4)
+  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_MAX_DEFENSIVE_ACTIONS, 3)
+  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_ATTACK_PERCENTAGE, 125)
+  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_MAX_ATTACKS, 15)
+  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_RETREAT_VALUE, 1+G_RANDOM(25))
+  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_BASE_UNDER_ATTACK_RETREAT, 0)
+  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_RANDOM_BUILD_SIDE, 1)
+  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_GROUP_OPTION, 0)
+  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_PEOPLE_PER_BOAT, 7)
+  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_PEOPLE_PER_BALLOON, 8)
+  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_ENEMY_SPY_MAX_STAND, 255)
+  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_SPY_CHECK_FREQUENCY, 128)
+  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_SPY_DISCOVER_CHANCE, 30)
+  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_MAX_TRAIN_AT_ONCE, 5)
+  WRITE_CP_ATTRIB(availableNums[i-3], ATTR_SHAMEN_BLAST, 8)
+
+  STATE_SET(availableNums[i-3], TRUE, CP_AT_TYPE_FETCH_WOOD)
+  STATE_SET(availableNums[i-3], TRUE, CP_AT_TYPE_CONSTRUCT_BUILDING)
+  STATE_SET(availableNums[i-3], TRUE, CP_AT_TYPE_BUILD_OUTER_DEFENCES)
+  STATE_SET(availableNums[i-3], TRUE, CP_AT_TYPE_DEFEND)
+  STATE_SET(availableNums[i-3], TRUE, CP_AT_TYPE_DEFEND_BASE)
+  STATE_SET(availableNums[i-3], TRUE, CP_AT_TYPE_PREACH)
+  STATE_SET(availableNums[i-3], TRUE, CP_AT_TYPE_BRING_NEW_PEOPLE_BACK)
+  STATE_SET(availableNums[i-3], TRUE, CP_AT_TYPE_SUPER_DEFEND)
+  STATE_SET(availableNums[i-3], TRUE, CP_AT_TYPE_TRAIN_PEOPLE)
+  STATE_SET(availableNums[i-3], TRUE, CP_AT_TYPE_AUTO_ATTACK)
+  STATE_SET(availableNums[i-3], TRUE, CP_AT_TYPE_HOUSE_A_PERSON)
+  STATE_SET(availableNums[i-3], TRUE, CP_AT_TYPE_POPULATE_DRUM_TOWER)
+  STATE_SET(availableNums[i-3], TRUE, CP_AT_TYPE_FETCH_LOST_PEOPLE)
+  STATE_SET(availableNums[i-3], TRUE, CP_AT_TYPE_MED_MAN_GET_WILD_PEEPS)
+
+  SET_BUCKET_USAGE(availableNums[i-3], TRUE)
+  SET_BUCKET_COUNT_FOR_SPELL(availableNums[i-3], M_SPELL_BLAST, 8)
+  SET_BUCKET_COUNT_FOR_SPELL(availableNums[i-3], M_SPELL_CONVERT_WILD, 8)
+  SET_BUCKET_COUNT_FOR_SPELL(availableNums[i-3], M_SPELL_GHOST_ARMY, 12)
+  SET_BUCKET_COUNT_FOR_SPELL(availableNums[i-3], M_SPELL_INSECT_PLAGUE, 16)
+  SET_BUCKET_COUNT_FOR_SPELL(availableNums[i-3], M_SPELL_LAND_BRIDGE, 32)
+  SET_BUCKET_COUNT_FOR_SPELL(availableNums[i-3], M_SPELL_LIGHTNING_BOLT, 40)
+  SET_BUCKET_COUNT_FOR_SPELL(availableNums[i-3], M_SPELL_INVISIBILITY, 28)
+  SET_BUCKET_COUNT_FOR_SPELL(availableNums[i-3], M_SPELL_HYPNOTISM, 70)
+  SET_BUCKET_COUNT_FOR_SPELL(availableNums[i-3], M_SPELL_WHIRLWIND, 80)
+  SET_BUCKET_COUNT_FOR_SPELL(availableNums[i-3], M_SPELL_SWAMP, 100)
+  SET_BUCKET_COUNT_FOR_SPELL(availableNums[i-3], M_SPELL_EARTHQUAKE, 175)
+  SET_BUCKET_COUNT_FOR_SPELL(availableNums[i-3], M_SPELL_EROSION, 200)
+  SET_BUCKET_COUNT_FOR_SPELL(availableNums[i-3], M_SPELL_FLATTEN, 125)
+  SET_BUCKET_COUNT_FOR_SPELL(availableNums[i-3], M_SPELL_FIRESTORM, 275)
+  SET_BUCKET_COUNT_FOR_SPELL(availableNums[i-3], M_SPELL_SHIELD, 28)
+
+  SET_DEFENCE_RADIUS(availableNums[i-3], 7)
+  SET_SPELL_ENTRY(availableNums[i-3], 0, M_SPELL_INSECT_PLAGUE, 25000, 64, 3, 0)
+  SET_SPELL_ENTRY(availableNums[i-3], 1, M_SPELL_LIGHTNING_BOLT, 40000, 64, 2, 0)
+  SET_SPELL_ENTRY(availableNums[i-3], 2, M_SPELL_HYPNOTISM, 70000, 64, 6, 0)
+  SET_SPELL_ENTRY(availableNums[i-3], 3, M_SPELL_INSECT_PLAGUE, 25000, 64, 3, 1)
+  SET_SPELL_ENTRY(availableNums[i-3], 4, M_SPELL_LIGHTNING_BOLT, 40000, 64, 2, 1)
+  SET_SPELL_ENTRY(availableNums[i-3], 5, M_SPELL_HYPNOTISM, 70000, 64, 6, 1)
 end
 
-for y,v in ipairs(botBldgs) do
-  PThing.BldgSet(TRIBE_BLACK, v, TRUE)
-end
 
-computer_init_player(_gsi.Players[TRIBE_BLACK])
-
-WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_EXPANSION, 24+G_RANDOM(16))
-WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_HOUSE_PERCENTAGE, 30+G_RANDOM(28))
-WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_MAX_BUILDINGS_ON_GO, 6+G_RANDOM(5))
-WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_PREF_WARRIOR_TRAINS, 0)
-WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_PREF_WARRIOR_PEOPLE, 0)
-WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_PREF_RELIGIOUS_TRAINS, 0)
-WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_PREF_RELIGIOUS_PEOPLE, 0)
-WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_PREF_SUPER_WARRIOR_TRAINS, 0)
-WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_PREF_SUPER_WARRIOR_PEOPLE, 0)
-WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_PREF_SPY_TRAINS, G_RANDOM(2))
-WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_PREF_SPY_PEOPLE, G_RANDOM(5)+2)
-WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_BRAVE, 5)
-WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_WARRIOR, 80)
-WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_RELIGIOUS, 69)
-WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_SUPER_WARRIOR, 47)
-WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_SPY, 5)
-WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_AWAY_MEDICINE_MAN, 100)
-WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_USE_PREACHER_FOR_DEFENCE, 1)
-WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_DEFENSE_RAD_INCR, 4)
-WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_MAX_DEFENSIVE_ACTIONS, 3)
-WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_ATTACK_PERCENTAGE, 125)
-WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_MAX_ATTACKS, 15)
-WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_RETREAT_VALUE, 1+G_RANDOM(25))
-WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_BASE_UNDER_ATTACK_RETREAT, 0)
-WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_RANDOM_BUILD_SIDE, 1)
-WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_GROUP_OPTION, 0)
-WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_PEOPLE_PER_BOAT, 7)
-WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_PEOPLE_PER_BALLOON, 8)
-WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_ENEMY_SPY_MAX_STAND, 255)
-WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_SPY_CHECK_FREQUENCY, 128)
-WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_SPY_DISCOVER_CHANCE, 30)
-WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_MAX_TRAIN_AT_ONCE, 5)
-WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_SHAMEN_BLAST, 8)
-WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_PREF_BOAT_HUTS, 1)
-WRITE_CP_ATTRIB(TRIBE_BLACK, ATTR_PREF_BOAT_DRIVERS, 5)
-
-STATE_SET(TRIBE_BLACK, TRUE, CP_AT_TYPE_BUILD_VEHICLE)
-STATE_SET(TRIBE_BLACK, TRUE, CP_AT_TYPE_FETCH_FAR_VEHICLE)
-STATE_SET(TRIBE_BLACK, TRUE, CP_AT_TYPE_FETCH_WOOD)
-STATE_SET(TRIBE_BLACK, TRUE, CP_AT_TYPE_CONSTRUCT_BUILDING)
-STATE_SET(TRIBE_BLACK, TRUE, CP_AT_TYPE_BUILD_OUTER_DEFENCES)
-STATE_SET(TRIBE_BLACK, TRUE, CP_AT_TYPE_DEFEND)
-STATE_SET(TRIBE_BLACK, TRUE, CP_AT_TYPE_DEFEND_BASE)
-STATE_SET(TRIBE_BLACK, TRUE, CP_AT_TYPE_PREACH)
-STATE_SET(TRIBE_BLACK, TRUE, CP_AT_TYPE_BRING_NEW_PEOPLE_BACK)
-STATE_SET(TRIBE_BLACK, TRUE, CP_AT_TYPE_SUPER_DEFEND)
-STATE_SET(TRIBE_BLACK, TRUE, CP_AT_TYPE_TRAIN_PEOPLE)
-STATE_SET(TRIBE_BLACK, TRUE, CP_AT_TYPE_AUTO_ATTACK)
-STATE_SET(TRIBE_BLACK, TRUE, CP_AT_TYPE_HOUSE_A_PERSON)
-STATE_SET(TRIBE_BLACK, TRUE, CP_AT_TYPE_POPULATE_DRUM_TOWER)
-STATE_SET(TRIBE_BLACK, TRUE, CP_AT_TYPE_FETCH_LOST_PEOPLE)
-STATE_SET(TRIBE_BLACK, TRUE, CP_AT_TYPE_MED_MAN_GET_WILD_PEEPS)
-
-SET_BUCKET_USAGE(TRIBE_BLACK, TRUE)
-SET_BUCKET_COUNT_FOR_SPELL(TRIBE_BLACK, M_SPELL_BLAST, 8)
-SET_BUCKET_COUNT_FOR_SPELL(TRIBE_BLACK, M_SPELL_CONVERT_WILD, 8)
-SET_BUCKET_COUNT_FOR_SPELL(TRIBE_BLACK, M_SPELL_GHOST_ARMY, 12)
-SET_BUCKET_COUNT_FOR_SPELL(TRIBE_BLACK, M_SPELL_INSECT_PLAGUE, 16)
-SET_BUCKET_COUNT_FOR_SPELL(TRIBE_BLACK, M_SPELL_LAND_BRIDGE, 32)
-SET_BUCKET_COUNT_FOR_SPELL(TRIBE_BLACK, M_SPELL_LIGHTNING_BOLT, 40)
-SET_BUCKET_COUNT_FOR_SPELL(TRIBE_BLACK, M_SPELL_INVISIBILITY, 28)
-SET_BUCKET_COUNT_FOR_SPELL(TRIBE_BLACK, M_SPELL_HYPNOTISM, 70)
-SET_BUCKET_COUNT_FOR_SPELL(TRIBE_BLACK, M_SPELL_WHIRLWIND, 80)
-SET_BUCKET_COUNT_FOR_SPELL(TRIBE_BLACK, M_SPELL_SWAMP, 100)
-SET_BUCKET_COUNT_FOR_SPELL(TRIBE_BLACK, M_SPELL_EARTHQUAKE, 175)
-SET_BUCKET_COUNT_FOR_SPELL(TRIBE_BLACK, M_SPELL_EROSION, 200)
-SET_BUCKET_COUNT_FOR_SPELL(TRIBE_BLACK, M_SPELL_FLATTEN, 125)
-SET_BUCKET_COUNT_FOR_SPELL(TRIBE_BLACK, M_SPELL_FIRESTORM, 275)
-SET_BUCKET_COUNT_FOR_SPELL(TRIBE_BLACK, M_SPELL_SHIELD, 28)
-
-SET_DEFENCE_RADIUS(TRIBE_BLACK, 7)
-SET_SPELL_ENTRY(TRIBE_BLACK, 0, M_SPELL_INSECT_PLAGUE, 25000, 64, 3, 0)
-SET_SPELL_ENTRY(TRIBE_BLACK, 1, M_SPELL_LIGHTNING_BOLT, 40000, 64, 2, 0)
-SET_SPELL_ENTRY(TRIBE_BLACK, 2, M_SPELL_HYPNOTISM, 70000, 64, 6, 0)
-SET_SPELL_ENTRY(TRIBE_BLACK, 3, M_SPELL_INSECT_PLAGUE, 25000, 64, 3, 1)
-SET_SPELL_ENTRY(TRIBE_BLACK, 4, M_SPELL_LIGHTNING_BOLT, 40000, 64, 2, 1)
-SET_SPELL_ENTRY(TRIBE_BLACK, 5, M_SPELL_HYPNOTISM, 70000, 64, 6, 1)
-
-SHAMAN_DEFEND(TRIBE_BLACK, 142, 108, TRUE)
-SET_DRUM_TOWER_POS(TRIBE_BLACK, 142, 108)
-SET_MARKER_ENTRY(TRIBE_BLACK,0,3,-1,0,4,0,0)
-SET_MARKER_ENTRY(TRIBE_BLACK,1,4,5,0,rt(),rt(),rt())
-SET_MARKER_ENTRY(TRIBE_BLACK,2,6,7,0,rt(),rt(),rt())
-SET_MARKER_ENTRY(TRIBE_BLACK,3,8,9,0,rt(),rt(),rt())
-SET_MARKER_ENTRY(TRIBE_BLACK,4,10,11,0,rt(),rt(),rt())
-SET_MARKER_ENTRY(TRIBE_BLACK,5,12,13,0,rt(),rt(),rt())
-SET_MARKER_ENTRY(TRIBE_BLACK,6,14,15,0,rt(),rt(),rt())
-MARKER_ENTRIES(TRIBE_BLACK,0,1,2,3)
-MARKER_ENTRIES(TRIBE_BLACK,4,5,6,-1)
+SHAMAN_DEFEND(TRIBE_BLACK, 242, 224, TRUE)
+SHAMAN_DEFEND(TRIBE_ORANGE, 102, 228, TRUE)
+SET_DRUM_TOWER_POS(TRIBE_BLACK, 242, 224)
+SET_DRUM_TOWER_POS(TRIBE_ORANGE, 102, 228)
 
 function OnTurn()
   if (GetTurn() > STurn + 1) then
-    if (GetTurn() > angel_counter) then
-      local sham = getShaman(TRIBE_BLACK)
-      if (sham ~= nil) then
-        if (not isFlagEnabled(sham.Flags, TF_LOST_CONTROL)) then
-          if (not isFlagEnabled(sham.Flags2, TF2_THING_IN_AIR)) then
-            createThing(T_SPELL,M_SPELL_ANGEL_OF_DEATH,sham.Owner,sham.Pos.D3,false,false)
-            if (G_RANDOM(10) == 0) then
-              angel_counter = GetTurn() + (12*60)*1
-            else
-              angel_counter = GetTurn() + (12*60)*3+G_RANDOM(2)
+    if every2Pow(2) then
+      for i,t in ipairs(lite_attack) do
+        if (GetTurn() > t) then
+          if (FREE_ENTRIES(availableNums[i]) > 2) then
+            if (count_troops(availableNums[i]) > 10) then
+              local e = decide_an_enemy_to_attack(availableNums[i])
+              if (NAV_CHECK(availableNums[i],e,ATTACK_BUILDING,4,0) > 0) then
+                WRITE_CP_ATTRIB(availableNums[i], ATTR_AWAY_MEDICINE_MAN,0)
+                ATTACK(availableNums[i],e,2+G_RANDOM(4),ATTACK_BUILDING,4,250,0,0,0,ATTACK_NORMAL,0,-1,-1,0)
+                WRITE_CP_ATTRIB(availableNums[i], ATTR_AWAY_MEDICINE_MAN,1)
+                lite_attack[i] = GetTurn() + (1024 + G_RANDOM(512))
+              end
             end
           end
         end
       end
     end
-
+    
     if every2Pow(2) then
-      if (GetTurn() > tick_attack_boat) then
-        tick_attack_boat = GetTurn() + (2048 + G_RANDOM(512))
-        if (GET_NUM_OF_AVAILABLE_BOATS(TRIBE_BLACK) > 2) then
-          if (GetPlayerPeople(TRIBE_BLACK) > 50) then
-            local opponent = G_RANDOM(2)
-            local tries = 16
-            local arrive_point = water_marker+G_RANDOM(water_marker_num)
-            while (tries > 16) do
-              tries=tries-1
-              opponent = G_RANDOM(2)
-              if (GetPlayerPeople(opponent) ~= 0) then
-                break
+      for i,t in ipairs(shaman_attack) do
+        if (GetTurn() > t) then
+          if (FREE_ENTRIES(availableNums[i]) > 2) then
+            if (IS_SHAMAN_AVAILABLE_FOR_ATTACK(availableNums[i]) > 0) then
+              local e = decide_an_enemy_to_attack(availableNums[i])
+              if (NAV_CHECK(availableNums[i],e,ATTACK_BUILDING,1,0) > 0) then
+                WRITE_CP_ATTRIB(availableNums[i], ATTR_AWAY_MEDICINE_MAN, 1)
+                ATTACK(availableNums[i],e,0,ATTACK_BUILDING,1+G_RANDOM(3),999,7,7,7,ATTACK_NORMAL,0,-1,-1,0)
+                WRITE_CP_ATTRIB(availableNums[i], ATTR_AWAY_MEDICINE_MAN, 0)
+                shaman_attack[i] = GetTurn() + (1536 + G_RANDOM(758))
               end
             end
-            WRITE_CP_ATTRIB(TRIBE_BLACK,ATTR_AWAY_MEDICINE_MAN,1)
-            ATTACK(TRIBE_BLACK, opponent, 4+G_RANDOM(GET_NUM_OF_AVAILABLE_BOATS(TRIBE_BLACK)+1)*4, ATTACK_BUILDING, 3, 850, 7, 7, 7, ATTACK_BY_BOAT, 0, arrive_point, -1, -1)
           end
+        end
+      end
+    end
+    
+    if (GetTurn() > orange_start_pray and every2Pow(5)) then
+      if (FREE_ENTRIES(TRIBE_ORANGE) > 2) then
+        if (GET_HEAD_TRIGGER_COUNT(78,234) > 0) then
+          if (GetPlayerPeople(TRIBE_ORANGE) > 30) then
+            PRAY_AT_HEAD(TRIBE_ORANGE,3,2)
+            orange_start_pray = 999999999
+          end
+        else
+          orange_start_pray = 999999999
         end
       end
     end
@@ -229,14 +238,9 @@ function OnTurn()
           STATE_SET(i, TRUE, CP_AT_TYPE_MED_MAN_GET_WILD_PEEPS)
         end
 
-        if (READ_CP_ATTRIB(i,ATTR_HOUSE_PERCENTAGE) < 160 and GetPlayerPeople(i) > READ_CP_ATTRIB(i,ATTR_HOUSE_PERCENTAGE)) then
+        if (READ_CP_ATTRIB(i,ATTR_HOUSE_PERCENTAGE) < 180 and GetPlayerPeople(i) > READ_CP_ATTRIB(i,ATTR_HOUSE_PERCENTAGE)) then
           WRITE_CP_ATTRIB(i,ATTR_HOUSE_PERCENTAGE,READ_CP_ATTRIB(i,ATTR_HOUSE_PERCENTAGE)+2)
         end
-      end
-
-      if (count_troops(TRIBE_BLACK) > 20) then
-        MARKER_ENTRIES(TRIBE_BLACK,0,1,2,3)
-        MARKER_ENTRIES(TRIBE_BLACK,4,5,6,-1)
       end
 
       ProcessGlobalTypeList(T_BUILDING, function(t)
@@ -280,8 +284,10 @@ function OnTurn()
     end
 
     if (every2Pow(3)) then
-      if (_gsi.Players[TRIBE_BLACK].NumPeople < 100 and
-          GetTurn() < STurn + (12*60)*2 and
+      if (_gsi.Players[TRIBE_CYAN].NumPeople +
+          _gsi.Players[TRIBE_ORANGE].NumPeople +
+          _gsi.Players[TRIBE_BLACK].NumPeople < 200 and
+          GetTurn() < STurn + (12*60)*4 and
           GetTurn() > STurn + (12*10)) then
         process(numthings)
       end

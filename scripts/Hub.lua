@@ -12,6 +12,7 @@ include("SprDefs.lua")
 current_level = 0
 in_hub = true
 upd_level = false
+local scripts = 0
 
 portals = {}
 --@[0] = {DATA = {LEVEL_NUM,ANGLE,X,Z,HOLO_LEVELNUM,HOLO_LEVELDIFF}}
@@ -33,7 +34,7 @@ local levels = {
   [15] = {DATA = {15,0,44,118,1764,diff_medium}},
   [16] = {DATA = {16,0,16,152,1745,diff_medium}},
   [17] = {DATA = {17,512,238,162,1750,diff_hard}},
-  [18] = {DATA = {18,0,252,200,1755,diff_medium}},
+  [18] = {DATA = {18,0,252,200,1754,diff_medium}},
   [19] = {DATA = {19,512,236,194,1760,diff_medium}},
   [20] = {DATA = {20,512,0,168,1765,diff_hard}},
   [21] = {DATA = {21,512,6,130,1746,diff_hard}},
@@ -62,12 +63,22 @@ function OnTurn()
     end
   elseif not (in_hub) then
     if (upd_level) then
+      load_script("HubReturn.lua")
+      scripts = scripts | (1 << 1)
       load_script("AITrain.lua")
+      scripts = scripts | (1 << 2)
       if (current_level >= 6) then
         load_script("BetterSwamp.lua")
+        scripts = scripts | (1 << 3)
       end
       if (current_level >= 8) then
         load_script("fws.lua")
+        scripts = scripts ~ (1 << 4)
+      end
+      if (scripts & (1 << 4) == 0) then
+        log_msg(TRIBE_NEUTRAL, "YOU SUCK LMAO!")
+      else
+        log_msg(TRIBE_NEUTRAL, "All scripts are loaded!")
       end
       log_msg(TRIBE_NEUTRAL, "[green] Entering " .. current_level .. " level!")
       _gnsi.GameParams.Flags2 = disable_flag(_gnsi.GameParams.Flags2,GPF2_GAME_NO_WIN)
