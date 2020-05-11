@@ -166,11 +166,11 @@ function OnTurn()
       for i = 4,7 do
         if (PLAYERS_PEOPLE_OF_TYPE(i, M_PERSON_BRAVE) > 20 and _gsi.Players[i].NumPeople > 35) then
           WRITE_CP_ATTRIB(i, ATTR_PREF_WARRIOR_TRAINS, 1)
-          WRITE_CP_ATTRIB(i, ATTR_PREF_WARRIOR_PEOPLE, 18+G_RANDOM(17))
+          WRITE_CP_ATTRIB(i, ATTR_PREF_WARRIOR_PEOPLE, 12+G_RANDOM(10))
           WRITE_CP_ATTRIB(i, ATTR_PREF_RELIGIOUS_TRAINS, 1)
-          WRITE_CP_ATTRIB(i, ATTR_PREF_RELIGIOUS_PEOPLE, 15+G_RANDOM(15))
+          WRITE_CP_ATTRIB(i, ATTR_PREF_RELIGIOUS_PEOPLE, 9+G_RANDOM(6))
           WRITE_CP_ATTRIB(i, ATTR_PREF_SUPER_WARRIOR_TRAINS, 1)
-          WRITE_CP_ATTRIB(i, ATTR_PREF_SUPER_WARRIOR_PEOPLE, 16+G_RANDOM(15))
+          WRITE_CP_ATTRIB(i, ATTR_PREF_SUPER_WARRIOR_PEOPLE, 11+G_RANDOM(8))
           STATE_SET(i, FALSE, CP_AT_TYPE_MED_MAN_GET_WILD_PEEPS)
         else
           WRITE_CP_ATTRIB(i, ATTR_PREF_WARRIOR_TRAINS, 0)
@@ -182,7 +182,7 @@ function OnTurn()
           STATE_SET(i, TRUE, CP_AT_TYPE_MED_MAN_GET_WILD_PEEPS)
         end
 
-        if (READ_CP_ATTRIB(i,ATTR_HOUSE_PERCENTAGE) < 100 and GetPlayerPeople(i) > READ_CP_ATTRIB(i,ATTR_HOUSE_PERCENTAGE)) then
+        if (READ_CP_ATTRIB(i,ATTR_HOUSE_PERCENTAGE) < 69 and GetPlayerPeople(i) > READ_CP_ATTRIB(i,ATTR_HOUSE_PERCENTAGE)) then
           WRITE_CP_ATTRIB(i,ATTR_HOUSE_PERCENTAGE,READ_CP_ATTRIB(i,ATTR_HOUSE_PERCENTAGE)+2)
         end
       end
@@ -190,13 +190,13 @@ function OnTurn()
       ProcessGlobalTypeList(T_BUILDING, function(t)
         if (t.Model < 4 and t.Owner > 1) then
           if (t.u.Bldg.SproggingCount < 3000) then
-            t.u.Bldg.SproggingCount = t.u.Bldg.SproggingCount + 1500
+            t.u.Bldg.SproggingCount = t.u.Bldg.SproggingCount + 375
           end
         end
 
         if (t.Model < 3 and t.Owner > 1) then
           if (t.u.Bldg.UpgradeCount < 1000) then
-            t.u.Bldg.UpgradeCount = t.u.Bldg.UpgradeCount + 250
+            t.u.Bldg.UpgradeCount = t.u.Bldg.UpgradeCount + 50
           end
         end
 
