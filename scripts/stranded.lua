@@ -161,6 +161,9 @@ SET_DRUM_TOWER_POS(TRIBE_PINK, 246,2)
 SET_DRUM_TOWER_POS(TRIBE_BLACK,136,62)
 SET_DRUM_TOWER_POS(TRIBE_ORANGE, 72,244)
 
+local tip_shown1 = false
+local tip_shown2 = false
+
 function OnTurn()
   if (GetTurn() > STurn + 1) then
     if (GetTurn() > STurn + (12*6) and not tip_shown1) then
