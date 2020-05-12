@@ -17,6 +17,7 @@ local STurn = GetTurn()
 _c.MaxManaValue = 2500000
 _c.ShamenDeadManaPer256Gained = 16
 
+center_pos = MAP_XZ_2_WORLD_XYZ(66,68)
 spell_delay = {0,0,0,0,0,0}
 spell_ms_delay = {720,720,720,720,720,720}
 spell_ms_used = {5,5,5,5,5,5}
@@ -283,6 +284,25 @@ function OnTurn()
     for i,v in ipairs(spell_delay) do
       if (v > 0) then
         spell_delay[i] = v-1
+      end
+    end
+  end
+end
+
+function OnCreateThing(t)
+  if (t.Type == T_INTERNAL) then
+    local r = G_RANDOM(5)
+    if (r == 1) then
+      if (t.Model == 12 and t.Owner > 1 and t.u.SoulConvert.CurrModel ~= 7 and t.u.SoulConvert.CurrModel ~= 1) then
+        if (_gsi.Players[0].NumPeople > 0 and _gsi.Players[1].NumPeople > 0) then
+          createThing(T_PERSON,t.u.SoulConvert.CurrModel,G_RANDOM(2),center_pos,false,false)
+        else
+          if (_gsi.Players[0].NumPeople > 0) then
+            createThing(T_PERSON,t.u.SoulConvert.CurrModel,0,center_pos,false,false)
+          elseif (_gsi.Players[1].NumPeople > 0) then
+            createThing(T_PERSON,t.u.SoulConvert.CurrModel,1,center_pos,false,false)
+          end
+        end
       end
     end
   end
