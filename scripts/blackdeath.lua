@@ -277,7 +277,7 @@ function OnTurn()
   if (every2Pow(2)) then
     if (GetTurn() > STurn + (12*15) and not tip_shown) then
       tip_shown = true
-      log_msg(TRIBE_NEUTRAL,"TIP: Invoking the ancient flying creature will fill Your blood with determination.")
+      log_msg(TRIBE_NEUTRAL,"INFO: Invoking the ancient flying creature will fill Your blood with determination... or fill Your heart with fear.")
     end
   end
 end

@@ -169,8 +169,19 @@ SET_MARKER_ENTRY(TRIBE_BLACK,6,14,15,0,rt(),rt(),rt())
 MARKER_ENTRIES(TRIBE_BLACK,0,1,2,3)
 MARKER_ENTRIES(TRIBE_BLACK,4,5,6,-1)
 
+local tip_shown1 = false
+local tip_shown2 = false
+
 function OnTurn()
   if (GetTurn() > STurn + 1) then
+    if (GetTurn() > STurn + (12*15) and not tip_shown1) then
+      tip_shown1 = true
+      log_msg(TRIBE_NEUTRAL, "INFO: Prophecy is close. Shadows keep raising. Our rivals gain ancient knownledge from their own mistakes.")
+    elseif(GetTurn() > STurn + (12*20) and not tip_shown2) then
+      tip_shown2 = true
+      log_msg(TRIBE_NEUTRAL, "INFO: What could it be?")
+    end
+  
     if (GetTurn() > angel_counter) then
       local sham = getShaman(TRIBE_BLACK)
       if (sham ~= nil) then

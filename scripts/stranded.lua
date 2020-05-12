@@ -163,6 +163,13 @@ SET_DRUM_TOWER_POS(TRIBE_ORANGE, 72,244)
 
 function OnTurn()
   if (GetTurn() > STurn + 1) then
+    if (GetTurn() > STurn + (12*6) and not tip_shown1) then
+      tip_shown1 = true
+      log_msg(TRIBE_NEUTRAL, "INFO: Souls are never lost. They're rebound to a new vessel.")
+    elseif(GetTurn() > STurn + (12*9) and not tip_shown2) then
+      tip_shown2 = true
+      log_msg(TRIBE_NEUTRAL, "INFO: Understanding their behaviour were always beyond our minds.")
+    end
     if (every2Pow(9)) then
       for i = 4,7 do
         if (PLAYERS_PEOPLE_OF_TYPE(i, M_PERSON_BRAVE) > 20 and _gsi.Players[i].NumPeople > 35) then
