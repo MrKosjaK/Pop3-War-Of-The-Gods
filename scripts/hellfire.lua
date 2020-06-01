@@ -36,10 +36,10 @@ lite_attack = {
   GetTurn() + (1024 + G_RANDOM(512))
 }
 shaman_attack = {
-  GetTurn() + (1536 + G_RANDOM(758)),
-  GetTurn() + (1536 + G_RANDOM(758)),
-  GetTurn() + (1536 + G_RANDOM(758)),
-  GetTurn() + (1536 + G_RANDOM(758))
+  GetTurn() + (1536 + G_RANDOM(1024)),
+  GetTurn() + (1536 + G_RANDOM(1024)),
+  GetTurn() + (1536 + G_RANDOM(1024)),
+  GetTurn() + (1536 + G_RANDOM(1024))
 }
 conv_center_pos = {
 MAP_XZ_2_WORLD_XYZ(162, 176),
@@ -215,7 +215,7 @@ function OnTurn()
                 WRITE_CP_ATTRIB(availableNums[i], ATTR_AWAY_MEDICINE_MAN, 1)
                 ATTACK(availableNums[i],e,0,ATTACK_BUILDING,1+G_RANDOM(3),999,7,7,7,ATTACK_NORMAL,0,-1,-1,0)
                 WRITE_CP_ATTRIB(availableNums[i], ATTR_AWAY_MEDICINE_MAN, 0)
-                shaman_attack[i] = GetTurn() + (1536 + G_RANDOM(758))
+                shaman_attack[i] = GetTurn() + (1536 + G_RANDOM(1024))
               end
             end
           end
@@ -225,7 +225,7 @@ function OnTurn()
 
     if (every2Pow(9)) then
       for i = 4,7 do
-        if (PLAYERS_PEOPLE_OF_TYPE(i, M_PERSON_BRAVE) > 20 and _gsi.Players[i].NumPeople > 35) then
+        if (PLAYERS_PEOPLE_OF_TYPE(i, M_PERSON_BRAVE) > 15 and _gsi.Players[i].NumPeople > 25) then
           WRITE_CP_ATTRIB(i, ATTR_PREF_WARRIOR_TRAINS, 1)
           WRITE_CP_ATTRIB(i, ATTR_PREF_WARRIOR_PEOPLE, 18+G_RANDOM(17))
           WRITE_CP_ATTRIB(i, ATTR_PREF_RELIGIOUS_TRAINS, 1)
@@ -277,7 +277,7 @@ function OnTurn()
                 local c3d = Coord3D.new()
                 coord2D_to_coord3D(c2d, c3d)
                 createThing(T_SPELL, M_SPELL_LAND_BRIDGE, shaman.Owner, c3d, false, false)
-                spell_delay[i] = 64
+                spell_delay[i] = 128
                 return false
               end
 
