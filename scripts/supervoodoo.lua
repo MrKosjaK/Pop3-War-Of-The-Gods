@@ -42,7 +42,7 @@ botBldgs = {M_BUILDING_TEPEE,
 set_players_allied(1,0)
 set_players_allied(0,1)
 
-for i = 2,4 do
+for i = 2,3 do
   for u,v in ipairs(botSpells) do
     PThing.SpellSet(availableNums[i-1], v, TRUE, FALSE)
   end
