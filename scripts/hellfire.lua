@@ -209,7 +209,7 @@ function OnTurn()
       for i,t in ipairs(shaman_attack) do
         if (GetTurn() > t) then
           if (FREE_ENTRIES(availableNums[i]) > 2) then
-            if (IS_SHAMAN_AVAILABLE_FOR_ATTACK(availableNums[i]) > 0) then
+            if (IS_SHAMAN_AVAILABLE_FOR_ATTACK(availableNums[i]) > 0 and MANA(availableNums[i]) > 225000) then
               local e = decide_an_enemy_to_attack(availableNums[i])
               if (NAV_CHECK(availableNums[i],e,ATTACK_BUILDING,1,0) > 0) then
                 WRITE_CP_ATTRIB(availableNums[i], ATTR_AWAY_MEDICINE_MAN, 1)
@@ -257,7 +257,7 @@ function OnTurn()
 
         if (t.Model < 3 and t.Owner > 1) then
           if (t.u.Bldg.UpgradeCount < 1825) then
-            t.u.Bldg.UpgradeCount = t.u.Bldg.UpgradeCount + 450
+            t.u.Bldg.UpgradeCount = t.u.Bldg.UpgradeCount + 350
           end
         end
 
