@@ -12,6 +12,7 @@ include("UtilRefs.lua")
 shamans = {}
 eq_models = {3,5,6,7,8}
 fs_models = {3,5,6,7,8}
+swamp_models = {5,6,7,8}
 ww_models = {1,2,4,5,6,7,8,13,15}
 
 AIShaman = {}
@@ -26,16 +27,17 @@ AIShaman.reg = function(...)
   data.Spells = {
     M_SPELL_WHIRLWIND,
     M_SPELL_EARTHQUAKE,
-    M_SPELL_FIRESTORM
+    M_SPELL_FIRESTORM,
+    M_SPELL_SWAMP
   }
   data.SpellsDelay = {
-    720,720*2,720*3
+    720,720*2,720*3,720*2
   }
   data.SpellsUsed = {
-    3,2,2
+    3,2,2,3
   }
   data.SpellsCost = {
-    720,720*2,720*3
+    720,720*2,720*3,720*2
   }
   data.BldgsIdxs = {}
 
@@ -111,6 +113,14 @@ AIShaman.reg = function(...)
                         createThing(T_SPELL,spell_input,data.ShamanThing.Owner,t.Pos.D3,false,false)
                         found = true
                         data.SpellsUsed[3] = data.SpellsUsed[3]+1
+                        table.insert(data.BldgsIdxs,t.ThingNum)
+                        return false
+                      end
+                      
+                      if (DoesExist(fs_models,t.Model) and spell_input == M_SPELL_SWAMP) then
+                        createThing(T_SPELL,spell_input,data.ShamanThing.Owner,t.Pos.D3,false,false)
+                        found = true
+                        data.SpellsUsed[4] = data.SpellsUsed[4]+1
                         table.insert(data.BldgsIdxs,t.ThingNum)
                         return false
                       end
