@@ -10,9 +10,9 @@ import(Module_Helpers)
 include("UtilRefs.lua")
 
 shamans = {}
-eq_models = {3,5,6,7,8}
-fs_models = {3,5,6,7,8}
-swamp_models = {5,6,7,8}
+eq_models = {3,5,6,7,8,15}
+fs_models = {2,3,5}
+swamp_models = {5,7,8}
 ww_models = {1,2,4,5,6,7,8,13,15}
 
 AIShaman = {}
@@ -31,13 +31,13 @@ AIShaman.reg = function(...)
     M_SPELL_SWAMP
   }
   data.SpellsDelay = {
-    720,720*2,720*3,720*2
+    840,840*2,840*3,840*2
   }
   data.SpellsUsed = {
     3,2,2,3
   }
   data.SpellsCost = {
-    720,720*2,720*3,720*2
+    840,840*2,840*3,840*2
   }
   data.BldgsIdxs = {}
 
@@ -117,7 +117,7 @@ AIShaman.reg = function(...)
                         return false
                       end
                       
-                      if (DoesExist(fs_models,t.Model) and spell_input == M_SPELL_SWAMP) then
+                      if (DoesExist(swamp_models,t.Model) and spell_input == M_SPELL_SWAMP) then
                         createThing(T_SPELL,spell_input,data.ShamanThing.Owner,t.Pos.D3,false,false)
                         found = true
                         data.SpellsUsed[4] = data.SpellsUsed[4]+1
