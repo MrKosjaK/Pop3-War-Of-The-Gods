@@ -94,7 +94,7 @@ HDR: Blank.hdr
 CREATOR: Impboy / KosjaK
 
 LEVEL: F
-NAME: Bloodthirsy
+NAME: Bloodthirsty
 DAT: levl2016.dat
 HDR: Blank.hdr
 CREATOR: Impboy / KosjaK
