@@ -1,5 +1,5 @@
 PACKNAME: War of the Gods
-PACKVERSION: 1.4.0
+PACKVERSION: 1.4.2
 PACKCREATOR: Impboy / KosjaK
 PACKDESC: Co-op project
 
@@ -52,7 +52,7 @@ HDR: Blank.hdr
 CREATOR: Impboy / KosjaK
 
 LEVEL: 8
-NAME: Obscured From the Flow (FoW)
+NAME: Obscured From the Flow
 DAT: levl2009.dat
 HDR: Blank.hdr
 CREATOR: Impboy / KosjaK
