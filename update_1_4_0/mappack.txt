@@ -252,10 +252,10 @@ EXTRASRC: cpscr024.dat
 EXTRADST: levels\cpscr024.dat
 
 EXTRASRC: cpscr025.dat
-EXTRADST: levels\cpscr026.dat
+EXTRADST: levels\cpscr025.dat
 
-EXTRASRC: cpscr024.dat
-EXTRADST: levels\cpscr024.dat
+EXTRASRC: cpscr026.dat
+EXTRADST: levels\cpscr026.dat
 
 EXTRASRC: cpscr122.dat
 EXTRADST: levels\cpscr122.dat
