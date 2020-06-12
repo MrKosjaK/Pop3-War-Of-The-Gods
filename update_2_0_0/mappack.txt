@@ -1,0 +1,428 @@
+PACKNAME: War of the Gods (Part 2)
+PACKVERSION: 2.0.0
+PACKCREATOR: Impboy / KosjaK
+PACKDESC: Co-op continues
+
+LEVEL: 0
+NAME: Center Field
+DAT: levl2017.dat
+HDR: Blank.hdr
+CREATOR: Impboy / KosjaK
+
+LEVEL: 1
+NAME: Top Stalker
+DAT: levl2018.dat
+HDR: Blank.hdr
+CREATOR: Impboy / KosjaK
+
+LEVEL: 2
+NAME: Absurd Partners
+DAT: levl2019.dat
+HDR: Blank.hdr
+CREATOR: Impboy / KosjaK
+
+LEVEL: 3
+NAME: Demon's Flight
+DAT: levl2020.dat
+HDR: Blank.hdr
+CREATOR: Impboy / KosjaK
+
+LEVEL: 4
+NAME: Ruptured World
+DAT: levl2021.dat
+HDR: Blank.hdr
+CREATOR: Impboy / KosjaK
+
+LEVEL: 5
+NAME: Stranded
+DAT: levl2022.dat
+HDR: Blank.hdr
+CREATOR: Impboy / KosjaK
+
+LEVEL: 6
+NAME: Hellfire
+DAT: levl2023.dat
+HDR: Blank.hdr
+CREATOR: Impboy / KosjaK
+
+CONSTANT: constant.dat
+
+EXTRASRC: levlspc2.dat
+EXTRADST: levels\levlspc2.dat
+
+EXTRASRC: cpatr000.dat
+EXTRADST: levels\cpatr000.dat
+
+EXTRASRC: cpatr001.dat
+EXTRADST: levels\cpatr001.dat
+
+EXTRASRC: cpatr002.dat
+EXTRADST: levels\cpatr002.dat
+
+EXTRASRC: cpatr003.dat
+EXTRADST: levels\cpatr003.dat
+
+EXTRASRC: cpatr004.dat
+EXTRADST: levels\cpatr004.dat
+
+EXTRASRC: cpatr005.dat
+EXTRADST: levels\cpatr005.dat
+
+EXTRASRC: cpatr006.dat
+EXTRADST: levels\cpatr006.dat
+
+EXTRASRC: cpatr007.dat
+EXTRADST: levels\cpatr007.dat
+
+EXTRASRC: cpatr008.dat
+EXTRADST: levels\cpatr008.dat
+
+EXTRASRC: cpatr027.dat
+EXTRADST: levels\cpatr027.dat
+
+EXTRASRC: cpatr028.dat
+EXTRADST: levels\cpatr028.dat
+
+EXTRASRC: cpatr029.dat
+EXTRADST: levels\cpatr029.dat
+
+EXTRASRC: cpatr030.dat
+EXTRADST: levels\cpatr030.dat
+
+EXTRASRC: cpatr031.dat
+EXTRADST: levels\cpatr031.dat
+
+EXTRASRC: cpatr032.dat
+EXTRADST: levels\cpatr032.dat
+
+EXTRASRC: cpatr033.dat
+EXTRADST: levels\cpatr033.dat
+
+EXTRASRC: cpatr122.dat
+EXTRADST: levels\cpatr122.dat
+
+EXTRASRC: cpscr000.dat
+EXTRADST: levels\cpscr000.dat
+
+EXTRASRC: cpscr001.dat
+EXTRADST: levels\cpscr001.dat
+
+EXTRASRC: cpscr002.dat
+EXTRADST: levels\cpscr002.dat
+
+EXTRASRC: cpscr003.dat
+EXTRADST: levels\cpscr003.dat
+
+EXTRASRC: cpscr004.dat
+EXTRADST: levels\cpscr004.dat
+
+EXTRASRC: cpscr005.dat
+EXTRADST: levels\cpscr005.dat
+
+EXTRASRC: cpscr006.dat
+EXTRADST: levels\cpscr006.dat
+
+EXTRASRC: cpscr007.dat
+EXTRADST: levels\cpscr007.dat
+
+EXTRASRC: cpscr008.dat
+EXTRADST: levels\cpscr008.dat
+
+EXTRASRC: cpscr027.dat
+EXTRADST: levels\cpscr027.dat
+
+EXTRASRC: cpscr028.dat
+EXTRADST: levels\cpscr028.dat
+
+EXTRASRC: cpscr029.dat
+EXTRADST: levels\cpscr029.dat
+
+EXTRASRC: cpscr030.dat
+EXTRADST: levels\cpscr030.dat
+
+EXTRASRC: cpscr031.dat
+EXTRADST: levels\cpscr031.dat
+
+EXTRASRC: cpscr032.dat
+EXTRADST: levels\cpscr032.dat
+
+EXTRASRC: cpscr033.dat
+EXTRADST: levels\cpscr033.dat
+
+EXTRASRC: cpscr122.dat
+EXTRADST: levels\cpscr122.dat
+
+EXTRASRC: al0-1.dat
+EXTRADST: data\al0-1.dat
+
+EXTRASRC: bigf0-1.dat
+EXTRADST: data\bigf0-1.dat
+
+EXTRASRC: fade0-1.dat
+EXTRADST: data\fade0-1.dat
+
+EXTRASRC: cliff0-1.dat
+EXTRADST: data\cliff0-1.dat
+
+EXTRASRC: ghost0-1.dat
+EXTRADST: data\ghost0-1.dat
+
+EXTRASRC: pal0-1.dat
+EXTRADST: data\pal0-1.dat
+
+EXTRASRC: sky0-1.dat
+EXTRADST: data\sky0-1.dat
+
+EXTRASRC: al0-e.dat
+EXTRADST: data\al0-e.dat
+
+EXTRASRC: bigf0-e.dat
+EXTRADST: data\bigf0-e.dat
+
+EXTRASRC: fade0-e.dat
+EXTRADST: data\fade0-e.dat
+
+EXTRASRC: cliff0-e.dat
+EXTRADST: data\cliff0-e.dat
+
+EXTRASRC: ghost0-e.dat
+EXTRADST: data\ghost0-e.dat
+
+EXTRASRC: pal0-e.dat
+EXTRADST: data\pal0-e.dat
+
+EXTRASRC: sky0-e.dat
+EXTRADST: data\sky0-e.dat
+
+EXTRASRC: al0-i.dat
+EXTRADST: data\al0-i.dat
+
+EXTRASRC: bigf0-i.dat
+EXTRADST: data\bigf0-i.dat
+
+EXTRASRC: fade0-i.dat
+EXTRADST: data\fade0-i.dat
+
+EXTRASRC: cliff0-i.dat
+EXTRADST: data\cliff0-i.dat
+
+EXTRASRC: ghost0-i.dat
+EXTRADST: data\ghost0-i.dat
+
+EXTRASRC: pal0-i.dat
+EXTRADST: data\pal0-i.dat
+
+EXTRASRC: sky0-i.dat
+EXTRADST: data\sky0-i.dat
+
+EXTRASRC: al0-l.dat
+EXTRADST: data\al0-l.dat
+
+EXTRASRC: bigf0-l.dat
+EXTRADST: data\bigf0-l.dat
+
+EXTRASRC: fade0-l.dat
+EXTRADST: data\fade0-l.dat
+
+EXTRASRC: cliff0-l.dat
+EXTRADST: data\cliff0-l.dat
+
+EXTRASRC: ghost0-l.dat
+EXTRADST: data\ghost0-l.dat
+
+EXTRASRC: pal0-l.dat
+EXTRADST: data\pal0-l.dat
+
+EXTRASRC: sky0-l.dat
+EXTRADST: data\sky0-l.dat
+
+EXTRASRC: al0-o.dat
+EXTRADST: data\al0-o.dat
+
+EXTRASRC: bigf0-o.dat
+EXTRADST: data\bigf0-o.dat
+
+EXTRASRC: fade0-o.dat
+EXTRADST: data\fade0-o.dat
+
+EXTRASRC: cliff0-o.dat
+EXTRADST: data\cliff0-o.dat
+
+EXTRASRC: ghost0-o.dat
+EXTRADST: data\ghost0-o.dat
+
+EXTRASRC: pal0-o.dat
+EXTRADST: data\pal0-o.dat
+
+EXTRASRC: sky0-o.dat
+EXTRADST: data\sky0-o.dat
+
+EXTRASRC: al0-r.dat
+EXTRADST: data\al0-r.dat
+
+EXTRASRC: bigf0-r.dat
+EXTRADST: data\bigf0-r.dat
+
+EXTRASRC: fade0-r.dat
+EXTRADST: data\fade0-r.dat
+
+EXTRASRC: cliff0-r.dat
+EXTRADST: data\cliff0-r.dat
+
+EXTRASRC: ghost0-r.dat
+EXTRADST: data\ghost0-r.dat
+
+EXTRASRC: pal0-r.dat
+EXTRADST: data\pal0-r.dat
+
+EXTRASRC: sky0-r.dat
+EXTRADST: data\sky0-r.dat
+
+EXTRASRC: al0-u.dat
+EXTRADST: data\al0-u.dat
+
+EXTRASRC: bigf0-u.dat
+EXTRADST: data\bigf0-u.dat
+
+EXTRASRC: fade0-u.dat
+EXTRADST: data\fade0-u.dat
+
+EXTRASRC: cliff0-u.dat
+EXTRADST: data\cliff0-u.dat
+
+EXTRASRC: ghost0-u.dat
+EXTRADST: data\ghost0-u.dat
+
+EXTRASRC: pal0-u.dat
+EXTRADST: data\pal0-u.dat
+
+EXTRASRC: sky0-u.dat
+EXTRADST: data\sky0-u.dat
+
+EXTRASRC: hfx0-0.dat
+EXTRADST: data\hfx0-0.dat
+
+EXTRASRC: UtilPThings.lua
+EXTRADST: scripts\UtilPThings.lua
+
+EXTRASRC: UtilFlags.lua
+EXTRADST: scripts\UtilFlags.lua
+
+EXTRASRC: UtilRefs.lua
+EXTRADST: scripts\UtilRefs.lua
+
+EXTRASRC: LibCmd.lua
+EXTRADST: scripts\LibCmd.lua
+
+EXTRASRC: BushMod.lua
+EXTRADST: scripts\BushMod.lua
+
+EXTRASRC: AITrain.lua
+EXTRADST: scripts\AITrain.lua
+
+EXTRASRC: AIBuild.lua
+EXTRADST: scripts\AIBuild.lua
+
+EXTRASRC: BetterSwamp.lua
+EXTRADST: scripts\BetterSwamp.lua
+
+EXTRASRC: shamAct.lua
+EXTRADST: scripts\shamAct.lua
+
+EXTRASRC: fws.lua
+EXTRADST: scripts\fws.lua
+
+EXTRASRC: absurd.lua
+EXTRADST: scripts\absurd.lua
+
+EXTRASRC: centerfield.lua
+EXTRADST: scripts\centerfield.lua
+
+EXTRASRC: demonfly.lua
+EXTRADST: scripts\demonfly.lua
+
+EXTRASRC: hellfire.lua
+EXTRADST: scripts\hellfire.lua
+
+EXTRASRC: rupture.lua
+EXTRADST: scripts\rupture.lua
+
+EXTRASRC: stranded.lua
+EXTRADST: scripts\stranded.lua
+
+EXTRASRC: topstalker.lua
+EXTRADST: scripts\topstalker.lua
+
+EXTRASRC: aniob0-2.dat
+EXTRADST: objects\aniob0-2.dat
+
+EXTRASRC: facs0-2.dat
+EXTRADST: objects\facs0-2.dat
+
+EXTRASRC: facs0-4.dat
+EXTRADST: objects\facs0-4.dat
+
+EXTRASRC: facs0-5.dat
+EXTRADST: objects\facs0-5.dat
+
+EXTRASRC: morph0-2.dat
+EXTRADST: objects\morph0-2.dat
+
+EXTRASRC: morph0-3.dat
+EXTRADST: objects\morph0-3.dat
+
+EXTRASRC: morph0-4.dat
+EXTRADST: objects\morph0-4.dat
+
+EXTRASRC: morph0-5.dat
+EXTRADST: objects\morph0-5.dat
+
+EXTRASRC: morph0-6.dat
+EXTRADST: objects\morph0-6.dat
+
+EXTRASRC: objs0-2.dat
+EXTRADST: objects\objs0-2.dat
+
+EXTRASRC: objs0-2.ver
+EXTRADST: objects\objs0-2.ver
+
+EXTRASRC: objs0-4.dat
+EXTRADST: objects\objs0-4.dat
+
+EXTRASRC: objs0-4.ver
+EXTRADST: objects\objs0-4.ver
+
+EXTRASRC: objs0-5.dat
+EXTRADST: objects\objs0-5.dat
+
+EXTRASRC: objs0-5.ver
+EXTRADST: objects\objs0-5.ver
+
+EXTRASRC: pnts0-2.dat
+EXTRADST: objects\pnts0-2.dat
+
+EXTRASRC: facs0-5.dat
+EXTRADST: objects\facs0-5.dat
+
+EXTRASRC: objs0-5.dat
+EXTRADST: objects\objs0-5.dat
+
+EXTRASRC: objs0-5.ver
+EXTRADST: objects\objs0-5.ver
+
+EXTRASRC: pnts0-2.dat
+EXTRADST: objects\pnts0-2.dat
+
+EXTRASRC: pnts0-4.dat
+EXTRADST: objects\pnts0-4.dat
+
+EXTRASRC: pnts0-5.dat
+EXTRADST: objects\pnts0-5.dat
+
+EXTRASRC: shapes.dat
+EXTRADST: objects\shapes.dat
+
+EXTRASRC: shapes.ver
+EXTRADST: objects\shapes.ver
+
+LANG: 611: Bush: Select Braves and {}to gather wood. |}query.
