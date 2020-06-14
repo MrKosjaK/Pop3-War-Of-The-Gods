@@ -1,7 +1,7 @@
 PACKNAME: War of the Gods (Part 2)
 PACKVERSION: 2.0.0
 PACKCREATOR: Impboy / KosjaK
-PACKDESC: Co-op continues
+PACKDESC: Co-op project
 
 LEVEL: 0
 NAME: Center Field
@@ -41,6 +41,12 @@ CREATOR: Impboy / KosjaK
 
 LEVEL: 6
 NAME: Hellfire
+DAT: levl2023.dat
+HDR: Blank.hdr
+CREATOR: Impboy / KosjaK
+
+LEVEL: 7
+NAME: A Mortal's End
 DAT: levl2023.dat
 HDR: Blank.hdr
 CREATOR: Impboy / KosjaK
@@ -98,6 +104,12 @@ EXTRADST: levels\cpatr032.dat
 EXTRASRC: cpatr033.dat
 EXTRADST: levels\cpatr033.dat
 
+EXTRASRC: cpatr034.dat
+EXTRADST: levels\cpatr034.dat
+
+EXTRASRC: cpatr035.dat
+EXTRADST: levels\cpatr035.dat
+
 EXTRASRC: cpatr122.dat
 EXTRADST: levels\cpatr122.dat
 
@@ -149,6 +161,12 @@ EXTRADST: levels\cpscr032.dat
 EXTRASRC: cpscr033.dat
 EXTRADST: levels\cpscr033.dat
 
+EXTRASRC: cpscr034.dat
+EXTRADST: levels\cpscr034.dat
+
+EXTRASRC: cpscr035.dat
+EXTRADST: levels\cpscr035.dat
+
 EXTRASRC: cpscr122.dat
 EXTRADST: levels\cpscr122.dat
 
@@ -193,6 +211,27 @@ EXTRADST: data\pal0-e.dat
 
 EXTRASRC: sky0-e.dat
 EXTRADST: data\sky0-e.dat
+
+EXTRASRC: al0-h.dat
+EXTRADST: data\al0-h.dat
+
+EXTRASRC: bigf0-h.dat
+EXTRADST: data\bigf0-h.dat
+
+EXTRASRC: fade0-h.dat
+EXTRADST: data\fade0-h.dat
+
+EXTRASRC: cliff0-h.dat
+EXTRADST: data\cliff0-h.dat
+
+EXTRASRC: ghost0-h.dat
+EXTRADST: data\ghost0-h.dat
+
+EXTRASRC: pal0-h.dat
+EXTRADST: data\pal0-h.dat
+
+EXTRASRC: sky0-h.dat
+EXTRADST: data\sky0-h.dat
 
 EXTRASRC: al0-i.dat
 EXTRADST: data\al0-i.dat
@@ -340,6 +379,9 @@ EXTRADST: scripts\centerfield.lua
 
 EXTRASRC: demonfly.lua
 EXTRADST: scripts\demonfly.lua
+
+EXTRASRC: mortal.lua
+EXTRADST: scripts\mortal.lua
 
 EXTRASRC: hellfire.lua
 EXTRADST: scripts\hellfire.lua
