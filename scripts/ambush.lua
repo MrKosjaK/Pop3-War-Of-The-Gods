@@ -244,11 +244,7 @@ function OnTurn()
               break
             end
           end
-
-          GIVE_ONE_SHOT(TRIBE_PINK, M_SPELL_HYPNOTISM)
-          GIVE_ONE_SHOT(TRIBE_PINK, M_SPELL_HYPNOTISM)
-          GIVE_ONE_SHOT(TRIBE_PINK, M_SPELL_HYPNOTISM)
-
+          
           WRITE_CP_ATTRIB(TRIBE_PINK, ATTR_DONT_GROUP_AT_DT, 1)
           WRITE_CP_ATTRIB(TRIBE_PINK, ATTR_AWAY_RELIGIOUS, 80)
           WRITE_CP_ATTRIB(TRIBE_PINK, ATTR_AWAY_SPY, 0)
