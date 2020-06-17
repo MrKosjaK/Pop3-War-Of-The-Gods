@@ -26,6 +26,8 @@ spell_ms_max_use = 5
 spell_ms_charge_time = 720
 prayer = nil
 index = 1
+black_point = MAP_XZ_2_WORLD_XYZ(240,106)
+orange_point = MAP_XZ_2_WORLD_XYZ(148,94)
 availableNums = {4,5,6,7,2,3}
 numthings = 16
 lite_attack = {
@@ -35,10 +37,10 @@ lite_attack = {
   GetTurn() + (1024 + G_RANDOM(512))
 }
 shaman_attack = {
-  GetTurn() + (1536 + G_RANDOM(1024)),
-  GetTurn() + (1536 + G_RANDOM(1024)),
-  GetTurn() + (1536 + G_RANDOM(1024)),
-  GetTurn() + (1536 + G_RANDOM(1024))
+  GetTurn() + (2536 + G_RANDOM(1024)),
+  GetTurn() + (2536 + G_RANDOM(1024)),
+  GetTurn() + (2536 + G_RANDOM(1024)),
+  GetTurn() + (2536 + G_RANDOM(1024))
 }
 conv_center_pos = {
 MAP_XZ_2_WORLD_XYZ(12, 26),
@@ -186,14 +188,16 @@ function OnTurn()
     if every2Pow(2) then
       for i,t in ipairs(lite_attack) do
         if (GetTurn() > t) then
-          if (FREE_ENTRIES(availableNums[i]) > 2) then
-            if (count_troops(availableNums[i]) > 7) then
-              local e = decide_an_enemy_to_attack(availableNums[i])
-              if (NAV_CHECK(availableNums[i],e,ATTACK_BUILDING,4,0) > 0) then
-                WRITE_CP_ATTRIB(availableNums[i], ATTR_AWAY_MEDICINE_MAN,0)
-                ATTACK(availableNums[i],e,2+G_RANDOM(4),ATTACK_BUILDING,4,250,0,0,0,ATTACK_NORMAL,0,-1,-1,0)
-                WRITE_CP_ATTRIB(availableNums[i], ATTR_AWAY_MEDICINE_MAN,1)
-                lite_attack[i] = GetTurn() + (1024 + G_RANDOM(512))
+          if (is_map_elem_all_land(world_coord3d_to_map_ptr(orange_point)) == 1 or is_map_elem_all_land(world_coord3d_to_map_ptr(black_point)) == 1) then
+            if (FREE_ENTRIES(availableNums[i]) > 2) then
+              if (count_troops(availableNums[i]) > 7) then
+                local e = decide_an_enemy_to_attack(availableNums[i])
+                if (NAV_CHECK(availableNums[i],e,ATTACK_BUILDING,4,0) == 1) then
+                  WRITE_CP_ATTRIB(availableNums[i], ATTR_AWAY_MEDICINE_MAN,0)
+                  ATTACK(availableNums[i],e,2+G_RANDOM(4),ATTACK_BUILDING,4,250,0,0,0,ATTACK_NORMAL,0,-1,-1,0)
+                  WRITE_CP_ATTRIB(availableNums[i], ATTR_AWAY_MEDICINE_MAN,1)
+                  lite_attack[i] = GetTurn() + (1024 + G_RANDOM(512))
+                end
               end
             end
           end
@@ -205,13 +209,38 @@ function OnTurn()
       for i,t in ipairs(shaman_attack) do
         if (GetTurn() > t) then
           if (FREE_ENTRIES(availableNums[i]) > 2) then
-            if (IS_SHAMAN_AVAILABLE_FOR_ATTACK(availableNums[i]) > 0 and MANA(availableNums[i]) > 225000) then
-              local e = decide_an_enemy_to_attack(availableNums[i])
-              if (NAV_CHECK(availableNums[i],e,ATTACK_BUILDING,1,0) > 0) then
-                WRITE_CP_ATTRIB(availableNums[i], ATTR_AWAY_MEDICINE_MAN, 1)
-                ATTACK(availableNums[i],e,0,ATTACK_BUILDING,1+G_RANDOM(3),999,7,7,7,ATTACK_NORMAL,0,-1,-1,0)
-                WRITE_CP_ATTRIB(availableNums[i], ATTR_AWAY_MEDICINE_MAN, 0)
-                shaman_attack[i] = GetTurn() + (1536 + G_RANDOM(1024))
+            if (is_map_elem_all_land(world_coord3d_to_map_ptr(orange_point)) == 1 and is_map_elem_all_land(world_coord3d_to_map_ptr(black_point)) == 1) then
+              if (IS_SHAMAN_AVAILABLE_FOR_ATTACK(availableNums[i]) > 0 and MANA(availableNums[i]) > 225000) then
+                local e = decide_an_enemy_to_attack(availableNums[i])
+                if (NAV_CHECK(availableNums[i],e,ATTACK_BUILDING,1,0) == 1) then
+                  WRITE_CP_ATTRIB(availableNums[i], ATTR_AWAY_MEDICINE_MAN, 1)
+                  ATTACK(availableNums[i],e,0,ATTACK_BUILDING,1+G_RANDOM(3),999,7,7,7,ATTACK_NORMAL,0,-1,-1,0)
+                  WRITE_CP_ATTRIB(availableNums[i], ATTR_AWAY_MEDICINE_MAN, 0)
+                  shaman_attack[i] = GetTurn() + (2048 + G_RANDOM(1024))
+                end
+              end
+            else
+              if (i == 3) then
+                if (IS_SHAMAN_AVAILABLE_FOR_ATTACK(availableNums[i]) > 0 and MANA(availableNums[i]) > 80000) then
+                  local e = decide_an_enemy_to_attack(availableNums[i])
+                  if (is_map_elem_all_land(world_coord3d_to_map_ptr(black_point)) ~= 1) then
+                    WRITE_CP_ATTRIB(availableNums[i], ATTR_AWAY_MEDICINE_MAN, 1)
+                    ATTACK(availableNums[i],e,0,ATTACK_BUILDING,1+G_RANDOM(3),1,12,0,0,ATTACK_NORMAL,0,15,17,0)
+                    WRITE_CP_ATTRIB(availableNums[i], ATTR_AWAY_MEDICINE_MAN, 0)
+                    shaman_attack[i] = GetTurn() + (2048 + G_RANDOM(1024))
+                  end
+                end
+              end
+              if (i == 4) then
+                if (IS_SHAMAN_AVAILABLE_FOR_ATTACK(availableNums[i]) > 0 and MANA(availableNums[i]) > 80000) then
+                  local e = decide_an_enemy_to_attack(availableNums[i])
+                  if (is_map_elem_all_land(world_coord3d_to_map_ptr(orange_point)) ~= 1) then
+                    WRITE_CP_ATTRIB(availableNums[i], ATTR_AWAY_MEDICINE_MAN, 1)
+                    ATTACK(availableNums[i],e,0,ATTACK_BUILDING,1+G_RANDOM(3),1,12,0,0,ATTACK_NORMAL,0,18,20,0)
+                    WRITE_CP_ATTRIB(availableNums[i], ATTR_AWAY_MEDICINE_MAN, 0)
+                    shaman_attack[i] = GetTurn() + (2048 + G_RANDOM(1024))
+                  end
+                end
               end
             end
           end
@@ -290,7 +319,7 @@ function OnTurn()
           _gsi.Players[TRIBE_PINK].NumPeople +
           _gsi.Players[TRIBE_CYAN].NumPeople +
           _gsi.Players[TRIBE_ORANGE].NumPeople +
-          _gsi.Players[TRIBE_BLACK].NumPeople < 200 and
+          _gsi.Players[TRIBE_BLACK].NumPeople < 256 and
           GetTurn() < STurn + (12*60)*4 and
           GetTurn() > STurn + (12*10)) then
         process(numthings)
