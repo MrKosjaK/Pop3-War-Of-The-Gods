@@ -31,10 +31,10 @@ orange_point = MAP_XZ_2_WORLD_XYZ(148,94)
 availableNums = {4,5,6,7,2,3}
 numthings = 16
 lite_attack = {
-  GetTurn() + (1024 + G_RANDOM(512)),
-  GetTurn() + (1024 + G_RANDOM(512)),
-  GetTurn() + (1024 + G_RANDOM(512)),
-  GetTurn() + (1024 + G_RANDOM(512))
+  GetTurn() + (1280 + G_RANDOM(758)),
+  GetTurn() + (1280 + G_RANDOM(758)),
+  GetTurn() + (1280 + G_RANDOM(758)),
+  GetTurn() + (1280 + G_RANDOM(758))
 }
 shaman_attack = {
   GetTurn() + (2536 + G_RANDOM(1024)),
@@ -196,7 +196,7 @@ function OnTurn()
                   WRITE_CP_ATTRIB(availableNums[i], ATTR_AWAY_MEDICINE_MAN,0)
                   ATTACK(availableNums[i],e,2+G_RANDOM(4),ATTACK_BUILDING,4,250,0,0,0,ATTACK_NORMAL,0,-1,-1,0)
                   WRITE_CP_ATTRIB(availableNums[i], ATTR_AWAY_MEDICINE_MAN,1)
-                  lite_attack[i] = GetTurn() + (1024 + G_RANDOM(512))
+                  lite_attack[i] = GetTurn() + (1280 + G_RANDOM(758))
                 end
               end
             end
