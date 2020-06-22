@@ -1,5 +1,5 @@
 PACKNAME: War of the Gods
-PACKVERSION: 1.4.2
+PACKVERSION: 1.4.4
 PACKCREATOR: Impboy / KosjaK
 PACKDESC: Co-op project
 
