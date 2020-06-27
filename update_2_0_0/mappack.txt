@@ -47,7 +47,7 @@ CREATOR: Impboy / KosjaK
 
 LEVEL: 7
 NAME: A Mortal's End
-DAT: levl2023.dat
+DAT: levl2024.dat
 HDR: Blank.hdr
 CREATOR: Impboy / KosjaK
 
@@ -349,6 +349,9 @@ EXTRADST: scripts\UtilFlags.lua
 
 EXTRASRC: UtilRefs.lua
 EXTRADST: scripts\UtilRefs.lua
+
+EXTRASRC: LibMap.lua
+EXTRADST: scripts\LibMap.lua
 
 EXTRASRC: LibCmd.lua
 EXTRADST: scripts\LibCmd.lua

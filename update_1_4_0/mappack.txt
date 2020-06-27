@@ -608,6 +608,9 @@ EXTRADST: scripts\UtilFlags.lua
 EXTRASRC: UtilRefs.lua
 EXTRADST: scripts\UtilRefs.lua
 
+EXTRASRC: LibMap.lua
+EXTRADST: scripts\LibMap.lua
+
 EXTRASRC: LibCmd.lua
 EXTRADST: scripts\LibCmd.lua
 
