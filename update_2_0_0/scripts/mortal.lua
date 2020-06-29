@@ -188,61 +188,113 @@ function OnTurn()
     if every2Pow(2) then
       for i,t in ipairs(lite_attack) do
         if (GetTurn() > t) then
-          if (is_map_elem_all_land(world_coord3d_to_map_ptr(orange_point)) == 1 or is_map_elem_all_land(world_coord3d_to_map_ptr(black_point)) == 1) then
-            if (FREE_ENTRIES(availableNums[i]) > 2) then
-              if (count_troops(availableNums[i]) > 7) then
-                local e = decide_an_enemy_to_attack(availableNums[i])
-                if (NAV_CHECK(availableNums[i],e,ATTACK_BUILDING,4,0) == 1) then
-                  WRITE_CP_ATTRIB(availableNums[i], ATTR_AWAY_MEDICINE_MAN,0)
-                  ATTACK(availableNums[i],e,2+G_RANDOM(4),ATTACK_BUILDING,4,250,0,0,0,ATTACK_NORMAL,0,-1,-1,0)
-                  WRITE_CP_ATTRIB(availableNums[i], ATTR_AWAY_MEDICINE_MAN,1)
+          if (FREE_ENTRIES(availableNums[i]) > 2) then
+            local troops = count_troops(availableNums[i])
+            if (troops < 5) then
+              --log("We don't have enough troops!" .. " Player: " .. availableNums[i])
+              lite_attack[i] = GetTurn() + (512 + G_RANDOM(256))
+              do return end
+            end
+            
+            --log("We have enough troops!" .. " Player: " .. availableNums[i])
+            WRITE_CP_ATTRIB(availableNums[i], ATTR_AWAY_MEDICINE_MAN,0)
+            
+            if (is_map_elem_all_land(world_coord3d_to_map_ptr(black_point)) == 0 and is_map_elem_all_land(world_coord3d_to_map_ptr(orange_point)) == 0) then
+              --log("Two point's are not connected yet!" .. " Player: " .. availableNums[i])
+              if (should_we_use_balloons) then
+                --log("We have balloons!" .. " Player: " .. availableNums[i])
+                local balloons = PLAYERS_VEHICLE_OF_TYPE(availableNums[i],M_VEHICLE_AIRSHIP_1)
+                if (balloons > 1) then
+                  --log("We have enough of them!" .. " Player: " .. availableNums[i])
+                  local e = decide_an_enemy_to_attack_with_vehicle(availableNums[i])
+                  ATTACK(availableNums[i],e,2*(balloons-1),ATTACK_BUILDING,1+G_RANDOM(3),999,0,0,0,ATTACK_BY_BALLOON,0,-1,-1,0)
                   lite_attack[i] = GetTurn() + (1280 + G_RANDOM(758))
+                  --do return end
                 end
               end
             end
+            
+            --log("We don't have balloons!" .. " Player: " .. availableNums[i])
+            
+            local e = decide_an_enemy_to_attack(availableNums[i])
+            if (NAV_CHECK(availableNums[i],e,ATTACK_BUILDING,0,0) == 1) then
+              --log("We can reach our enemy by foot!" .. " Player: " .. availableNums[i])
+              ATTACK(availableNums[i],e,2+G_RANDOM(4),ATTACK_BUILDING,4,250,0,0,0,ATTACK_NORMAL,0,-1,-1,0)
+              lite_attack[i] = GetTurn() + (1280 + G_RANDOM(758))
+              do return end
+            end
+            
+            --log("Couldn't attack..." .. " Player: " .. availableNums[i])
+            lite_attack[i] = GetTurn() + (512 + G_RANDOM(256))
           end
         end
       end
     end
-    
+
     if every2Pow(2) then
       for i,t in ipairs(shaman_attack) do
         if (GetTurn() > t) then
           if (FREE_ENTRIES(availableNums[i]) > 2) then
-            if (is_map_elem_all_land(world_coord3d_to_map_ptr(orange_point)) == 1 and is_map_elem_all_land(world_coord3d_to_map_ptr(black_point)) == 1) then
-              if (IS_SHAMAN_AVAILABLE_FOR_ATTACK(availableNums[i]) > 0 and MANA(availableNums[i]) > 225000) then
-                local e = decide_an_enemy_to_attack(availableNums[i])
-                if (NAV_CHECK(availableNums[i],e,ATTACK_BUILDING,1,0) == 1) then
-                  WRITE_CP_ATTRIB(availableNums[i], ATTR_AWAY_MEDICINE_MAN, 1)
-                  ATTACK(availableNums[i],e,0,ATTACK_BUILDING,1+G_RANDOM(3),999,7,7,7,ATTACK_NORMAL,0,-1,-1,0)
+            if (IS_SHAMAN_AVAILABLE_FOR_ATTACK(availableNums[i]) == 0) then
+              --log("No shaman found!" .. " Player: " .. availableNums[i])
+              shaman_attack[i] = GetTurn() + (512 + G_RANDOM(256))
+              do return end
+            end
+            
+            --log("Shaman is found!" .. " Player: " .. availableNums[i])
+            WRITE_CP_ATTRIB(availableNums[i], ATTR_AWAY_MEDICINE_MAN, 1)
+            
+            if (not should_we_use_balloons) then
+              --log("We don't have balloons yet!" .. " Player: " .. availableNums[i])
+              if (i == 3) then
+                --log("I should be black!" .. " Player: " .. availableNums[i])
+                if (is_map_elem_all_land(world_coord3d_to_map_ptr(black_point)) == 0) then
+                  --log("The Point isn't land! Trying to connect!" .. " Player: " .. availableNums[i])
+                  local e = decide_an_enemy_to_attack_with_vehicle(availableNums[i])
+                  ATTACK(availableNums[i],e,0,ATTACK_BUILDING,1+G_RANDOM(3),1,12,0,0,ATTACK_NORMAL,0,15,17,0)
                   WRITE_CP_ATTRIB(availableNums[i], ATTR_AWAY_MEDICINE_MAN, 0)
                   shaman_attack[i] = GetTurn() + (2048 + G_RANDOM(1024))
+                  do return end
                 end
-              end
-            else
-              if (i == 3) then
-                if (IS_SHAMAN_AVAILABLE_FOR_ATTACK(availableNums[i]) > 0 and MANA(availableNums[i]) > 80000) then
-                  local e = decide_an_enemy_to_attack(availableNums[i])
-                  if (is_map_elem_all_land(world_coord3d_to_map_ptr(black_point)) ~= 1) then
-                    WRITE_CP_ATTRIB(availableNums[i], ATTR_AWAY_MEDICINE_MAN, 1)
-                    ATTACK(availableNums[i],e,0,ATTACK_BUILDING,1+G_RANDOM(3),1,12,0,0,ATTACK_NORMAL,0,15,17,0)
-                    WRITE_CP_ATTRIB(availableNums[i], ATTR_AWAY_MEDICINE_MAN, 0)
-                    shaman_attack[i] = GetTurn() + (2048 + G_RANDOM(1024))
-                  end
-                end
-              end
-              if (i == 4) then
-                if (IS_SHAMAN_AVAILABLE_FOR_ATTACK(availableNums[i]) > 0 and MANA(availableNums[i]) > 80000) then
-                  local e = decide_an_enemy_to_attack(availableNums[i])
-                  if (is_map_elem_all_land(world_coord3d_to_map_ptr(orange_point)) ~= 1) then
-                    WRITE_CP_ATTRIB(availableNums[i], ATTR_AWAY_MEDICINE_MAN, 1)
-                    ATTACK(availableNums[i],e,0,ATTACK_BUILDING,1+G_RANDOM(3),1,12,0,0,ATTACK_NORMAL,0,18,20,0)
-                    WRITE_CP_ATTRIB(availableNums[i], ATTR_AWAY_MEDICINE_MAN, 0)
-                    shaman_attack[i] = GetTurn() + (2048 + G_RANDOM(1024))
-                  end
+              elseif (i == 4) then
+                --log("I should be orange!" .. " Player: " .. availableNums[i])
+                if (is_map_elem_all_land(world_coord3d_to_map_ptr(orange_point)) == 0) then
+                  --log("The Point isn't land! Trying to connect!" .. " Player: " .. availableNums[i])
+                  local e = decide_an_enemy_to_attack_with_vehicle(availableNums[i])
+                  ATTACK(availableNums[i],e,0,ATTACK_BUILDING,1+G_RANDOM(3),1,12,0,0,ATTACK_NORMAL,0,18,20,0)
+                  WRITE_CP_ATTRIB(availableNums[i], ATTR_AWAY_MEDICINE_MAN, 0)
+                  shaman_attack[i] = GetTurn() + (2048 + G_RANDOM(1024))
+                  do return end
                 end
               end
             end
+            
+            --log("Didn't have to connect!" .. " Player: " .. availableNums[i])
+            
+            if (should_we_use_balloons) then
+              --log("We have balloons!" .. " Player: " .. availableNums[i])
+              if (PLAYERS_VEHICLE_OF_TYPE(availableNums[i],M_VEHICLE_AIRSHIP_1) > 0) then
+                --log("We have enough of them!" .. " Player: " .. availableNums[i])
+                local e = decide_an_enemy_to_attack_with_vehicle(availableNums[i])
+                ATTACK(availableNums[i],e,0,ATTACK_BUILDING,1+G_RANDOM(3),999,7,7,7,ATTACK_BY_BALLOON,0,-1,-1,0)
+                WRITE_CP_ATTRIB(availableNums[i], ATTR_AWAY_MEDICINE_MAN, 0)
+                shaman_attack[i] = GetTurn() + (2048 + G_RANDOM(1024))
+                do return end
+              end
+              --log("But not enough...!" .. " Player: " .. availableNums[i])
+            end
+            
+            local e = decide_an_enemy_to_attack(availableNums[i])
+            if (NAV_CHECK(availableNums[i],e,ATTACK_BUILDING,0,0) == 1) then
+              --log("Regular land attack!" .. " Player: " .. availableNums[i])
+              ATTACK(availableNums[i],e,0,ATTACK_BUILDING,1+G_RANDOM(3),999,7,7,7,ATTACK_NORMAL,0,-1,-1,0)
+              WRITE_CP_ATTRIB(availableNums[i], ATTR_AWAY_MEDICINE_MAN, 0)
+              shaman_attack[i] = GetTurn() + (2048 + G_RANDOM(1024))
+              do return end
+            end
+            
+            shaman_attack[i] = GetTurn() + (512 + G_RANDOM(256))
+            --log("Couldnt attack..." .. " Player: " .. availableNums[i])
           end
         end
       end
@@ -398,6 +450,22 @@ function OnCreateThing(t)
   if (t.Type == T_PERSON and t.Model == M_PERSON_WILD) then
     table.insert(wilds, t)
   end
+  if (t.Type == T_SPELL) then
+    if (t.Model == M_SPELL_FLATTEN or t.Model == M_SPELL_EROSION) then
+      if (t.Owner < 2) then
+        if (not should_we_use_balloons) then
+          should_we_use_balloons = true
+          
+          for i=4,7 do
+            WRITE_CP_ATTRIB(i, ATTR_PREF_BALLOON_HUTS, 1)
+            WRITE_CP_ATTRIB(i, ATTR_PREF_BALLOON_DRIVERS, 5)
+            STATE_SET(i, TRUE, CP_AT_TYPE_BUILD_VEHICLE)
+            STATE_SET(i, TRUE, CP_AT_TYPE_FETCH_FAR_VEHICLE)
+          end
+        end
+      end
+    end
+  end
 end
 
 function process(n)
@@ -431,23 +499,6 @@ function calc_limit(pn)
   end
 end
 
-function count_enemy_bldgs_around(myself,x,z,radiii)
-  local count = 0
-  local c3d = MAP_XZ_2_WORLD_XYZ(x,z)
-  SearchMapCells(SQUARE,0,0,radiii,world_coord3d_to_map_idx(c3d),function(me)
-    me.MapWhoList:processList(function(t)
-      if (t.Type == T_BUILDING) then
-        if (t.Owner ~= myself and are_players_allied(t.Owner,myself) == 0) then
-          count=count+1
-        end
-      end
-      return true
-    end)
-    return true
-  end)
-  return count
-end
-
 function count_people(myself,coord2,radii)
   local count = 0
   SearchMapCells(CIRCULAR, 0, 0, radii, world_coord3d_to_map_idx(coord2), function(me)
@@ -476,6 +527,21 @@ function decide_an_enemy_to_attack(myself)
         if (NAV_CHECK(myself,i,ATTACK_BUILDING,0,0) == 1) then
           break
         end
+      end
+    end
+  end
+  return i
+end
+
+function decide_an_enemy_to_attack_with_vehicle(myself)
+  local i = myself
+  local tries = 16
+  while (tries > 0) do
+    tries=tries-1
+    i = G_RANDOM(MAX_NUM_REAL_PLAYERS)
+    if (i ~= myself and are_players_allied(i,myself) == 0) then
+      if (GetPlayerPeople(i) > 0) then
+        break
       end
     end
   end
