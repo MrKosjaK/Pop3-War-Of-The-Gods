@@ -83,6 +83,12 @@ EXTRADST: levels\cpatr007.dat
 EXTRASRC: cpatr008.dat
 EXTRADST: levels\cpatr008.dat
 
+EXTRASRC: cpatr012.dat
+EXTRADST: levels\cpatr012.dat
+
+EXTRASRC: cpatr018.dat
+EXTRADST: levels\cpatr018.dat
+
 EXTRASRC: cpatr027.dat
 EXTRADST: levels\cpatr027.dat
 
@@ -139,6 +145,12 @@ EXTRADST: levels\cpscr007.dat
 
 EXTRASRC: cpscr008.dat
 EXTRADST: levels\cpscr008.dat
+
+EXTRASRC: cpscr012.dat
+EXTRADST: levels\cpscr012.dat
+
+EXTRASRC: cpscr018.dat
+EXTRADST: levels\cpscr018.dat
 
 EXTRASRC: cpscr027.dat
 EXTRADST: levels\cpscr027.dat
