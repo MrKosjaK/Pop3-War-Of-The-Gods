@@ -300,10 +300,10 @@ function OnTurn()
 end
 
 function OnCreateThing(t)
-  if (t.Type == T_INTERNAL) then
+  if (t.Type == T_INTERNAL and t.Model == 12) then
     local r = G_RANDOM(5)
     if (r == 1) then
-      if (t.Model == 12 and t.Owner > 1 and t.u.SoulConvert.CurrModel ~= 7 and t.u.SoulConvert.CurrModel ~= 1) then
+      if (t.Owner > 1 and t.u.SoulConvert.CurrModel ~= 7 and t.u.SoulConvert.CurrModel ~= 1) then
         if (_gsi.Players[0].NumPeople > 0 and _gsi.Players[1].NumPeople > 0) then
           createThing(T_PERSON,t.u.SoulConvert.CurrModel,G_RANDOM(2),center_pos,false,false)
         else
@@ -322,75 +322,4 @@ function calc_limit(pn)
   if (_gsi.Players[pn].NumPeople > spell_ms_charge_time) then
     return 1 else return spell_ms_charge_time-_gsi.Players[pn].NumPeople
   end
-end
-
-function count_enemy_bldgs_around(myself,x,z,radiii)
-  local count = 0
-  local c3d = MAP_XZ_2_WORLD_XYZ(x,z)
-  SearchMapCells(SQUARE,0,0,radiii,world_coord3d_to_map_idx(c3d),function(me)
-    me.MapWhoList:processList(function(t)
-      if (t.Type == T_BUILDING) then
-        if (t.Owner ~= myself and are_players_allied(t.Owner,myself) == 0) then
-          count=count+1
-        end
-      end
-      return true
-    end)
-    return true
-  end)
-  return count
-end
-
-function count_people(myself,coord2,radii)
-  local count = 0
-  SearchMapCells(CIRCULAR, 0, 0, radii, world_coord3d_to_map_idx(coord2), function(me)
-    me.MapWhoList:processList(function (t)
-      if (t.Type == T_PERSON) then
-        if (t.Owner ~= myself and are_players_allied(myself,t.Owner) == 0) then
-          count = count+1
-        end
-      end
-      return true
-    end)
-    return true
-  end)
-
-  return count
-end
-
-function decide_an_enemy_to_attack(myself)
-  local i = myself
-  local tries = 16
-  while (tries > 0) do
-    tries=tries-1
-    i = G_RANDOM(MAX_NUM_REAL_PLAYERS)
-    if (i ~= myself and are_players_allied(i,myself) == 0) then
-      if (GetPlayerPeople(i) > 0) then
-        if (NAV_CHECK(myself,i,ATTACK_BUILDING,0,0) == 1) then
-          break
-        end
-      end
-    end
-  end
-  return i
-end
-
-function count_troops(pn)
-  local count = 0
-  ProcessGlobalTypeList(T_PERSON, function(t)
-    if (t.Owner == pn) then
-      if (t.Model == M_PERSON_WARRIOR) then
-        count=count+1
-      end
-      if (t.Model == M_PERSON_RELIGIOUS) then
-        count=count+1
-      end
-      if (t.Model == M_PERSON_SUPER_WARRIOR) then
-        count=count+1
-      end
-    end
-    return true
-  end)
-
-  return count
 end

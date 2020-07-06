@@ -1,5 +1,5 @@
 PACKNAME: War of the Gods (Part 2)
-PACKVERSION: 2.0.1
+PACKVERSION: 2.0.2
 PACKCREATOR: Impboy / KosjaK
 PACKDESC: Co-op project
 
