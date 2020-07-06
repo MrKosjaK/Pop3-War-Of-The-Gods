@@ -356,6 +356,27 @@ EXTRADST: data\pal0-u.dat
 EXTRASRC: sky0-u.dat
 EXTRADST: data\sky0-u.dat
 
+EXTRASRC: al0-p.dat
+EXTRADST: data\al0-p.dat
+
+EXTRASRC: bigf0-p.dat
+EXTRADST: data\bigf0-p.dat
+
+EXTRASRC: fade0-p.dat
+EXTRADST: data\fade0-p.dat
+
+EXTRASRC: cliff0-p.dat
+EXTRADST: data\cliff0-p.dat
+
+EXTRASRC: ghost0-p.dat
+EXTRADST: data\ghost0-p.dat
+
+EXTRASRC: pal0-p.dat
+EXTRADST: data\pal0-p.dat
+
+EXTRASRC: sky0-p.dat
+EXTRADST: data\sky0-p.dat
+
 EXTRASRC: hfx0-0.dat
 EXTRADST: data\hfx0-0.dat
 
