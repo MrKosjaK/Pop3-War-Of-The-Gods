@@ -51,6 +51,12 @@ DAT: levl2024.dat
 HDR: Blank.hdr
 CREATOR: Impboy / KosjaK
 
+LEVEL: 8
+NAME: War Of The Gods
+DAT: levl2025.dat
+HDR: Blank.hdr
+CREATOR: Impboy / KosjaK
+
 CONSTANT: constant.dat
 
 EXTRASRC: levlspc2.dat
@@ -409,6 +415,9 @@ EXTRADST: scripts\stranded.lua
 
 EXTRASRC: topstalker.lua
 EXTRADST: scripts\topstalker.lua
+
+EXTRASRC: wotg.lua
+EXTRADST: scripts\wotg.lua
 
 EXTRASRC: aniob0-2.dat
 EXTRADST: objects\aniob0-2.dat
