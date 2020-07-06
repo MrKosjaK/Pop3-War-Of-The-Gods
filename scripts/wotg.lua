@@ -217,7 +217,7 @@ function OnTurn()
       end
     end
     
-    if (every2Pow(10) then
+    if every2Pow(10) then
       for i,pn in ipairs(availableNums) do
         if (FREE_ENTRIES(pn) > 18) then
           if (GetPlayerPeople(pn) > 40 and amt_of_building_type(pn,M_BUILDING_DRUM_TOWER) < 24) then
